@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<table>
+
+    {% for item in products %}
+    <tr>
+        <td>
+            {{ item.name }}
+        </td>
+        <td>
+        <td>
+            {{ item.description }}
+        </td>
+        </td>
+    </tr>
+
+
+
+    {% endfor %}
+
+
+</table>
+{% endblock %}
