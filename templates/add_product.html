@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+{% block body %}
+<form action="/add_product" method="post">
+
+
+    <table align="center">
+        <tr>
+            <td>
+                <label for="name">Product Name</label>
+            </td>
+            <td>
+                <input type="text" name="name">
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="description">Product Description</label>
+            </td>
+            <td>
+                <input type="text" name="description">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="price"> Price</label>
+            </td>
+            <td>
+                <input type="text" name="price">
+            </td>
+        </tr>
+        <tr>
+
+            <td>
+                <label for="stock">Stock</label>
+            </td>
+            <td>
+                <input type="text" name="stock">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="category">Category</label>
+            </td>
+            <td>
+                <input type="text" name="category">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="image">image</label>
+            </td>
+            <td>
+                <input type="text" name="image">
+            </td>
+        </tr>
+        <tr><td><input type="submit"></td></tr>
+    </table>
+
+</form>
+
+{% endblock %}
