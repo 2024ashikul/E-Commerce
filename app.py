@@ -1,6 +1,7 @@
 from flask import Flask,render_template,request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
 db = SQLAlchemy(app)
@@ -20,6 +21,7 @@ class User(db.Model):
     username = db.Column(db.String , unique = True, nullable = False)
     email = db.Column(db.String, unique = True, nullable = False)
     password = db.Column(db.String,nullable = False)
+
 
 @app.route('/add_product',methods =['GET','POST'])
 def add():
