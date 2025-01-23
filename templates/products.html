@@ -1,24 +1,36 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<table>
 
-    {% for item in products %}
-    <tr>
-        <td>
-            {{ item.name }}
-        </td>
-        <td>
-        <td>
-            {{ item.description }}
-        </td>
-        </td>
-    </tr>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
 
+        </div>
+        <div class="row">
 
+       
+        <div class="col-8">
 
-    {% endfor %}
+        
+{% for item in products %}
 
+    <div class="col-">
+        <div class="card">
+            <img src="..." class="card-img-top" alt="notheim" >
+            <div class="card-body">
+                <h5 class="card-title"> {{ item.name }}</h5>
+                <p class="card-text"> {{ item.description }}</p>
+                <a href="#" class="btn btn-primary"> {{item.price}}</a>
+            </div>
+        </div>
+    </div>
 
-</table>
-{% endblock %}
+        {% endfor %}
+    </div>
+</div>
+    </div>
+</div>
+
+      
+        {% endblock %}
