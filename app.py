@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request, redirect
+from flask import Flask,render_template,request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -37,10 +37,10 @@ def add():
         return "successfully added"
     except:
         return "There was an error while adding the product"
-    
-@app.route('/products')
-def products():
-    products = Product.query.order_by(Product.id).all()
+
+@app.route('/products/<category>')
+def products(category):
+    products = Product.query.order_by(Product.id).filter_by(category = category)
     return render_template('/products.html',products= products)
 
 @app.route('/register_html',methods= ['GET','POST'])
