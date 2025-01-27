@@ -1,9 +1,18 @@
 from flask import Flask,render_template,request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail,Message
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
 db = SQLAlchemy(app)
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = '2024ashikul@gmail.com'
+app.config['MAIL_PASSWORD'] = ''
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 class Product(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -21,6 +30,9 @@ class User(db.Model):
     email = db.Column(db.String, unique = True, nullable = False)
     password = db.Column(db.String,nullable = False)
 
+@app.route('/send_mail_all_html')
+def send_mail_all_html():
+    return render_template('send_promotional.html')
 
 @app.route('/add_product',methods =['GET','POST'])
 def add():
@@ -67,6 +79,7 @@ def register():
         username  = request.form['username']
         email = request.form['email']
         password = request.form['password']
+
     user = User(name = name , username= username, email = email, password = password)
     try:
         db.session.add(user)
@@ -74,6 +87,23 @@ def register():
         return "user succesfully added"
     except:
         return "FAILED TO GET USER"
+
+@app.route('/send_mail_all',methods=['GET','POST'])
+def send_mail_all():
+    message_subject = request.form['message_subject']
+    message_body = request.form['message_body']
+    results = User.query.with_entities(User.email).all()
+    recipients = [email[0] for email in results ]
+    msg = Message(message_subject, sender = '2024ashikul@gmail.com',recipients = recipients)
+    msg.body = message_body
+    mail.send(msg)
+    return "email sent"
+
+def send_mail():
+    msg = Message('Hello i am ashikul', sender = '2024ashikul@gmail.com',recipients = ['2020ashikul@gmail.com'])
+    msg.body = 'This is a test email from Flask-Mail.'
+    mail.send(msg)
+    return "Email sent!"
 
 @app.route('/login',methods = ['GET','POST'])
 def login():
@@ -89,6 +119,8 @@ def login():
             return "login not allowed"
     except:
         return "some error caused"
+
+
 
 with app.app_context():
     db.create_all()  # This creates all tables defined in your models
