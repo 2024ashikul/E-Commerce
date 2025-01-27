@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<h2>Send promotional sms to the users</h2>
+<form method="post" action = "send_mail_all">
+    <input type="text" name="message_subject" placeholder="please enter the message subject">
+    <input type="text" name="message_body" placeholder="please enter the message">
+    <input type="submit">
+</form>
+
+{% endblock %}
