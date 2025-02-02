@@ -77,7 +77,7 @@ def home():
 def login_html():
     if 'username' in session:
         username = session['username']
-        return redirect('/profile_html')
+        return redirect('/profile')
     return render_template('/login.html')
 
 @app.route('/register', methods =['GET','POST'])
@@ -140,10 +140,20 @@ def profile_html():
 def profile():
     if 'username' in session:
         username = session['username']
-        return f"welcome {username}"
+        user = User.query.filter_by(username = username).first()
+        email = user.email
+        return render_template('profile.html',username = username,email= email)
+
     else:
         return redirect('/login')
     return "not logged in"
+
+@app.route('/search/',methods = ['GET','POST'])
+def search():
+    keyword = request.form['keyword']
+    print('came here')
+    result = Product.query.filter(Product.description.like(keyword)).all()
+    return render_template("products.html",products = result)
 
 @app.route('/logout')
 def logout():
