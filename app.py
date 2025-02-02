@@ -1,10 +1,12 @@
-from flask import Flask,render_template,request, redirect, url_for
+from flask import Flask,render_template,request, redirect, url_for,session
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail,Message
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
 db = SQLAlchemy(app)
+app.secret_key="hi it is mme"
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -53,7 +55,10 @@ def add():
 
 @app.route('/products/<category>')
 def products(category):
-    products = Product.query.order_by(Product.id).filter_by(category = category)
+    if category == "all":
+        products = Product.query.order_by(Product.id).all()
+    else:
+        products = Product.query.order_by(Product.id).filter_by(category = category)
     return render_template('/products.html',products= products)
 
 @app.route('/register_html',methods= ['GET','POST'])
@@ -70,6 +75,9 @@ def home():
 
 @app.route('/login_html')
 def login_html():
+    if 'username' in session:
+        username = session['username']
+        return redirect('/profile_html')
     return render_template('/login.html')
 
 @app.route('/register', methods =['GET','POST'])
@@ -107,6 +115,9 @@ def send_mail():
 
 @app.route('/login',methods = ['GET','POST'])
 def login():
+    if 'username' in session:
+        username = session['username']
+        return "already logged in "
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -114,13 +125,30 @@ def login():
         user = User.query.filter(User.username == username).first()
         user_pass = user.password
         if password == user_pass:
-            return "head into login"
+            session['username'] = username
+            return redirect('profile_html')
         else:
             return "login not allowed"
     except:
         return "some error caused"
+    
+@app.route('/profile_html')
+def profile_html():
+    return render_template('profile.html')
 
+@app.route('/profile')
+def profile():
+    if 'username' in session:
+        username = session['username']
+        return f"welcome {username}"
+    else:
+        return redirect('/login')
+    return "not logged in"
 
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
 
 with app.app_context():
     db.create_all()  # This creates all tables defined in your models
