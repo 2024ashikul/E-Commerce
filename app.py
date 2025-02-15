@@ -1,20 +1,28 @@
-from flask import Flask,render_template,request, redirect, url_for,session
+from flask import Flask,render_template,request, redirect, url_for,session,flash,send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail,Message
-
+import os
+from werkzeug.utils import secure_filename
+import uuid
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
 db = SQLAlchemy(app)
 app.secret_key="hi it is mme"
+UPLOAD_FOLDER ='uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = '2024ashikul@gmail.com'
-app.config['MAIL_PASSWORD'] = ''
+app.config['MAIL_PASSWORD'] = 'lkmp dfgm vwsd bgck'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
+
+
 
 class Product(db.Model):
     id = db.Column(db.Integer,primary_key = True)
@@ -31,6 +39,12 @@ class User(db.Model):
     username = db.Column(db.String , unique = True, nullable = False)
     email = db.Column(db.String, unique = True, nullable = False)
     password = db.Column(db.String,nullable = False)
+    profile_pic = db.Column(db.String, nullable = False)
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 
 @app.route('/send_mail_all_html')
 def send_mail_all_html():
@@ -49,6 +63,7 @@ def add():
     try:
         db.session.add(product)
         db.session.commit()
+        flash("sucess! succefully added")
         return "successfully added"
     except:
         return "There was an error while adding the product"
@@ -77,6 +92,7 @@ def home():
 def login_html():
     if 'username' in session:
         username = session['username']
+        print(username)
         return redirect('/profile')
     return render_template('/login.html')
 
@@ -87,14 +103,27 @@ def register():
         username  = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        file = request.files['file']
+        file_extension = file.filename.rsplit('.',1)[1].lower()
+        unique_extension = generate_unique_filename(file_extension)
 
-    user = User(name = name , username= username, email = email, password = password)
+        filename = os.path.join(app.config['UPLOAD_FOLDER'], unique_extension)
+        file.save(filename)
+
+    user = User(name = name , username= username, email = email, password = password, profile_pic= filename)
     try:
         db.session.add(user)
         db.session.commit()
         return "user succesfully added"
     except:
         return "FAILED TO GET USER"
+
+def generate_unique_filename(extension):
+    while True:
+        unique_filename = str(uuid.uuid4()) + '.' + extension
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+        if not os.path.exists(filepath):
+            return unique_filename
 
 @app.route('/send_mail_all',methods=['GET','POST'])
 def send_mail_all():
@@ -142,11 +171,12 @@ def profile():
         username = session['username']
         user = User.query.filter_by(username = username).first()
         email = user.email
-        return render_template('profile.html',username = username,email= email)
+        picture_url = user.profile_pic
+        return render_template('profile.html',username = username,email= email,picture_url = picture_url)
 
     else:
         return redirect('/login')
-    return "not logged in"
+    
 
 @app.route('/search/',methods = ['GET','POST'])
 def search():
