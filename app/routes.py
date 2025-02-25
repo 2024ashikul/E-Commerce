@@ -4,6 +4,7 @@ from app.models import Product
 from app.models import User
 import os
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash,check_password_hash
 import uuid
 from flask_mail import Mail,Message
 
@@ -58,6 +59,7 @@ def register():
         username  = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        hashed_pass = generate_password_hash(password,method='pbkdf2:sha512',salt_length = 16)
         file = request.files['file']
         file_extension = file.filename.rsplit('.',1)[1].lower()
         unique_extension = generate_unique_filename(file_extension)
@@ -65,7 +67,7 @@ def register():
         filename = os.path.join(UPLOAD_FOLDER, unique_extension)
         file.save(filename)
 
-    user = User(name = name , username= username, email = email, password = password, profile_pic= filename)
+    user = User(name = name , username= username, email = email, password = hashed_pass, profile_pic= filename)
     try:
         db.session.add(user)
         db.session.commit()
@@ -105,10 +107,11 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        
     try:
         user = User.query.filter(User.username == username).first()
-        user_pass = user.password
-        if password == user_pass:
+        
+        if user and check_password_hash(user.password,password):
             session['username'] = username
             return redirect('profile_html')
         else:
