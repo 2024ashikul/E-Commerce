@@ -4,20 +4,15 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-4">
-
-        </div>
-        <div class="row">
-
-       
-        <div class="col-8">
+        
 
         
 {% for item in products %}
 
-    <div class="col-">
-        <div class="card">
-            <img src="..." class="card-img-top" alt="notheim" >
+
+        <div class="col-md-4" id="cardstyle">
+        <div class="card" width = "18 rem">
+            <img src="..." class="card-img-top" alt="notheim">
             <div class="card-body">
                 <h5 class="card-title"> {{ item.name }}</h5>
                 <p class="card-text"> {{ item.description }}</p>
@@ -25,6 +20,7 @@
             </div>
         </div>
     </div>
+    
 
         {% endfor %}
     </div>
@@ -32,5 +28,9 @@
     </div>
 </div>
 
-      
+      <style>
+        #cardstyle{
+            padding: 10px 10px 10px 10px;
+        }
+      </style>
         {% endblock %}
