@@ -15,8 +15,10 @@ def create_app():
     db.init_app(app)
     mail.init_app(app)
     from app.routes import main
+    from app.send_mail import sendmail
+    from app.addproduct import addproduct
+    app.register_blueprint(sendmail)
     app.register_blueprint(main)
+    app.register_blueprint(addproduct)
     
-    
-
     return app
