@@ -10,7 +10,6 @@ from flask_mail import Mail,Message
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 
-
 main = Blueprint('main',__name__)
 
 
@@ -36,9 +35,6 @@ def products(category):
 def register_html():
     return render_template('/register.html')
 
-@main.route('/add_product_html')
-def add_product_html():
-    return render_template('add_product.html')
 
 @main.route('/')
 def home():
@@ -82,22 +78,7 @@ def generate_unique_filename(extension):
         if not os.path.exists(filepath):
             return unique_filename
 
-@main.route('/send_mail_all',methods=['GET','POST'])
-def send_mail_all():
-    message_subject = request.form['message_subject']
-    message_body = request.form['message_body']
-    results = User.query.with_entities(User.email).all()
-    recipients = [email[0] for email in results ]
-    msg = Message(message_subject, sender = '2024ashikul@gmail.com',recipients = recipients)
-    msg.body = message_body
-    mail.send(msg)
-    return "email sent"
 
-def send_mail():
-    msg = Message('Hello i am ashikul', sender = '2024ashikul@gmail.com',recipients = ['2020ashikul@gmail.com'])
-    msg.body = 'This is a test email from Flask-Mail.'
-    mail.send(msg)
-    return "Email sent!"
 
 @main.route('/login',methods = ['GET','POST'])
 def login():
@@ -136,23 +117,6 @@ def profile():
         return redirect('/login')
 
 
-@main.route('/add_product',methods =['GET','POST'])
-def add():
-    if request.method == 'POST':
-        name = request.form['name']
-        description = request.form['description']
-        price = request.form['price']
-        stock = request.form['stock']
-        category = request.form['category']
-        image = request.form['image']
-        product = Product(name = name, description= description,price = price,stock = stock,category= category,image= image)
-    try:
-        db.session.add(product)
-        db.session.commit()
-        flash("sucess! succefully added")
-        return "successfully added"
-    except:
-        return "There was an error while adding the product"
 
 
 @main.route('/search/',methods = ['GET','POST'])
