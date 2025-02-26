@@ -1,4 +1,8 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 class Config:
     
     SQLALCHEMY_DATABASE_URI = 'sqlite:///db.db'
@@ -9,8 +13,8 @@ class Config:
     
     MAIL_SERVER='smtp.gmail.com'
     MAIL_PORT = 465
-    MAIL_USERNAME = '2024ashikul@gmail.com'
-    MAIL_PASSWORD = 'lkmp dfgm vwsd bgck'
+    MAIL_USERNAME = os.getenv('MAIL_USERNAME')
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
     
