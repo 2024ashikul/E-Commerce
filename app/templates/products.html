@@ -12,7 +12,7 @@
 
         <div class="col-md-4" id="cardstyle">
         <div class="card" width = "18 rem">
-            <img src="..." class="card-img-top" alt="notheim">
+            <img src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
             <div class="card-body">
                 <h5 class="card-title"> {{ item.name }}</h5>
                 <p class="card-text"> {{ item.description }}</p>
