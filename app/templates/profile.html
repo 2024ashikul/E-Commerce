@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block body %}
-<img height="500px" width="400px" src="{{ url_for('main.uploaded_file', filename= picture_url.split('/')[-1]) }}">
+<img height="500px" width="400px" src="{{ url_for('main.uploaded_file', filename = picture_url.split('/')[-1]) }}">
 
     hi {{ username }}, how are you doing?
     your email {{ email }}

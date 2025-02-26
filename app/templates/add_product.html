@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block body %}
-<form action="/add_product" method="post">
+<form action="/add_product" method="post" enctype="multipart/form-data">
 
 
     <table align="center">
@@ -52,10 +52,10 @@
         </tr>
         <tr>
             <td>
-                <label for="image">image</label>
+                <label for="file">image</label>
             </td>
             <td>
-                <input type="text" name="image">
+                <input type="file" name="file">
             </td>
         </tr>
         <tr><td><input type="submit"></td></tr>

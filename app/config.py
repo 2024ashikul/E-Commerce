@@ -6,7 +6,7 @@ load_dotenv()
 class Config:
     
     SQLALCHEMY_DATABASE_URI = 'sqlite:///db.db'
-    SECRET_KEY="hi it is mme"
+    SECRET_KEY= os.getenv('SECRET_KEY')
     UPLOAD_FOLDER ='uploads'
 
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
