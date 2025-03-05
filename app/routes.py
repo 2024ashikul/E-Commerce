@@ -103,7 +103,7 @@ def login():
         user = User.query.filter(User.username == username).first()
         
         if user and check_password_hash(user.password,password):
-            session['username'] = username
+            login_user(user)
             return redirect('profile')
         else:
             return "login not allowed"
@@ -114,17 +114,16 @@ def login():
 def profile_html():
     return render_template('profile.html')
 
+@login_required
 @main.route('/profile')
 def profile():
-    if 'username' in session:
-        username = session['username']
-        user = User.query.filter_by(username = username).first()
-        email = user.email
-        picture_url = user.profile_pic
-        return render_template('profile.html',username = username,email= email,picture_url = picture_url)
+    
+    username = current_user.username
+    
+    email = current_user.email
+    picture_url = current_user.profile_pic
+    return render_template('profile.html',username = username,email= email,picture_url = picture_url)
 
-    else:
-        return redirect('/login')
 
 
 
