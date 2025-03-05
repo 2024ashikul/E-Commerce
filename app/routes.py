@@ -2,16 +2,26 @@ from flask import  Blueprint,render_template,session,request,url_for,redirect,se
 from app import db,mail
 from app.models import Product
 from app.models import User
+from app.__init__ import login_manager
 import os
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash,check_password_hash
 import uuid
 from flask_mail import Mail,Message
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 
 main = Blueprint('main',__name__)
 
+
+login_manager.login_view = '/login'
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @main.route('/uploads/<filename>')
 def uploaded_file(filename):
@@ -94,7 +104,7 @@ def login():
         
         if user and check_password_hash(user.password,password):
             session['username'] = username
-            return redirect('profile_html')
+            return redirect('profile')
         else:
             return "login not allowed"
     except:
