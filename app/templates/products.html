@@ -2,6 +2,22 @@
 
 {% block body %}
 
+<style>
+    .card img{
+        width: 100%; /* Makes image responsive */
+         /* Set a max width to keep size controlled */
+        height: auto; /* Maintain aspect ratio */
+        aspect-ratio: 16/9; /* Ensures all images have the same proportion */
+        object-fit: cover; /* Prevents distortion */
+        /* Centers images */
+        
+    }
+    .card-body{
+        object-fit: cover;
+        
+    }
+</style>
+
 <div class="container">
     <div class="row">
         

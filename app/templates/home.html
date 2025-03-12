@@ -3,20 +3,31 @@
     Tech Bangladesh
 {% endblock %}
 {% block body %}
+<style>
+    .carousel-item img {
+    width: 100%; /* Makes image responsive */
+    max-width: 12000px; /* Set a max width to keep size controlled */
+    height: auto; /* Maintain aspect ratio */
+    aspect-ratio: 16/9; /* Ensures all images have the same proportion */
+    object-fit: cover; /* Prevents distortion */
+    margin: auto; /* Centers images */
+    display: block;
+}
 
+</style>
 <div class="container">
     <div class="row" >
-        <div class="col-md-10" >
+        <div class="col-md-7" style="height: fit-content;">
             <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
                 <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="asdfds.png" class="d-block w-100" alt="asdfsd">
+                    <img src="/static/2.png" class="" alt="asdfsd">
                 </div>
                 <div class="carousel-item">
-                    <img src="asdf.png" class="d-block w-100" alt="asdfsd">
+                    <img src="/static/1.jpeg" class=""  alt="asdfsd">
                 </div>
                 <div class="carousel-item">
-                    <img src="asdf.png" class="d-block w-100" alt="asdfas">
+                    <img src="/static/Screenshot 2025-02-05 at 23.44.15.png" class="" alt="asdfas">
                 </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">

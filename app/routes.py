@@ -130,15 +130,16 @@ def profile():
 
 
 
-
-
-@main.route('/search/',methods = ['GET','POST'])
+@main.route('/search', methods=['GET', 'POST'])
 def search():
-    keyword = request.form['keyword']
-    print('came here')
-    result = Product.query.filter(Product.description.like(keyword)).all()
-    return render_template("products.html",products = result)
+    keyword = request.form.get('keyword','')  # Get keyword from form input
+    if not keyword:
+        return redirect(url_for('main.home'))  # Redirect if empty search
 
+    # Perform case-insensitive search
+    result = Product.query.filter(Product.description.ilike(f"%{keyword}%")).all()
+
+    return render_template("products.html", products=result)
 @main.route('/logout')
 def logout():
     session.clear()
