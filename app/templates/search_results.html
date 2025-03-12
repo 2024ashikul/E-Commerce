@@ -1,6 +1,54 @@
+
 {% extends 'layout.html' %}
+
 {% block body %}
 
+<style>
+    .card img{
+        width: 100%; /* Makes image responsive */
+         /* Set a max width to keep size controlled */
+        height: auto; /* Maintain aspect ratio */
+        aspect-ratio: 16/9; /* Ensures all images have the same proportion */
+        object-fit: cover; /* Prevents distortion */
+        /* Centers images */
+        
+    }
+    .card-body{
+        object-fit: cover;
+        
+    }
+</style>
 
+<div class="container">
+    <div class="row">
+    
+        {% if count == 0 %}
+            <p>sorry no results found</p>
+
+        {% else %}
+        
+{% for item in result %}
+        <p>There were {{count }} results found </p>
+
+    <div class="col-md-3" id="cardstyle">
+        <div class="card" width = "18 rem">
+            <img src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
+            <div class="card-body">
+                <h5 class="card-title"> {{ item.name }}</h5>
+                <p class="card-text"> {{ item.description }}</p>
+                <a href="#" class="btn btn-primary"> {{item.price}}</a>
+            </div>
+        </div>
+    </div>
+    
+
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+    </div>
+</div>
+
+    
 
 {% endblock %}
