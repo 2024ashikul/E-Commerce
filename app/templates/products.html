@@ -10,7 +10,7 @@
 {% for item in products %}
 
 
-        <div class="col-md-3" id="cardstyle">
+    <div class="col-md-3" id="cardstyle">
         <div class="card" width = "18 rem">
             <img src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
             <div class="card-body">

@@ -48,7 +48,12 @@ def register_html():
 
 @main.route('/')
 def home():
-    return render_template('/home.html')
+    try:
+        items = Product.query.order_by(Product.time.desc()).limit(10).all()
+        print("succesfull")
+    except :
+        print("an error occured")
+    return render_template('/home.html', items= items )
 
 @main.route('/login_html')
 def login_html():
@@ -87,7 +92,6 @@ def generate_unique_filename(extension):
         filepath = os.path.join(UPLOAD_FOLDER, unique_filename)
         if not os.path.exists(filepath):
             return unique_filename
-
 
 
 @main.route('/login',methods = ['GET','POST'])

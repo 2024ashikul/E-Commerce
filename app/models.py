@@ -1,6 +1,6 @@
 from . import db
 from flask_login import UserMixin
-
+from datetime import datetime
 class Product(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(200),nullable = False)
@@ -9,6 +9,7 @@ class Product(db.Model):
     stock = db.Column(db.Integer,nullable = False)
     category = db.Column(db.String(100),nullable = False)
     image = db.Column(db.String(100),nullable = False)
+    time = db.Column(db.DateTime,default= datetime.now)
 
 class User(db.Model,UserMixin):
     id = db.Column(db.Integer, primary_key = True)

@@ -4,11 +4,60 @@
 {% endblock %}
 {% block body %}
 
+<div class="container">
+    <div class="row" >
+        <div class="col-md-10" >
+            <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
+                <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="asdfds.png" class="d-block w-100" alt="asdfsd">
+                </div>
+                <div class="carousel-item">
+                    <img src="asdf.png" class="d-block w-100" alt="asdfsd">
+                </div>
+                <div class="carousel-item">
+                    <img src="asdf.png" class="d-block w-100" alt="asdfas">
+                </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            </div>
+            </div>
 
+<br>
+
+    <div class="row">
+        <h1>NEWEST ARRIVALS</h1>
+        {% for item in items %}
+            <div class="col-md-1" id="cardstyle">
+                <div class="card" width = "">
+                    <img src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
+                    <div class="card-body">
+                        <h5 class="card-title"> {{ item.name }}</h5>
+                        <p class="card-text"> {{ item.description }}</p>
+                        <a href="#" class="btn btn-primary"> {{item.price}}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+            
+</div>
+
+<div class="row">
+    <h1>ADMIN THINGS</h1>
     <a href="{{ url_for('main.products',category = 'all')}}" >Click here to see all products</a><br>
     <a href="register_html" >Click here to register</a><br>
     <a href="login_html" >Click here to login</a><br>
     <a href="add_product_html" >Click here add product</a><hr>
     <a href="send_mail_all_html" >Click here to send promotional emails</a>
-    
+</div>
+
+</div>
 {% endblock %}
