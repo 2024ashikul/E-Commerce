@@ -31,8 +31,12 @@
             <img src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
             <div class="card-body">
                 <h5 class="card-title"> {{ item.name }}</h5>
-                <p class="card-text"> {{ item.description }}</p>
-                <a href="#" class="btn btn-primary"> {{item.price}}</a>
+                <p class="card-text"> {{ item.price }}</p>
+                <form action="addtocart" method="post">
+                    <button type="submit" class="btn btn-primary">Add to cart</button>
+                    <input type="hidden" value="{{item}}" name="product_id">
+                </form>
+
             </div>
         </div>
     </div>

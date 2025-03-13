@@ -16,7 +16,7 @@ UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 main = Blueprint('main',__name__)
 
 
-login_manager.login_view = '/login'
+
 
 
 @login_manager.user_loader
@@ -57,10 +57,8 @@ def home():
 
 @main.route('/login_html')
 def login_html():
-    if 'username' in session:
-        username = session['username']
-        print(username)
-        return redirect('/profile')
+    if current_user.is_authenticated:
+        return redirect("profile")
     return render_template('/login.html')
 
 @main.route('/register', methods =['GET','POST'])
@@ -96,9 +94,7 @@ def generate_unique_filename(extension):
 
 @main.route('/login',methods = ['GET','POST'])
 def login():
-    if 'username' in session:
-        username = session['username']
-        return "already logged in "
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -107,7 +103,7 @@ def login():
         user = User.query.filter(User.username == username).first()
         
         if user and check_password_hash(user.password,password):
-            login_user(user)
+            login_user(user,remember =True)
             return redirect('profile')
         else:
             return "login not allowed"
@@ -118,15 +114,17 @@ def login():
 def profile_html():
     return render_template('profile.html')
 
-@login_required
+
 @main.route('/profile')
+@login_required
 def profile():
-    
     username = current_user.username
-    
     email = current_user.email
     picture_url = current_user.profile_pic
-    return render_template('profile.html',username = username,email= email,picture_url = picture_url)
+    
+    for i in cart:
+        
+    return render_template('profile.html',username = username,email= email,picture_url = picture_url,cart =cart)
 
 
 
@@ -141,7 +139,25 @@ def search():
     count = len(result)
     
     return render_template("search_results.html", result=result,count = count)
+
 @main.route('/logout')
 def logout():
-    session.clear()
+    logout_user()
     return redirect('/')
+
+
+
+@main.route('/products/addtocart',methods=['GET','POST'])
+@login_required
+def addtocart():
+    if request.method  == 'POST':
+        product = request.form['product_id']
+        print(product.id)
+        
+
+    return redirect("/")
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    print("Unauthorized")
+    return redirect("/")

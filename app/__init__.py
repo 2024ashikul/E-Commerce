@@ -10,7 +10,7 @@ from flask_migrate import Migrate
 db = SQLAlchemy()
 mail = Mail()
 login_manager = LoginManager()
-
+login_manager.login_view = '/login_html'
 
 
 def create_app():

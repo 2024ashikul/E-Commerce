@@ -18,3 +18,11 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String, unique = True, nullable = False)
     password = db.Column(db.String,nullable = False)
     profile_pic = db.Column(db.String, nullable = False)
+    cart_items = db.relationship("Cart",backref="user",lazy = True)
+
+class Cart(db.Model):
+    id = db.Column(db.Integer, primary_key =True)
+    user = db.Column(db.Integer,db.ForeignKey("user.id"),nullable =False)
+    product = db.Column(db.Integer, db.ForeignKey("product.id"),nullable = False)
+    quantity = db.Column(db.Integer,default = 1)
+    product = db.relationship("Product",backref = "cart")

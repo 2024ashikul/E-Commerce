@@ -1,9 +1,28 @@
 {% extends 'layout.html' %}
 {% block body %}
-<img height="500px" width="400px" src="{{ url_for('main.uploaded_file', filename = picture_url.split('/')[-1]) }}">
 
-    hi {{ username }}, how are you doing?
-    your email {{ email }}
+
+
+
+
+    <div class="container">
+        <div class="row">
+            <h2>
+                Hi {{ username }}, Welcome!!!
+            </h2>
+        </div>
+
+    </div>
+
+    
+
+    <h2>
+        Your Cart
+    </h2>
+    {% for item in cart %}
+        <p>{{ item }}</p>
+    {% endfor %}
+
     <form action="/logout">
     <button type="submit">Logout</button>
     
