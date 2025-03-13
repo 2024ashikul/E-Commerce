@@ -35,5 +35,5 @@ def create_app():
 
 @login_manager.user_loader
 def load_user(user_id):
-    from app.models import User  # Import User model inside the function to avoid circular imports
+    from app.models import User  
     return User.query.get(int(user_id))

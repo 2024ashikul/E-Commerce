@@ -2,6 +2,7 @@ from flask import  Blueprint,render_template,session,request,url_for,redirect,se
 from app import db,mail
 from app.models import Product
 from app.models import User
+from app.models import Cart
 from app.__init__ import login_manager
 import os
 from werkzeug.utils import secure_filename
@@ -48,9 +49,12 @@ def register_html():
 
 @main.route('/')
 def home():
+    
     try:
         items = Product.query.order_by(Product.time.desc()).limit(12).all()
+        print(items)
         print("succesfull")
+        return render_template('/home.html', items= items )
     except :
         print("an error occured")
     return render_template('/home.html', items= items )
@@ -121,10 +125,9 @@ def profile():
     username = current_user.username
     email = current_user.email
     picture_url = current_user.profile_pic
+    cart_items = Cart.query.filter(Cart.user_id == current_user.id).all()
     
-    for i in cart:
-        
-    return render_template('profile.html',username = username,email= email,picture_url = picture_url,cart =cart)
+    return render_template('profile.html',username = username,email= email,picture_url = picture_url,cart_items = cart_items)
 
 
 
@@ -151,9 +154,13 @@ def logout():
 @login_required
 def addtocart():
     if request.method  == 'POST':
-        product = request.form['product_id']
-        print(product.id)
-        
+        product_id = request.form['product_id']
+        print(product_id)
+        product = Product.query.filter(Product.id == product_id).first()
+        cart_item = Cart(user_id = current_user.id ,product_id = product.id, quantity = 1)
+        #cart_item = Cart(user_id = current_user.id,product_id = product_id,product = product, user = current_user )
+        db.session.add(cart_item)
+        db.session.commit()
 
     return redirect("/")
 

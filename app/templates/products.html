@@ -34,7 +34,7 @@
                 <p class="card-text"> {{ item.price }}</p>
                 <form action="addtocart" method="post">
                     <button type="submit" class="btn btn-primary">Add to cart</button>
-                    <input type="hidden" value="{{item}}" name="product_id">
+                    <input type="hidden" value="{{item.id}}" name="product_id">
                 </form>
 
             </div>

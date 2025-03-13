@@ -19,9 +19,21 @@
     <h2>
         Your Cart
     </h2>
-    {% for item in cart %}
-        <p>{{ item }}</p>
+    <table border="1px">
+        {% for item in cart_items %}
+            <tr border="1">
+                <td>
+                    <p>{{ item.product.name }}</p>
+                </td>
+                <td>
+                    <p>{{ item.quantity }}</p>
+                </td>
+            </tr>
+
     {% endfor %}
+    </table>
+    
+
 
     <form action="/logout">
     <button type="submit">Logout</button>
