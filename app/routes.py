@@ -49,7 +49,7 @@ def register_html():
 @main.route('/')
 def home():
     try:
-        items = Product.query.order_by(Product.time.desc()).limit(10).all()
+        items = Product.query.order_by(Product.time.desc()).limit(12).all()
         print("succesfull")
     except :
         print("an error occured")

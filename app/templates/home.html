@@ -5,19 +5,24 @@
 {% block body %}
 <style>
     .carousel-item img {
-    width: 100%; /* Makes image responsive */
-    max-width: 12000px; /* Set a max width to keep size controlled */
-    height: auto; /* Maintain aspect ratio */
-    aspect-ratio: 16/9; /* Ensures all images have the same proportion */
-    object-fit: cover; /* Prevents distortion */
-    margin: auto; /* Centers images */
+    width: 100%;
+    max-width: 12000px; 
+    height: auto; 
+    aspect-ratio: 16/9; 
+    object-fit: cover; 
+    margin: auto; 
     display: block;
+}
+#image-recent{
+    aspect-ratio: 16/9; 
+    object-fit: cover;
+    margin: auto;
 }
 
 </style>
 <div class="container">
     <div class="row" >
-        <div class="col-md-7" style="height: fit-content;">
+        <div class="col-md-8" style="height: fit-content;">
             <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
                 <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -45,13 +50,13 @@
 <br>
 
     <div class="row">
-        <h1>NEWEST ARRIVALS</h1>
+        <h3>NEWEST ARRIVALS</h3>
         {% for item in items %}
             <div class="col-md-1" id="cardstyle">
                 <div class="card" width = "">
-                    <img src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
+                    <img id="image-recent" src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
                     <div class="card-body">
-                        <h5 class="card-title"> {{ item.name }}</h5>
+                        <h5 class="card-title" > {{ item.name }}</h5>
                         <p class="card-text"> {{ item.description }}</p>
                         <a href="#" class="btn btn-primary"> {{item.price}}</a>
                     </div>
