@@ -1,4 +1,4 @@
-from flask import  Blueprint,render_template,session,request,url_for,redirect,send_from_directory,flash
+from flask import  Blueprint,render_template,session,request,url_for,redirect,send_from_directory,flash,jsonify
 from app import db,mail
 from app.models import Product
 from app.models import User
@@ -126,8 +126,11 @@ def profile():
     email = current_user.email
     picture_url = current_user.profile_pic
     cart_items = Cart.query.filter(Cart.user_id == current_user.id).all()
+    total = 0
+    #for i in cart_items:
+     #   total = total + int(i.product.price)
     
-    return render_template('profile.html',username = username,email= email,picture_url = picture_url,cart_items = cart_items)
+    return render_template('profile.html',username = username,email= email,picture_url = picture_url,cart_items = cart_items,total = total)
 
 
 
@@ -161,10 +164,12 @@ def addtocart():
         #cart_item = Cart(user_id = current_user.id,product_id = product_id,product = product, user = current_user )
         db.session.add(cart_item)
         db.session.commit()
-
-    return redirect("/")
+        flash("Success! Item added to the cart.")
+    return redirect(url_for('main.profile'))
 
 @login_manager.unauthorized_handler
 def unauthorized():
     print("Unauthorized")
     return redirect("/")
+
+

@@ -1,7 +1,24 @@
 {% extends 'layout.html' %}
+
 {% block body %}
 
-
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+    
+            {% for category, message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+        {% endfor %}
+                
+    {% endif %}
+    {% endwith %}
+    <style>
+        td{
+            border: 1px solid black;
+        }
+    </style>
 
 
 
@@ -13,24 +30,52 @@
         </div>
 
     </div>
-
     
 
     <h2>
         Your Cart
     </h2>
-    <table border="1px">
+
+    <table class="table">
+        <tr class="table-primary">
+            <td class="table-primary ">
+                Product Name
+            </td>
+            <td class="table-primary">
+                Quantity
+            </td>
+            <td class="table-primary">
+                Price
+            </td>
+            <td class="table-primary">
+                Action
+            </td>
+        </tr>
         {% for item in cart_items %}
-            <tr border="1">
-                <td>
-                    <p>{{ item.product.name }}</p>
+            <tr class="table-primary">
+                <td class="table-primary ">
+                    {{ item.product.name }}
                 </td>
-                <td>
-                    <p>{{ item.quantity }}</p>
+                <td class="table-primary">
+                    {{ item.quantity }}
+                </td>
+                <td class="table-primary">
+                    {{ item.product.price }}
+                </td>
+                <td class="table-primary">
+                    <a href="#">Buy Now</a>
+                    
+                    
+                        <button  onclick="">Remove</button>
+                    
                 </td>
             </tr>
-
+        
     {% endfor %}
+    <tr>
+        <td colspan="3">Total</td>
+        <td>{{total}}</td>
+    </tr>
     </table>
     
 
@@ -39,6 +84,8 @@
     <button type="submit">Logout</button>
     
     </form>
-
+    <script>
+        
+    </script>
 
 {% endblock %}
