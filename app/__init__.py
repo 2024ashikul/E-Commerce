@@ -26,11 +26,12 @@ def create_app():
     from app.send_mail import sendmail
     from app.addproduct import addproduct
     from app.admin import admin
+    from app.searching import searching
     app.register_blueprint(sendmail)
     app.register_blueprint(main)
     app.register_blueprint(addproduct)
     app.register_blueprint(admin)
-    
+    app.register_blueprint(searching)
     return app
 
 @login_manager.user_loader

@@ -1,4 +1,4 @@
-from flask import Flask,Blueprint,request,flash,render_template,request,send_from_directory
+from flask import Flask,Blueprint,request,flash,render_template,request,send_from_directory,jsonify
 from app.models import Product
 from app import db
 import os
@@ -23,7 +23,6 @@ def add():
         filename = os.path.join(UPLOAD_FOLDER,unique_extension)
         file.save(filename)
         
-
         product = Product(name = name, description= description,price = price,stock = stock,category= category,image= filename)
     try:
         db.session.add(product)
