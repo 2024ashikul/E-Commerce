@@ -2,18 +2,7 @@
 
 {% block body %}
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
     
-            {% for category, message in messages %}
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>{{ message }}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-        {% endfor %}
-                
-    {% endif %}
-    {% endwith %}
     <style>
         td{
             border: 1px solid black;
@@ -62,6 +51,7 @@
                     <form method="post" action="addquantity">
                         <input name="item_id" value="{{item.id}}" type="hidden">
                         <button type="submit">Add More</button>
+
                     </form>
                     {% if item.quantity > 1 %}
                     <form method="post" action="decreasequantity">

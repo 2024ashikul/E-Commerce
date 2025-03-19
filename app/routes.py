@@ -16,10 +16,6 @@ UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 
 main = Blueprint('main',__name__)
 
-
-
-
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -28,11 +24,9 @@ def load_user(user_id):
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
 
-
 @main.route('/send_mail_all_html')
 def send_mail_all_html():
     return render_template('send_promotional.html')
-
 
 @main.route('/products/<category>')
 def products(category):
@@ -108,33 +102,21 @@ def login():
         
         if user and check_password_hash(user.password,password):
             login_user(user,remember =True)
+            flash(f"Hi, {user.name.upper()}! Welcome Back!","success")
             return redirect('profile')
         else:
-            return "login not allowed"
+            flash("Incorrect password or username","warning")
+            return redirect('/login_html')
     except:
-        return "some error caused"
+        flash("Incorrect password or username","warning")
+        flash("Some error caused")
+        return redirect('/login_html')
     
-
-
-
-@main.route('/search', methods=['GET', 'POST'])
-def search():
-    keyword = request.form.get('keyword','')  
-    if not keyword:
-        return redirect(url_for('main.home')) 
-
-    
-    result = Product.query.filter(Product.description.ilike(f"%{keyword}%")).all()
-    count = len(result)
-    
-    return render_template("search_results.html", result=result,count = count)
 
 @main.route('/logout')
 def logout():
     logout_user()
     return redirect('/')
-
-
 
 
 @login_manager.unauthorized_handler

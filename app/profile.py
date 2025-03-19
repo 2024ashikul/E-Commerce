@@ -40,11 +40,11 @@ def addtocart():
         print(product_id)
         product = Product.query.filter(Product.id == product_id).first()
         cart_item = Cart(user_id = current_user.id ,product_id = product.id, quantity = 1)
-        #cart_item = Cart(user_id = current_user.id,product_id = product_id,product = product, user = current_user )
+        name = product.name
         db.session.add(cart_item)
         db.session.commit()
-        flash("Success! Item added to the cart.")
-    return redirect(url_for('main.profile'))
+        flash(f"{name} added to the cart","success")
+    return redirect(url_for('profile.profile'))
 
 @profiles.route('/removefromcart',methods=['POST'])
 def removefromcart():
@@ -53,9 +53,12 @@ def removefromcart():
         print(f"id is {cartid}")
         todelete =  Cart.query.filter(Cart.id == cartid).first()
         print(todelete)
+        name = todelete.product.name
         db.session.delete(todelete)
         db.session.commit()
+        flash(f"Removed {name} from cart","success")
         print("delete done")
+        
     return redirect("/profile")
 
 @profiles.route('/addquantity',methods=['POST'])
@@ -65,6 +68,7 @@ def addquantity():
         item = Cart.query.filter(Cart.id == item_id).first()
         item.quantity = item.quantity + 1
         db.session.commit()
+        flash("Increased Cart Item","success")
     return redirect('/profile')
 
 @profiles.route('/decreasequantity',methods=['POST'])
@@ -74,4 +78,6 @@ def decreasequantity():
         item = Cart.query.filter(Cart.id == item_id).first()
         item.quantity = item.quantity - 1
         db.session.commit()
+        message = "Decreased succesfully"
+        flash(message, "success")
     return redirect('/profile')
