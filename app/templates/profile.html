@@ -58,23 +58,39 @@
                 </td>
                 <td class="table-primary">
                     {{ item.quantity }}
+
+                    <form method="post" action="addquantity">
+                        <input name="item_id" value="{{item.id}}" type="hidden">
+                        <button type="submit">Add More</button>
+                    </form>
+                    {% if item.quantity > 1 %}
+                    <form method="post" action="decreasequantity">
+                        <input name="item_id" value="{{item.id}}" type="hidden">
+                        <button type="submit">Decrease</button>
+                    </form>
+                    {% else %}
+                    
+                        <button  >Decrease</button>
+                   
+                    {% endif %}
+
                 </td>
                 <td class="table-primary">
                     {{ item.product.price }}
                 </td>
-                <td class="table-primary">
-                    <a href="#">Buy Now</a>
-                    
-                    
-                        <button  onclick="">Remove</button>
-                    
+                <td class="table-primary" style="display: flex;">
+                    <a href="#" style="margin-right: 10px;">Buy Now</a>
+                    <form method="post" action="/removefromcart">
+                        <input name="item_id" value=" {{ item.id }} " type="hidden">
+                        <button  type="submit">Remove</button>
+                    </form>
                 </td>
             </tr>
         
     {% endfor %}
     <tr>
         <td colspan="3">Total</td>
-        <td>{{total}}</td>
+        <td>{{ total }}</td>
     </tr>
     </table>
     
@@ -87,5 +103,7 @@
     <script>
         
     </script>
-
+    <style>
+        
+    </style>
 {% endblock %}

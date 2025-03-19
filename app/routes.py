@@ -127,8 +127,8 @@ def profile():
     picture_url = current_user.profile_pic
     cart_items = Cart.query.filter(Cart.user_id == current_user.id).all()
     total = 0
-    #for i in cart_items:
-     #   total = total + int(i.product.price)
+    for i in cart_items:
+        total = total + (i.product.price)*i.quantity
     
     return render_template('profile.html',username = username,email= email,picture_url = picture_url,cart_items = cart_items,total = total)
 
@@ -173,3 +173,32 @@ def unauthorized():
     return redirect("/")
 
 
+@main.route('/removefromcart',methods=['POST'])
+def removefromcart():
+    if request.method == 'POST':
+        cartid = request.form['item_id']
+        print(f"id is {cartid}")
+        todelete =  Cart.query.filter(Cart.id == cartid).first()
+        print(todelete)
+        db.session.delete(todelete)
+        db.session.commit()
+        print("delete done")
+    return redirect("/profile")
+
+@main.route('/addquantity',methods=['POST'])
+def addquantity():
+    if request.method == 'POST':
+        item_id =request.form['item_id']
+        item = Cart.query.filter(Cart.id == item_id).first()
+        item.quantity = item.quantity + 1
+        db.session.commit()
+    return redirect('/profile')
+
+@main.route('/decreasequantity',methods=['POST'])
+def decreasequantity():
+    if request.method == 'POST':
+        item_id =request.form['item_id']
+        item = Cart.query.filter(Cart.id == item_id).first()
+        item.quantity = item.quantity - 1
+        db.session.commit()
+    return redirect('/profile')
