@@ -13,6 +13,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from app.oauth import oauth
 import secrets
 
+
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 
 main = Blueprint('main',__name__)
@@ -125,18 +126,6 @@ def unauthorized():
     print("Unauthorized")
     return redirect("/")
 
-"""@main.route("/google")
-def google_login():
-    return oauth.google.authorize_redirect(url_for("main.google_auth", _external=True))
-
-@main.route("/google/auth")
-def google_auth():
-    token = oauth.google.authorize_access_token()
-    print(token)
-    user = oauth.google.parse_id_token(token)
-    print(user)
-    session["user"] = user  # Store user info in session
-    return f"Hello, {user['email']}!" """
 
 @main.route("/google")
 def google_login():
@@ -152,23 +141,7 @@ def google_login():
         nonce=nonce
     )
 
-"""@main.route("/google/auth")
-def google_auth():
-    # Get the access token from the OAuth flow
-    token = oauth.google.authorize_access_token()
 
-    # Fetch the ID token and parse it with the nonce from the session
-    try:
-        # Include the nonce while parsing the ID token
-        user = oauth.google.parse_id_token(token, nonce=session['nonce'])
-    except Exception as e:
-        return f"An error occurred: {str(e)}"
-
-    # Store user info in session (optional)
-    login_user(user,remember=True)
-
-    # Display the user info
-    return redirect('/profile')"""
 
 @main.route("/google/auth")
 def google_auth():
@@ -186,23 +159,28 @@ def google_auth():
         return f"An error occurred: {str(e)}"
 
 
-    # Step 4: Check if the user already exists in your system (database)
     existing_user = User.query.filter_by(email=user_info['email']).first()
-
+    
     if existing_user:
-        # User exists, log them in
-        login_user(existing_user, remember=True)
-        return redirect(url_for('profile.profile'))  # Redirect to your main app's dashboard
+        if not existing_user.password :
+            login_user(existing_user, remember=True)
+            return redirect(url_for('profile.profile'))
+        else:
+            flash("Login using your Username and Password","warning")
+            flash("Account already exists with associated Email","warning")
+            return redirect(url_for('main.login_html'))
     else:
-        # User doesn't exist, create a new user record
+
         new_user = User(
             email=user_info['email'],
-            username=user_info['sub'],  # Store Google user ID
+            username=user_info['sub'],
             name=user_info.get('name'),
-            profile_pic=user_info.get('picture')  # You can store their profile picture if desired
+            profile_pic=user_info.get('picture')
         )
     
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user, remember=True)
         return redirect(url_for('profile'))
+    
+

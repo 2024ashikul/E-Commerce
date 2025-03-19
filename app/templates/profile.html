@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row">
             <h2>
-                Hi {{ username }}, Welcome!!!
+                Hi {{ current_user.name }}, Welcome!!!
             </h2>
         </div>
 
@@ -69,7 +69,11 @@
                     {{ item.product.price }}
                 </td>
                 <td class="table-primary" style="display: flex;">
-                    <a href="#" style="margin-right: 10px;">Buy Now</a>
+                    <form method="post" action="/checkout">
+                        <input name="item_id" value=" {{ item.id }} " type="hidden">
+                        
+                        <button  type="submit">Buy</button>
+                    </form>
                     <form method="post" action="/removefromcart">
                         <input name="item_id" value=" {{ item.id }} " type="hidden">
                         <button  type="submit">Remove</button>

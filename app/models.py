@@ -20,6 +20,7 @@ class User(db.Model,UserMixin):
     password = db.Column(db.String)
     profile_pic = db.Column(db.String, nullable = False)
     cart_items = db.relationship("Cart",back_populates="user",lazy = True)
+    purchases = db.relationship("Purchase",back_populates = "user", lazy = True)
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key =True)
@@ -29,3 +30,13 @@ class Cart(db.Model):
 
     product = db.relationship("Product",backref = "cart_items")
     user = db.relationship("User", back_populates = "cart_items")
+
+class Purchase(db.Model):
+    id = db.Column(db.Integer , primary_key = True)
+    user_id = db.Column(db.Integer,db.ForeignKey("user.id"),nullable = False)
+    product_id = db.Column(db.Integer, db.ForeignKey("product.id"),nullable = False)
+    quantity = db.Column(db.Integer,default = 1)
+    time = db.Column(db.DateTime, default =datetime.now)
+
+    product = db.relationship("Product",backref = "purchases")
+    user = db.relationship("User", back_populates = "purchases")

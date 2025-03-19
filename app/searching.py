@@ -6,7 +6,6 @@ searching = Blueprint("searching",__name__)
 
 
 
-
 @searching.route('/search', methods=['GET', 'POST'])
 def search():
     keyword = request.form.get('keyword','')  

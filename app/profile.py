@@ -3,7 +3,9 @@ from app import db,mail
 from app.models import Product
 from app.models import User
 from app.models import Cart
+from app.models import Purchase
 from app.__init__ import login_manager
+from app.send_mail import send_mail
 import os
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -82,3 +84,25 @@ def decreasequantity():
         message = "Decreased succesfully"
         flash(message, "success")
     return redirect('/profile')
+
+
+@profiles.route('/checkout',methods=['POST'])
+def checkout():
+    if request.method == 'POST':
+        cartid = request.form['item_id']
+        print(f"id is {cartid}")
+        tocheckout =  Cart.query.filter(Cart.id == cartid).first()
+        print(tocheckout)
+        name = tocheckout.product.name
+
+        #if the payment is successful then need to add payment api
+        newpurchase = Purchase(user_id = current_user.id,product_id = tocheckout.product.id,quantity= tocheckout.quantity,)
+        db.session.add(newpurchase)
+        db.session.delete(tocheckout)
+        
+        db.session.commit()
+        flash("Product purchased successfully","success")
+        
+        print("purchase done")
+        
+    return redirect("/profile")
