@@ -10,7 +10,8 @@ from werkzeug.security import generate_password_hash,check_password_hash
 import uuid
 from flask_mail import Mail,Message
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-
+from app.oauth import oauth
+import secrets
 
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 
@@ -124,3 +125,84 @@ def unauthorized():
     print("Unauthorized")
     return redirect("/")
 
+"""@main.route("/google")
+def google_login():
+    return oauth.google.authorize_redirect(url_for("main.google_auth", _external=True))
+
+@main.route("/google/auth")
+def google_auth():
+    token = oauth.google.authorize_access_token()
+    print(token)
+    user = oauth.google.parse_id_token(token)
+    print(user)
+    session["user"] = user  # Store user info in session
+    return f"Hello, {user['email']}!" """
+
+@main.route("/google")
+def google_login():
+    ""# Generate a nonce (a random string)
+    nonce = secrets.token_urlsafe(32)
+    
+    # Store the nonce in the session
+    session['nonce'] = nonce
+    ""
+    # Pass the nonce to the Google OAuth authorization request
+    return oauth.google.authorize_redirect(
+        url_for("main.google_auth", _external=True), 
+        nonce=nonce
+    )
+
+"""@main.route("/google/auth")
+def google_auth():
+    # Get the access token from the OAuth flow
+    token = oauth.google.authorize_access_token()
+
+    # Fetch the ID token and parse it with the nonce from the session
+    try:
+        # Include the nonce while parsing the ID token
+        user = oauth.google.parse_id_token(token, nonce=session['nonce'])
+    except Exception as e:
+        return f"An error occurred: {str(e)}"
+
+    # Store user info in session (optional)
+    login_user(user,remember=True)
+
+    # Display the user info
+    return redirect('/profile')"""
+
+@main.route("/google/auth")
+def google_auth():
+    # Step 2: Retrieve the access token
+    token = oauth.google.authorize_access_token()
+
+    try:
+        # Include the nonce while parsing the ID token
+        nonce = session.get('nonce')  # Retrieve nonce from session
+        if not nonce:
+            return "Nonce is missing!", 400  # Just a safeguard to ensure the nonce exists
+        
+        user_info = oauth.google.parse_id_token(token, nonce=nonce)
+    except Exception as e:
+        return f"An error occurred: {str(e)}"
+
+
+    # Step 4: Check if the user already exists in your system (database)
+    existing_user = User.query.filter_by(email=user_info['email']).first()
+
+    if existing_user:
+        # User exists, log them in
+        login_user(existing_user, remember=True)
+        return redirect(url_for('profile.profile'))  # Redirect to your main app's dashboard
+    else:
+        # User doesn't exist, create a new user record
+        new_user = User(
+            email=user_info['email'],
+            username=user_info['sub'],  # Store Google user ID
+            name=user_info.get('name'),
+            profile_pic=user_info.get('picture')  # You can store their profile picture if desired
+        )
+    
+        db.session.add(new_user)
+        db.session.commit()
+        login_user(new_user, remember=True)
+        return redirect(url_for('profile'))

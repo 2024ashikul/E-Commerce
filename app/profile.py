@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash,check_password_hash
 import uuid
 from flask_mail import Mail,Message
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from authlib.integrations.flask_client import OAuth
 
 profiles = Blueprint("profile",__name__)
 

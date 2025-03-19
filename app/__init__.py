@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 import uuid
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_migrate import Migrate
+from app.oauth import configure_oauth
 
 db = SQLAlchemy()
 mail = Mail()
@@ -21,7 +22,8 @@ def create_app():
     mail.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app)
-    
+    configure_oauth(app)
+
     from app.routes import main
     from app.send_mail import sendmail
     from app.addproduct import addproduct
