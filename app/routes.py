@@ -114,23 +114,6 @@ def login():
     except:
         return "some error caused"
     
-@main.route('/profile_html')
-def profile_html():
-    return render_template('profile.html')
-
-
-@main.route('/profile')
-@login_required
-def profile():
-    username = current_user.username
-    email = current_user.email
-    picture_url = current_user.profile_pic
-    cart_items = Cart.query.filter(Cart.user_id == current_user.id).all()
-    total = 0
-    for i in cart_items:
-        total = total + (i.product.price)*i.quantity
-    
-    return render_template('profile.html',username = username,email= email,picture_url = picture_url,cart_items = cart_items,total = total)
 
 
 
@@ -153,52 +136,9 @@ def logout():
 
 
 
-@main.route('/products/addtocart',methods=['GET','POST'])
-@login_required
-def addtocart():
-    if request.method  == 'POST':
-        product_id = request.form['product_id']
-        print(product_id)
-        product = Product.query.filter(Product.id == product_id).first()
-        cart_item = Cart(user_id = current_user.id ,product_id = product.id, quantity = 1)
-        #cart_item = Cart(user_id = current_user.id,product_id = product_id,product = product, user = current_user )
-        db.session.add(cart_item)
-        db.session.commit()
-        flash("Success! Item added to the cart.")
-    return redirect(url_for('main.profile'))
 
 @login_manager.unauthorized_handler
 def unauthorized():
     print("Unauthorized")
     return redirect("/")
 
-
-@main.route('/removefromcart',methods=['POST'])
-def removefromcart():
-    if request.method == 'POST':
-        cartid = request.form['item_id']
-        print(f"id is {cartid}")
-        todelete =  Cart.query.filter(Cart.id == cartid).first()
-        print(todelete)
-        db.session.delete(todelete)
-        db.session.commit()
-        print("delete done")
-    return redirect("/profile")
-
-@main.route('/addquantity',methods=['POST'])
-def addquantity():
-    if request.method == 'POST':
-        item_id =request.form['item_id']
-        item = Cart.query.filter(Cart.id == item_id).first()
-        item.quantity = item.quantity + 1
-        db.session.commit()
-    return redirect('/profile')
-
-@main.route('/decreasequantity',methods=['POST'])
-def decreasequantity():
-    if request.method == 'POST':
-        item_id =request.form['item_id']
-        item = Cart.query.filter(Cart.id == item_id).first()
-        item.quantity = item.quantity - 1
-        db.session.commit()
-    return redirect('/profile')
