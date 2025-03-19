@@ -18,8 +18,8 @@ def send_mail_all():
     mail.send(msg)
     return "email sent"
 
-def send_mail():
-    msg = Message('Hello i am ashikul', sender = '2024ashikul@gmail.com',recipients = ['2020ashikul@gmail.com'])
-    msg.body = 'This is a test email from Flask-Mail.'
+def send_mail(recipients,message):
+    msg = Message('Hello i am ashikul', sender = '2024ashikul@gmail.com',recipients = recipients)
+    msg.body = message
     mail.send(msg)
     return "Email sent!"

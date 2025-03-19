@@ -99,10 +99,18 @@ def checkout():
         newpurchase = Purchase(user_id = current_user.id,product_id = tocheckout.product.id,quantity= tocheckout.quantity,)
         db.session.add(newpurchase)
         db.session.delete(tocheckout)
-        
         db.session.commit()
         flash("Product purchased successfully","success")
-        
+        try :
+            recipient =  list()
+            recipient.append(current_user.email)
+            print(current_user.email)
+            print(recipient)
+            message = "Your product purchased succesfully"
+            send_mail(recipient,message)
+        except:
+            print("Email failed to send")
         print("purchase done")
+        
         
     return redirect("/profile")

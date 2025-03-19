@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    
+    <style>
+        td{
+            border: 1px solid black;
+        }
+    </style>
+
+
+    
+
+    <h2>
+        Purchases
+    </h2>
+
+    <table class="table">
+        <tr class="table-primary">
+            <td class="table-primary ">
+                Product Name
+            </td>
+            <td class="table-primary">
+                Quantity
+            </td>
+            <td class="table-primary">
+                Price
+            </td>
+            <td class="table-primary">
+                Action
+            </td>
+        </tr>
+        {% for purchase in purchases %}
+            <tr class="table-primary">
+                <td class="table-primary ">
+                    {{ purchase.product.id }}
+                </td>
+                <td class="table-primary">
+                    {{ purchase.product.name }}
+
+
+
+                </td>
+                <td class="table-primary">
+                    {{ purchase.user.name }}
+                </td>
+                <td class="table-primary" style="display: flex;">
+                    {{ purchase.user.name }}
+                </td>
+            </tr>
+        
+    {% endfor %}
+    
+    </table>
+    
+
+
+    <form action="/logout">
+    <button type="submit">Logout</button>
+    
+    </form>
+    <script>
+        
+    </script>
+    <style>
+        
+    </style>
+{% endblock %}
