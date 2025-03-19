@@ -6,6 +6,8 @@ def configure_oauth(app):
     oauth.init_app(app)
 
     oauth.register(
+        client_id=os.getenv('client_id'),
+        client_secret=os.getenv('client_secret'),
         name="google",
         authorize_url="https://accounts.google.com/o/oauth2/auth",
         access_token_url="https://oauth2.googleapis.com/token",
