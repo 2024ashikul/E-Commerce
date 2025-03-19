@@ -8,7 +8,8 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///db.db'
     SECRET_KEY= os.getenv('SECRET_KEY')
     UPLOAD_FOLDER ='uploads'
-
+    client_id=os.getenv('client_id')
+    client_secret=os.getenv('client_secret')
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     
     MAIL_SERVER='smtp.gmail.com'
@@ -17,5 +18,5 @@ class Config:
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
-    
+
     
