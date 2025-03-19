@@ -154,7 +154,29 @@ def login():
         flash("Incorrect password or username","warning")
         flash("Some error caused")
         return redirect('/login_html')
-    
+
+@main.route('/api/login',methods = ['GET','POST'])
+def logina():
+    print("came here")
+    data = request.get_json(force= True)
+    username = data.get('username')
+    password = data.get('password')
+    print(username)
+    try:
+        user = User.query.filter(User.username == username).first()
+        
+        if user and check_password_hash(user.password,password):
+            login_user(user,remember =True)
+            flash(f"Hi, {user.name.upper()}! Welcome Back!","success")
+            return jsonify({'message':'logged in succesfully','redirect_url':'/profile'}),201
+        else:
+            flash("Incorrect password or username","warning")
+            return jsonify({'message':'Incorrect username or password'}),400
+    except:
+        flash("Incorrect password or username","warning")
+        flash("Some error caused")
+        return redirect('/login_html')
+
 
 @main.route('/logout')
 def logout():

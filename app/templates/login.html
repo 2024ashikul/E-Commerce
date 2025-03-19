@@ -5,13 +5,13 @@
 
 
     <div class="">
-        <form action="login" method="post">
+        <form action="api/login" method="post" id="form">
         <div class="form-floating mb-3" action ="login" method="post">
-            <input type="text" class="form-control" id="floatingInput" placeholder="username" name="username">
+            <input type="text" class="form-control" id="username" placeholder="username" name="username" i>
             <label for="floatingInput">Username </label>
           </div>
           <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+            <input type="password" class="form-control" id="password" placeholder="Password" name="password">
             <label for="floatingPassword">Password</label>
           </div>
           <div class="form-floating">
@@ -21,4 +21,27 @@
         </form>
         <a href="/google" >Login with google</a>
     </div>
+    <script>
+      document.getElementById("form").addEventListener("submit",function(event){
+        event.preventDefault();
+        const data = {
+          username : document.getElementById("username").value,
+          password : document.getElementById("password").value
+        }
+        fetch("http://127.0.0.1:5000/api/login", {
+          method : 'POST',
+          headers : {
+            'Content-Type': 'application/json'
+          },
+          body : JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log("success",data);
+          window.location.href = data.redirect_url;
+        })
+        .catch(error => console.error('Error:', error));
+
+      });
+    </script>
 {% endblock %}

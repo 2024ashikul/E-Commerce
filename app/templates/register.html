@@ -38,13 +38,13 @@
             event.preventDefault();
         
             const form = document.getElementById("form");
-            const formData = new FormData(form);  // ✅ Automatically collects all form data
+            const formData = new FormData(form);
         
             fetch('http://127.0.0.1:5000/api/register', {
                 method: 'POST',
-                body: formData  // ✅ No need to set headers for FormData
+                body: formData
             })
-            .then(response => response.json())  // ✅ Parse response as JSON
+            .then(response => response.json())
             .then(data => {
                 console.log('Success:', data);
                 //alert("User registered successfully! Redirecting to login");
