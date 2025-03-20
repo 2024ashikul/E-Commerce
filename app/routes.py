@@ -47,7 +47,7 @@ def register_html():
 def home():
     
     try:
-        items = Product.query.order_by(Product.time.desc()).limit(12).all()
+        items = Product.query.order_by(Product.time.desc()).limit(8).all()
         print(items)
         print("succesfull")
         return render_template('/home.html', items= items )
