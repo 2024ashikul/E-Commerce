@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+
+<h2>Chat with us</h2>
+    
+    
+    <div id="chat" style="display: block;">
+        <h3>Chat Messages</h3>
+        <div id="messages" style="border: 1px solid black; height: 200px; overflow-y: scroll; padding: 5px;"></div>
+        
+        <input type="text" id="message" placeholder="Type a message" >
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    
+
+{% endblock %}
