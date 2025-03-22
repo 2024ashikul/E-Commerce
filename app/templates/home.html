@@ -88,6 +88,54 @@
         </div>
         
 </div>
+<div class="row">
+    <div class="container mt-4" >
+
+    <h3>Top Products</h3>
+    <div class="d-flex flex-row mb-3" id="check" >
+
+    {% for item in items %}
+    
+
+        <div class="card" width = "">
+        
+                <img id="image-recent" src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
+                <div class="card-body">
+                    <h5 class="card-title" > {{ item.name }}</h5>
+                    <p class="card-text"> {{ item.description }}</p>
+                    <a href="#" class="btn btn-primary"> {{item.price}}</a>
+                </div>
+            </div>
+        
+    {% endfor %}
+    </div>
+    </div>
+    
+</div>
+<div class="row">
+    <div class="container mt-4" >
+
+    <h3>Top deals</h3>
+    <div class="d-flex flex-row mb-3" id="check" >
+
+    {% for item in items %}
+    
+
+        <div class="card" width = "">
+        
+                <img id="image-recent" src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
+                <div class="card-body">
+                    <h5 class="card-title" > {{ item.name }}</h5>
+                    <p class="card-text"> {{ item.description }}</p>
+                    <a href="#" class="btn btn-primary"> {{item.price}}</a>
+                </div>
+            </div>
+        
+    {% endfor %}
+    </div>
+    </div>
+    
+</div>
 
 <div class="row">
     <h1>ADMIN THINGS</h1>
