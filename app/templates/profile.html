@@ -21,10 +21,14 @@
     </div>
     
 
-    <h2>
+    <h2 class="">
         Your Cart
     </h2>
 
+    {% if not cart_items %}
+
+    <p class="lead">You have nothing in your cart</p>
+    {% else %}
     <table class="table">
         <tr class="table-primary">
             <td class="table-primary ">
@@ -40,6 +44,9 @@
                 Action
             </td>
         </tr>
+        
+
+
         {% for item in cart_items %}
             <tr class="table-primary">
                 <td class="table-primary ">
@@ -88,7 +95,62 @@
     </tr>
     </table>
     
+    {% endif  %}
 
+
+    <h2>
+        Your Purchase History
+    </h2>
+
+    {% if not purchases %}
+
+    <p>You have no purchase history.</p>
+    {% else %}
+    <table class="table">
+        <tr class="table-primary">
+            <td class="table-primary ">
+                Product Name
+            </td>
+            <td class="table-primary">
+                Quantity
+            </td>
+            <td class="table-primary">
+                Total Price
+            </td>
+            <td class="table-primary">
+                Date
+            </td>
+            <td class="table-primary">
+                Time
+            </td>
+        </tr>
+        
+
+
+        {% for item in purchases %}
+            <tr class="table-primary">
+                <td class="table-primary ">
+                    {{ item.product.name }}
+                </td>
+                
+                <td class="table-primary">
+                    {{ item.quantity }}
+                </td>
+                <td class="table-primary">
+                    {{ item.quantity * item.product.price}}
+                </td>
+                <td class="table-primary">
+                    {{ item.time.date() }} 
+                </td>
+                <td class="table-primary">
+                    {{ item.time.date() }} 
+                </td>
+            </tr>
+        
+    {% endfor %}
+    
+    
+    {% endif  %}
 
     <form action="/logout">
     <button type="submit">Logout</button>

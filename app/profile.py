@@ -32,7 +32,10 @@ def profile():
     for i in cart_items:
         total = total + (i.product.price)*i.quantity
     
-    return render_template('profile.html',username = username,email= email,picture_url = picture_url,cart_items = cart_items,total = total)
+    purchases = Purchase.query.filter(Purchase.user_id == current_user.id).all()
+
+
+    return render_template('profile.html',username = username,email= email,picture_url = picture_url,cart_items = cart_items,total = total,purchases=purchases)
 
 
 @profiles.route('/products/addtocart',methods=['GET','POST'])
