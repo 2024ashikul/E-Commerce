@@ -49,7 +49,7 @@ def addtocart():
         name = product.name
         db.session.add(cart_item)
         db.session.commit()
-        flash(f"{name} added to the cart","success")
+        flash(f"{name} added to the cartss","success")
     return redirect(url_for('profile.profile'))
 
 @profiles.route('/removefromcart',methods=['POST'])
