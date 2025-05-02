@@ -8,7 +8,7 @@ adPurchases = Blueprint("admin_purchase",__name__)
 @adPurchases.route('/admin_purchase')
 def admin_purchase():
     purchases = Purchase.query.order_by(Purchase.time.desc()).all()
-
+    
     return render_template("admin_purchase.html",purchases=purchases)
 
     

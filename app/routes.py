@@ -45,15 +45,14 @@ def register_html():
 
 @main.route('/')
 def home():
-    
     try:
         items = Product.query.order_by(Product.time.desc()).limit(8).all()
         print(items)
         print("succesfull")
-        return render_template('/home.html', items= items )
+        return render_template('home.html', items= items )
     except :
         print("an error occured")
-    return render_template('/home.html', items= items )
+    return render_template('home.html', items= items )
 
 @main.route('/login_html')
 def login_html():

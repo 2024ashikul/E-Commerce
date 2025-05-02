@@ -115,5 +115,4 @@ def checkout():
             print("Email failed to send")
         print("purchase done")
         
-        
     return redirect("/profile")
