@@ -1,0 +1,109 @@
+{% extends 'adminlayout.html' %}
+{% block body %}
+<div class="container mt-4">
+  <h2 class="mb-4">Product Details</h2>
+
+  <!-- General Information -->
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">General Information</div>
+    <div class="card-body">
+      <p><strong>Product Name:</strong> {{ product.name }}</p>
+      <p><strong>Description:</strong> {{ product.description }}</p>
+      <p><strong>Price:</strong> ${{ product.price }}</p>
+      <p><strong>Stock:</strong> {{ product.stock }}</p>
+      <p><strong>Category:</strong> {{ product.category }}</p>
+      
+    </div>
+  </div>
+
+  <!-- Hardware -->
+  <div class="card mb-4">
+    <div class="card-header bg-secondary text-white">Hardware</div>
+    <div class="card-body">
+      <p><strong>Chipset:</strong> {{ product.chipset }}</p>
+      <p><strong>GPU:</strong> {{ product.gpu }}</p>
+      <p><strong>RAM:</strong> {{ product.ram }}</p>
+      <p><strong>Storage:</strong> {{ product.storage }}</p>
+      <p><strong>Storage Type:</strong> {{ product.storage_type }}</p>
+      <p><strong>Build Material:</strong> {{ product.build_material }}</p>
+      <p><strong>Weight:</strong> {{ product.weight }}</p>
+      <p><strong>Dimensions:</strong> {{ product.dimensions }}</p>
+    </div>
+  </div>
+
+  <!-- Software -->
+  <div class="card mb-4">
+    <div class="card-header bg-success text-white">Software</div>
+    <div class="card-body">
+      <p><strong>Operating System:</strong> {{ product.operating_system }}</p>
+      <p><strong>OS Version:</strong> {{ product.os_version }}</p>
+      <p><strong>Extra Features:</strong> {{ product.extra_features }}</p>
+      <p><strong>Promised Updates:</strong> {{ product.promised_updates }}</p>
+    </div>
+  </div>
+
+  <!-- Display -->
+  <div class="card mb-4">
+    <div class="card-header bg-success text-white">Display</div>
+    <div class="card-body">
+      <p><strong>Screen Size:</strong> {{ product.screen_size }}</p>
+      <p><strong>Screen Type:</strong> {{ product.screen_type }}</p>
+      <p><strong>Resolution:</strong> {{ product.resolution }}</p>
+      <p><strong>Refresh Rate:</strong> {{ product.refresh_rate }}</p>
+      <p><strong>Touchscreen:</strong> {{ product.touchscreen }}</p>
+    </div>
+  </div>
+
+  <!-- Battery -->
+  <div class="card mb-4">
+    <div class="card-header bg-success text-white">Battery</div>
+    <div class="card-body">
+      <p><strong>Battery Capacity:</strong> {{ product.battery_capacity }}</p>
+      <p><strong>Battery Type:</strong> {{ product.battery_type }}</p>
+      <p><strong>Battery Life:</strong> {{ product.battery_life }}</p>
+      <p><strong>Charging Speed:</strong> {{ product.charging_speed }}</p>
+    </div>
+  </div>
+
+  <!-- Camera -->
+  <div class="card mb-4">
+    <div class="card-header bg-info text-white">Camera</div>
+    <div class="card-body">
+      <p><strong>Rear Camera:</strong> {{ product.rear_camera }}</p>
+      <p><strong>Front Camera:</strong> {{ product.front_camera }}</p>
+      <p><strong>Video Recording:</strong> {{ product.video_recording }}</p>
+      <p><strong>Sensors:</strong> {{ product.sensors }}</p>
+      <p><strong>Extra:</strong> {{ product.extra }}</p>
+    </div>
+  </div>
+
+  <!-- Connectivity -->
+  <div class="card mb-4">
+    <div class="card-header bg-dark text-white">Connectivity</div>
+    <div class="card-body">
+      <p><strong>Charging Port Type:</strong> {{ product.charging_port_type }}</p>
+      <p><strong>Headphone Jack:</strong> {{ product.headphone_jack }}</p>
+      <p><strong>HDMI Ports:</strong> {{ product.hdmi_ports }}</p>
+      <p><strong>Wi-Fi Specs:</strong> {{ product.wifi_specs }}</p>
+      <p><strong>Bluetooth Specs:</strong> {{ product.bluetooth_specs }}</p>
+      <p><strong>Cellular Specs:</strong> {{ product.cellular_specs }}</p>
+      <p><strong>SIM Type:</strong> {{ product.sim_type }}</p>
+      <p><strong>NFC:</strong> {{ product.nfc }}</p>
+      <p><strong>GPS:</strong> {{ product.gps }}</p>
+    </div>
+  </div>
+
+  <!-- Extra Info -->
+  <div class="card mb-4">
+    <div class="card-header bg-warning text-dark">Extra Info</div>
+    <div class="card-body">
+      <p><strong>Biometrics:</strong> {{ product.biometrics }}</p>
+      <p><strong>Stylus Support:</strong> {{ product.stylus_support }}</p>
+      <p><strong>Keyboard:</strong> {{ product.keyboard }}</p>
+      <p><strong>Water Resistant:</strong> {{ product.water_resistant }}</p>
+      <p><strong>Speaker:</strong> {{ product.speaker }}</p>
+      <p><strong>Microphone:</strong> {{ product.microphone }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

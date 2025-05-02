@@ -246,3 +246,16 @@ def google_auth():
         return redirect(url_for('profile'))
     
 
+
+@main.route('/product___')
+def product():
+    product = Product.query.order_by(Product.id == 1).first()
+    return render_template('individual_product.html',product=product)
+
+
+
+
+@main.route('/product/<id>')
+def productes(id):
+    product = Product.query.order_by(Product.id == id).first()
+    return render_template('/individual_product.html',product= product)

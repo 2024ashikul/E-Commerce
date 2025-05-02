@@ -1,142 +1,339 @@
-{% extends 'layout.html' %}
+{% extends 'adminlayout.html' %}
 {% block body %}
 <form action="/add_product" method="post" enctype="multipart/form-data">
+  <div class="container mt-4">
+    <!-- General Information Section -->
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white">General Information</div>
+      <div class="card-body">
+        <div class="mb-3 row">
+          <label for="name" class="col-sm-2 col-form-label">Product Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="name" id="name" required>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="description" class="col-sm-2 col-form-label">Description</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" name="description" id="description" rows="3" required></textarea>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="price" class="col-sm-2 col-form-label">Price</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control" name="price" id="price" required>
+          </div>
+          <label for="stock" class="col-sm-2 col-form-label">Stock</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control" name="stock" id="stock" required>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label class="col-sm-2 col-form-label">Category</label>
+          <div class="col-sm-10">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="category" id="phone" value="phone" required>
+              <label class="form-check-label" for="phone">Phone</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="category" id="laptop" value="laptop">
+              <label class="form-check-label" for="laptop">Laptop</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="category" id="tablet" value="tablet">
+              <label class="form-check-label" for="tablet">Tablet</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="category" id="accessories" value="accessories">
+              <label class="form-check-label" for="accessories">Accessories</label>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="file" class="col-sm-2 col-form-label">Image</label>
+          <div class="col-sm-10">
+            <input type="file" class="form-control" name="file" id="file" required>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hardware Section -->
+    <div class="card mb-4">
+      <div class="card-header bg-secondary text-white">Hardware</div>
+      <div class="card-body">
+        <div class="mb-3 row">
+          <label for="chipset" class="col-sm-2 col-form-label">Chipset</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="chipset" id="chipset">
+          </div>
+          <label for="gpu" class="col-sm-2 col-form-label">GPU</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="gpu" id="gpu">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="ram" class="col-sm-2 col-form-label">RAM</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="ram" id="ram">
+          </div>
+          <label for="storage" class="col-sm-2 col-form-label">Storage</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="storage" id="storage">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="storage_type" class="col-sm-2 col-form-label">Storage Type</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="storage_type" id="storage_type">
+          </div>
+          <label for="build_material" class="col-sm-2 col-form-label">Build Material</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="build_material" id="build_material">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="weight" class="col-sm-2 col-form-label">Weight</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="weight" id="weight">
+          </div>
+          <label for="dimensions" class="col-sm-2 col-form-label">Dimensions</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="dimensions" id="dimensions">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="weight" class="col-sm-2 col-form-label">Weight</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="weight" id="weight">
+          </div>
+          <label for="dimensions" class="col-sm-2 col-form-label">Dimensions</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="dimensions" id="dimensions">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Software Section -->
+    <div class="card mb-4">
+      <div class="card-header bg-success text-white">Software</div>
+      <div class="card-body">
+        <div class="mb-3 row">
+          <label for="operating_system" class="col-sm-2 col-form-label">Operating System</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="operating_system" id="operating_system">
+          </div>
+          <label for="os_version" class="col-sm-2 col-form-label">OS Version</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="os_version" id="os_version">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="extra_features" class="col-sm-2 col-form-label">Extra Features</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="extra_features" id="extra_features">
+          </div>
+          <label for="promised_updates" class="col-sm-2 col-form-label">Promised Updates</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="promised_updates" id="promised_updates">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--   Display section -->
 
 
-    <table align="center">
-        <tr>
-            <td>
-                <label for="name">Product Name</label>
-            </td>
-            <td>
-                <input type="text" name="name">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="description">Product Description</label>
-            </td>
-            <td>
-                <input type="text" name="description">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="price"> Price</label>
-            </td>
-            <td>
-                <input type="text" name="price">
-            </td>
-        </tr>
-        <tr>
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">Display</div>
+        <div class="card-body">
+          <div class="mb-3 row">
+            <label for="screen_size" class="col-sm-2 col-form-label">Screen size</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="screen_size" id="screen_size">
+            </div>
+            <label for="screen_type" class="col-sm-2 col-form-label">Screen Type</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="screen_type" id="screen_type">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="resolution" class="col-sm-2 col-form-label">Resolution</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="resolution" id="resolution">
+            </div>
+            <label for="refresh_rate" class="col-sm-2 col-form-label">Refresh Rate</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="refresh_rate" id="refresh_rate">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="touchscreen" class="col-sm-2 col-form-label">TouchScreen</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="touchscreen" id="touchscreen">
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      
+    <!--Battery-->
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">Battery</div>
+        <div class="card-body">
+          <div class="mb-3 row">
+            <label for="battery_capacity" class="col-sm-2 col-form-label">Battery Capacity</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="battery_capacity" id="battery_capacity">
+            </div>
+            <label for="battery_type" class="col-sm-2 col-form-label">Battery Type</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="battery_type" id="battery_type">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="battery_life" class="col-sm-2 col-form-label">Battry Life</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="battery_life" id="battery_life">
+            </div>
+            <label for="charging_speed" class="col-sm-2 col-form-label">Charging speed</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" name="charging_speed" id="charging_speed">
+            </div>
+          </div>
+        </div>
+      </div>
+    
+<!-- Camera Section -->
+<div class="card mb-4">
+    <div class="card-header bg-info text-white">Camera</div>
+    <div class="card-body">
+      <div class="mb-3 row">
+        <label for="rear_camera" class="col-sm-2 col-form-label">Rear Camera</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="rear_camera" id="rear_camera">
+        </div>
+        <label for="front_camera" class="col-sm-2 col-form-label">Front Camera</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="front_camera" id="front_camera">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="video_recording" class="col-sm-2 col-form-label">Video Recording</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="video_recording" id="video_recording">
+        </div>
+        <label for="sensors" class="col-sm-2 col-form-label">Sensors</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="sensors" id="sensors">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="extra" class="col-sm-2 col-form-label">Extra</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="extra" id="extra">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Connectivity Section -->
+<div class="card mb-4">
+    <div class="card-header bg-dark text-white">Connectivity</div>
+    <div class="card-body">
+      <div class="mb-3 row">
+        <label for="charging_port_type" class="col-sm-2 col-form-label">Charging Port Type</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="charging_port_type" id="charging_port_type">
+        </div>
+        <label for="headphone_jack" class="col-sm-2 col-form-label">Headphone Jack</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="headphone_jack" id="headphone_jack">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="hdmi_ports" class="col-sm-2 col-form-label">HDMI Ports</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="hdmi_ports" id="hdmi_ports">
+        </div>
+        <label for="wifi_specs" class="col-sm-2 col-form-label">Wi-Fi Specs</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="wifi_specs" id="wifi_specs">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="bluetooth_specs" class="col-sm-2 col-form-label">Bluetooth Specs</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="bluetooth_specs" id="bluetooth_specs">
+        </div>
+        <label for="cellular_specs" class="col-sm-2 col-form-label">Cellular Specs</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="cellular_specs" id="cellular_specs">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="sim_type" class="col-sm-2 col-form-label">SIM Type</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="sim_type" id="sim_type">
+        </div>
+        <label for="nfc" class="col-sm-2 col-form-label">NFC</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="nfc" id="nfc">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="gps" class="col-sm-2 col-form-label">GPS</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" name="gps" id="gps">
+        </div>
+      </div>
+    </div>
+  </div>
 
-            <td>
-                <label for="stock">Stock</label>
-            </td>
-            <td>
-                <input type="text" name="stock">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="category">Category</label>
-            </td>
-            <td>
-                <input type="radio" name="category" value="phone"> Phone
-                <input type="radio" name="category" value="laptop"> Laptop
-                <input type="radio" name="category" value="tablet">Tablet
-                <input type="radio" name="category" value="accecories">Accecories
-            </td>
-        </tr>
-
-        <tr>
-
-            <td>
-                <label for="stock">Dimensions</label>
-            </td>
-            <td>
-                <input type="text" name="dimensions">
-            </td>
-        </tr>
-
-        <tr>
-
-            <td>
-                <label for="stock">Weight</label>
-            </td>
-            <td>
-                <input type="text" name="weight">
-            </td>
-        </tr>
-        <tr>
-
-            <td>
-                <label for="stock">Build Material</label>
-            </td>
-            <td>
-                <input type="text" name="build_material">
-            </td>
-        </tr>
-        <tr>
-
-            <td>
-                <label for="stock">Chipset</label>
-            </td>
-            <td>
-                <input type="text" name="chipset">
-            </td>
-        </tr>
-        <tr>
-
-            <td>
-                <label for="stock">GPU</label>
-            </td>
-            <td>
-                <input type="text" name="gpu">
-            </td>
-        </tr>
-
-        <tr>
-
-            <td>
-                <label for="ram">RAM</label>
-            </td>
-            <td>
-                <input type="text" name="ram">
-            </td>
-        </tr>
-        <tr>
-
-            <td>
-                <label for="storage">Storage</label>
-            </td>
-            <td>
-                <input type="text" name="storage">
-            </td>
-        </tr>
-        <tr>
-
-            <td>
-                <label for="stock">Storage Type</label>
-            </td>
-            <td>
-                <input type="text" name="storage_type">
-            </td>
-        </tr>
-
-
-
-        <tr>
-            <td>
-                <label for="file">image</label>
-            </td>
-            <td>
-                <input type="file" name="file">
-            </td>
-        </tr>
-        <tr><td><input type="submit"></td></tr>
-    </table>
-
+  
+  <!-- Extra Info Section -->
+<div class="card mb-4">
+    <div class="card-header bg-warning text-dark">Extra Info</div>
+    <div class="card-body">
+      <div class="mb-3 row">
+        <label for="biometrics" class="col-sm-2 col-form-label">Biometrics</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="biometrics" id="biometrics">
+        </div>
+        <label for="stylus_support" class="col-sm-2 col-form-label">Stylus Support</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="stylus_support" id="stylus_support">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="keyboard" class="col-sm-2 col-form-label">Keyboard</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="keyboard" id="keyboard">
+        </div>
+        <label for="water_resistant" class="col-sm-2 col-form-label">Water Resistant</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="water_resistant" id="water_resistant">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="speaker" class="col-sm-2 col-form-label">Speaker</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="speaker" id="speaker">
+        </div>
+        <label for="microphone" class="col-sm-2 col-form-label">Microphone</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" name="microphone" id="microphone">
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    
+    <!-- Submit Button -->
+    <div class="text-center mb-4">
+      <button type="submit" class="btn btn-primary">Add Product</button>
+    </div>
+  </div>
 </form>
-
 {% endblock %}
