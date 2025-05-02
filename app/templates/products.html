@@ -32,7 +32,9 @@
             <div class="card-body">
                 <h5 class="card-title"> {{ item.name }}</h5>
                 <p class="card-text"> {{ item.price }}</p>
+                
                 <form action="addtocart" method="post">
+                    <a href="{{url_for('main.product', id =item.id)}}" class="btn btn-primary">Check Details</a>
                     <button type="submit" class="btn btn-primary">Add to cart</button>
                     <input type="hidden" value="{{item.id}}" name="product_id">
                 </form>

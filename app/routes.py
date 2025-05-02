@@ -38,6 +38,7 @@ def products(category):
         products = Product.query.order_by(Product.id).filter_by(category = category)
     return render_template('/products.html',products= products)
 
+
 @main.route('/register_html',methods= ['GET','POST'])
 def register_html():
     return render_template('/register.html')
@@ -54,11 +55,14 @@ def home():
         print("an error occured")
     return render_template('home.html', items= items )
 
+
 @main.route('/login_html')
 def login_html():
     if current_user.is_authenticated:
         return redirect("profile")
     return render_template('/login.html')
+
+
 
 @main.route('/register', methods =['GET','POST'])
 def register():
