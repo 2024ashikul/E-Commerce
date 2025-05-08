@@ -49,11 +49,11 @@
                 <td class="table-primary ">
                     {{ item.product.name }}
                 </td>
-                <td class="table-primary">
+                <td class="table-primary quantity_value{{item.id}}">
                     {{ item.quantity }}
 
-                    <form method="post" action="addquantity">
-                        <input name="item_id" value="{{item.id}}" type="hidden">
+                    <form method="post" action="/api/addquantity" class="quantity">
+                        <input name="item_id" value="{{item.id}}" type="hidden" class="quantity_value">
                         <button type="submit">Add More</button>
 
                     </form>
@@ -209,6 +209,32 @@
             .catch(error => console.error('Error : ',error));
             
         });
+    })
+
+    document.querySelectorAll('.quantity').forEach(form => {
+        form.addEventListener("submit",function(event){
+            event.preventDefault();
+
+            const item_id= this.querySelector(".quantity_value").value;
+            console.log(item_id);
+            fetch("/api/addquantity",{
+                method :'POST',
+                headers:{
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify({item_id : item_id})
+            })
+            .then(response => response.json())
+            .then (data=>{
+                console.log("success",data);
+                const temp = document.getElementById("quantity_value"+item_id);
+                console.log(temp);
+                temp.textContent=data.quantity;
+            })
+            .catch(error => console.error('Error : ',error));
+    
+        });
+
     })
     
     

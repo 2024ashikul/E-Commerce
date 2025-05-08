@@ -52,6 +52,21 @@ def addtocart():
         flash(f"{name} added to the cartss","success")
     return redirect(url_for('profile.profile'))
 
+
+@profiles.route('/api/products/addtocart',methods=['GET','POST'])
+@login_required
+def addtocartapi():
+    if request.method  == 'POST':
+        product_id = request.form['product_id']
+        print(product_id)
+        product = Product.query.filter(Product.id == product_id).first()
+        cart_item = Cart(user_id = current_user.id ,product_id = product.id, quantity = 1)
+        name = product.name
+        db.session.add(cart_item)
+        db.session.commit()
+        flash(f"{name} added to the cartss","success")
+    return redirect(url_for('profile.profile'))
+
 @profiles.route('/removefromcart',methods=['POST'])
 def removefromcart():
     if request.method == 'POST':
@@ -97,6 +112,20 @@ def addquantity():
         db.session.commit()
         flash("Increased Cart Item","success")
     return redirect('/profile')
+
+@profiles.route('/api/addquantity',methods=['POST'])
+def addquantityapi():
+    if request.method == 'POST':
+        data = request.get_json(force = True)
+        item_id = data.get('item_id')
+        try:
+            item = Cart.query.filter(Cart.id == item_id).first()
+            item.quantity = item.quantity + 1
+            db.session.commit()
+            flash("Increased Cart Item","success")
+            return jsonify({'message': 'item added successfully','quantity' : item.quantity}),201
+        except:
+            return redirect('/profile')
 
 @profiles.route('/decreasequantity',methods=['POST'])
 def decreasequantity():
