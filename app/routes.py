@@ -263,3 +263,4 @@ def product():
 def productes(id):
     product = Product.query.order_by(Product.id == id).first()
     return render_template('/individual_product.html',product= product)
+

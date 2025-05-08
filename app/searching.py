@@ -12,7 +12,6 @@ def search():
     if not keyword:
         return redirect(url_for('main.home')) 
 
-    
     result = Product.query.filter(Product.description.ilike(f"%{keyword}%")).all()
     count = len(result)
     

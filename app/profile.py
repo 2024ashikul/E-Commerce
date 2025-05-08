@@ -29,8 +29,8 @@ def profile():
     picture_url = current_user.profile_pic
     cart_items = Cart.query.filter(Cart.user_id == current_user.id).all()
     total = 0
-    for i in cart_items:
-        total = total + (i.product.price)*i.quantity
+    #for i in cart_items:
+        #total = total + (i.product.price)*i.quantity
     
     purchases = Purchase.query.filter(Purchase.user_id == current_user.id).all()
 
@@ -66,6 +66,27 @@ def removefromcart():
         print("delete done")
         
     return redirect("/profile")
+
+
+@profiles.route('/api/remove_from_cart',methods =['POST'])
+def removefromcart2():
+    print("came to remove")
+    data = request.get_json(force = True)
+    item_id = data.get('item_id')
+    print(item_id)
+    try:
+        todelete =  Cart.query.filter(Cart.id == item_id).first()
+        name = todelete.product.name
+        db.session.delete(todelete)
+        db.session.commit()
+        flash(f"Removed {name} from cart","success")
+        print("delete done")
+        return jsonify({'message':'item removed successfulyy','redirect_url':'/profile'}),201
+    except: 
+        return jsonify({'message':'some error caused'}),400
+
+
+
 
 @profiles.route('/addquantity',methods=['POST'])
 def addquantity():

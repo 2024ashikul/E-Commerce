@@ -6,13 +6,8 @@
     <style>
         td{
             border: 1px solid green;
-            
         }
-        
-
     </style>
-
-
 
     <div class="container">
         <div class="row">
@@ -49,9 +44,8 @@
         </tr>
         
 
-
         {% for item in cart_items %}
-            <tr class="table-primary">
+            <tr class="table-primary" id="cart-item-{{item.id}}">
                 <td class="table-primary ">
                     {{ item.product.name }}
                 </td>
@@ -80,13 +74,13 @@
                 </td>
                 <td class="table-primary" style="display: flex;">
                     <form method="post" action="/checkout">
-                        <input name="item_id" value=" {{ item.id }} " type="hidden">
+                        <input name="item_id" value="{{ item.id }}" type="hidden">
                         
                         <button  type="submit">Buy</button>
                     </form>
-                    <form method="post" action="/removefromcart">
-                        <input name="item_id" value=" {{ item.id }} " type="hidden">
-                        <button  type="submit">Remove</button>
+                    <form method="post" action="/api/remove_from_cart" class="removefromcart">
+                        <input name="item_id" value="{{ item.id }}" type="hidden" class="item_id">
+                        <button  type="submit" >Remove</button>
                     </form>
                 </td>
             </tr>
@@ -129,7 +123,6 @@
             </td>
         </tr>
         
-
 
         {% for item in purchases %}
             <tr class="table-primary">
@@ -189,5 +182,36 @@
 
 </div>
 
+<script>
+    document.querySelectorAll(".removefromcart").forEach(form =>{
+        form.addEventListener("submit",function(event){
+            event.preventDefault();
+
+            const item_id= this.querySelector(".item_id").value;
+            console.log(item_id);
+            fetch("/api/remove_from_cart",{
+                method :'POST',
+                headers:{
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify({item_id : item_id})
+            })
+            .then(response => response.json())
+            .then (data=>{
+                console.log("success",data);
+                
+                    const row = document.getElementById("cart-item-"+item_id);
+                    if(row) row.remove();
+                
+                    console.error("Failed to remove item:", data.message || "Unknown error");
+                
+            })
+            .catch(error => console.error('Error : ',error));
+            
+        });
+    })
+    
+    
+</script>
 
 {% endblock %}
