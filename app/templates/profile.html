@@ -49,17 +49,17 @@
                 <td class="table-primary ">
                     {{ item.product.name }}
                 </td>
-                <td class="table-primary quantity_value{{item.id}}">
-                    {{ item.quantity }}
+                <td class="table-primary ">
+                    <p class="quantity_value{{item.id}}">{{ item.quantity }}</p>
 
-                    <form method="post" action="/api/addquantity" class="quantity">
+                    <form method="post" action="/api/addquantity" class="quantity1">
                         <input name="item_id" value="{{item.id}}" type="hidden" class="quantity_value">
                         <button type="submit">Add More</button>
 
                     </form>
                     {% if item.quantity > 1 %}
-                    <form method="post" action="decreasequantity">
-                        <input name="item_id" value="{{item.id}}" type="hidden">
+                    <form method="post" action="/api/decreasequantity" class="quantity2">
+                        <input name="item_id" value="{{item.id}}" type="hidden" class="quantity_value">
                         <button type="submit">Decrease</button>
                     </form>
                     {% else %}
@@ -209,14 +209,14 @@
             .catch(error => console.error('Error : ',error));
             
         });
-    })
+    })                 
 
-    document.querySelectorAll('.quantity').forEach(form => {
+    document.querySelectorAll('.quantity1').forEach(form => {
         form.addEventListener("submit",function(event){
             event.preventDefault();
-
             const item_id= this.querySelector(".quantity_value").value;
             console.log(item_id);
+
             fetch("/api/addquantity",{
                 method :'POST',
                 headers:{
@@ -227,7 +227,33 @@
             .then(response => response.json())
             .then (data=>{
                 console.log("success",data);
-                const temp = document.getElementById("quantity_value"+item_id);
+                const temp = document.querySelector(".quantity_value"+item_id);
+                console.log(temp);
+                temp.textContent=data.quantity;
+            })
+            .catch(error => console.error('Error : ',error));
+    
+        });
+
+    })
+
+    document.querySelectorAll('.quantity2').forEach(form => {
+        form.addEventListener("submit",function(event){
+            event.preventDefault();
+            const item_id= this.querySelector(".quantity_value").value;
+            const tempo = document.querySelector(".quantity_value"+item_id);
+            console.log(item_id);
+            fetch("/api/decreasequantity",{
+                method :'POST',
+                headers:{
+                    'Content-Type' : 'application/json'
+                },
+                body : JSON.stringify({item_id : item_id})
+            })
+            .then(response => response.json())
+            .then (data=>{
+                console.log("success",data);
+                const temp = document.querySelector(".quantity_value"+item_id);
                 console.log(temp);
                 temp.textContent=data.quantity;
             })

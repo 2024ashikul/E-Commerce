@@ -138,6 +138,18 @@ def decreasequantity():
         flash(message, "success")
     return redirect('/profile')
 
+@profiles.route('/api/decreasequantity',methods=['POST'])
+def decreasequantityapi():
+    if request.method == 'POST':
+        data = request.get_json(force= True)
+        item_id = data.get('item_id')
+        item = Cart.query.filter(Cart.id == item_id).first()
+        item.quantity = item.quantity - 1
+        db.session.commit()
+        message = "Decreased succesfully"
+        flash(message, "success")
+        return jsonify({'message':'decreased successfully','quantity':item.quantity})
+    return redirect('/profile')
 
 @profiles.route('/checkout',methods=['POST'])
 def checkout():
