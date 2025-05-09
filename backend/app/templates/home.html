@@ -1,143 +1,114 @@
 {% extends 'layout.html' %}
+
 {% block title %}
     Tech Bangladesh
 {% endblock %}
+
 {% block body %}
 <style>
     .carousel-item img {
-    width: 100%;
-    max-width: 12000px; 
-    height: auto; 
-    aspect-ratio: 16/9; 
-    object-fit: cover; 
-    margin: auto; 
-    display: block;
-}
-#image-recent{
-    aspect-ratio: 16/9; 
-    object-fit: cover;
-    margin: auto;
-}
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        display: block;
+        margin: auto;
+        border-radius: 10px;
+    }
 
-        
-        .card {
-            flex: none ;
-            width: 200px;
-            border-radius: 10px;
-            aspect-ratio: 16/11;
-            margin: 10px;
-        }
-        #check{
-            flex: auto;
-            margin: 10px;
-            overflow: scroll;
-        }
+    #image-recent {
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
 
+    .card {
+        flex: none;
+        width: 220px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+        transition: transform 0.2s ease;
+    }
 
+    .card:hover {
+        transform: scale(1.03);
+    }
+
+    .scroll-row {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 10px;
+    }
+
+    .scroll-row::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .scroll-row::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 5px;
+    }
+
+    h3 {
+        font-weight: 600;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
 </style>
-<div class="container">
-    <div class="row" >
-        <div class="col-md-8" style="height: fit-content;">
-            <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
+
+<div class="container py-4">
+    <!-- Carousel Section -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-10">
+            <div id="carouselExampleRide" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="/static/2.png" class="" alt="asdfsd">
-                </div>
-                <div class="carousel-item">
-                    <img src="/static/1.jpeg" class=""  alt="asdfsd">
-                </div>
-                <div class="carousel-item">
-                    <img src="/static/Screenshot 2025-02-05 at 23.44.15.png" class="" alt="asdfas">
-                </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            </div>
-            </div>
-
-<br>
-
-    <div class="row">
-        <div class="container mt-4" >
-
-        <h3>NEWEST ARRIVALS</h3>
-        <div class="d-flex flex-row mb-3" id="check" >
-
-        {% for item in items %}
-        
-
-            <div class="card" width = "">
-            
-                    <img id="image-recent" src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
-                    <div class="card-body">
-                        <h5 class="card-title" > {{ item.name }}</h5>
-                        <p class="card-text"> {{ item.description }}</p>
-                        <a href="/product/item.id" class="btn btn-primary"> {{item.price}}</a>
+                    <div class="carousel-item active">
+                        <img src="/static/2.png" class="d-block w-100" alt="Banner 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/1.jpeg" class="d-block w-100" alt="Banner 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="/static/Screenshot 2025-02-05 at 23.44.15.png" class="d-block w-100" alt="Banner 3">
                     </div>
                 </div>
-            
-        {% endfor %}
-        </div>
-        </div>
-        
-</div>
-<div class="row">
-    <div class="container mt-4" >
-
-    <h3>Top Products</h3>
-    <div class="d-flex flex-row mb-3" id="check" >
-
-    {% for item in items %}
-    
-
-        <div class="card" width = "">
-        
-                <img id="image-recent" src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
-                <div class="card-body">
-                    <h5 class="card-title" > {{ item.name }}</h5>
-                    <p class="card-text"> {{ item.description }}</p>
-                    <a href="/product/item.id" class="btn btn-primary"> {{item.price}}</a>
-                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
-        
-    {% endfor %}
+        </div>
     </div>
-    </div>
-    
-</div>
-<div class="row">
-    <div class="container mt-4" >
 
-    <h3>Top deals</h3>
-    <div class="d-flex flex-row mb-3" id="check" >
-
-    {% for item in items %}
-    
-
-        <div class="card" width = "">
-        
-                <img id="image-recent" src="{{ url_for('addproduct.uploaded_file',filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="notheim" >
-                <div class="card-body">
-                    <h5 class="card-title" > {{ item.name }}</h5>
-                    <p class="card-text"> {{ item.description }}</p>
-                    <a href="{{url_for('main.product', id =item.id)}}" class="btn btn-primary"> {{item.price}}</a>
+    <!-- Reusable Product Section Block -->
+    {% macro product_section(title, items) %}
+    <div class="row">
+        <div class="col-12">
+            <h3>{{ title }}</h3>
+            <div class="scroll-row">
+                {% for item in items %}
+                <div class="card">
+                    <img id="image-recent" src="{{ url_for('addproduct.uploaded_file', filename=item.image.split('/')[-1]) }}" class="card-img-top" alt="Product image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.name }}</h5>
+                        <p class="card-text text-truncate">{{ item.description }}</p>
+                        <a href="{{ url_for('main.product', id=item.id) }}" class="btn btn-sm btn-primary w-100">৳ {{ item.price }}</a>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-        
-    {% endfor %}
+        </div>
     </div>
-    </div>
-    
-</div>
+    {% endmacro %}
 
-
-
+    {{ product_section('Newest Arrivals', items) }}
+    {{ product_section('Top Products', items) }}
+    {{ product_section('Top Deals', items) }}
 </div>
 {% endblock %}

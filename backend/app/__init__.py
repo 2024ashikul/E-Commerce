@@ -8,6 +8,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from flask_migrate import Migrate
 from app.oauth import configure_oauth
 from flask_socketio import SocketIO
+from flask_cors import CORS
 
 db = SQLAlchemy()
 mail = Mail()
@@ -26,6 +27,7 @@ def create_app():
     socketio.init_app(app)
     configure_oauth(app)
     socketio.init_app(app, cors_allowed_origins="*")
+    CORS(app)
 
     from app.routes import main
     from app.send_mail import sendmail

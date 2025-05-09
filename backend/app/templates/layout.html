@@ -20,7 +20,7 @@
 </head>
 
 <body>
-  <div id="navigation bar">
+  <div id="navigationbar">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         
@@ -80,26 +80,108 @@
 
 
 
-  <div class="body">
-    <div class="container mt-3">
-      {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-              {% for category, message in messages %}
-                  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                      {{ message }}
-                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-              {% endfor %}
-          {% endif %}
-      {% endwith %}
+  <div id="alert-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show shadow" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
   </div>
 
     {% block body %}
     
     {% endblock %}
+  
+    <footer class="bg-dark text-white mt-auto pt-4 pb-3">
+      <div class="container">
+        <div class="row">
+    
+          <!-- Company Info -->
+          <div class="col-md-4 mb-4">
+            <h5>Tech Bangladesh</h5>
+            <p>Your trusted source for top-quality electronics and unbeatable tech deals.</p>
+          </div>
+    
+          <!-- Newsletter Form -->
+          <div class="col-md-4 mb-4">
+            <h5>Subscribe</h5>
+            <form class="d-flex flex-column">
+              <input type="email" class="form-control mb-2" placeholder="Enter your email" required>
+              <button type="submit" class="btn btn-primary btn-sm">Subscribe</button>
+            </form>
+          </div>
+    
+          <!-- Quick Links -->
+          <div class="col-md-4 mb-4">
+            <h5>Quick Links</h5>
+            <ul class="list-unstyled">
+              <li><a href="/" class="text-white text-decoration-none">Home</a></li>
+              <li><a href="/products" class="text-white text-decoration-none">Shop</a></li>
+              <li><a href="/about" class="text-white text-decoration-none">About</a></li>
+              <li><a href="/contact" class="text-white text-decoration-none">Contact</a></li>
+            </ul>
+          </div>
+    
+        </div>
+    
+        <div class="row align-items-center">
+          <div class="col-md-6 text-center text-md-start">
+            <p class="mb-0">© 2025 Tech Bangladesh. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 text-center text-md-end">
+            <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
 
+    
+    
     <div>
+<style>
+    #navigationbar{
+      background-color: black;
+      background: black;
+    }
+  
+html, body {
+  height: 100%;
+}
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+}
+
+</style>
+
+<script>
+  window.setTimeout(function () {
+    const alerts = document.querySelectorAll('#alert-container .alert');
+    alerts.forEach(function (alert) {
+
+      alert.classList.remove('show');
+      alert.classList.add('fade');
+
+    
+      setTimeout(() => {
+        alert.remove();
+      }, 500);
+    });
+  }, 5000);
+</script>
 
 
 </body>
