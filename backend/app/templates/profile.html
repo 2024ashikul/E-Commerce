@@ -241,7 +241,6 @@
         form.addEventListener("submit",function(event){
             event.preventDefault();
             const item_id= this.querySelector(".quantity_value").value;
-            const tempo = document.querySelector(".quantity_value"+item_id);
             console.log(item_id);
             fetch("/api/decreasequantity",{
                 method :'POST',
