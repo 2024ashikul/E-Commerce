@@ -1,4 +1,4 @@
-from flask import  Blueprint,render_template,session,request,url_for,redirect,send_from_directory,flash,jsonify
+from flask import  Blueprint,render_template,session,request,url_for,redirect,send_from_directory,flash,jsonify,get_flashed_messages
 from app import db,mail
 from app.models import Product
 from app.models import User
@@ -14,9 +14,12 @@ from app.oauth import oauth
 import secrets
 
 
+
+
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 
 main = Blueprint('main',__name__)
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -87,40 +90,7 @@ def register():
     except:
         return "FAILED TO GET USER"
 
-@main.route('/api/register', methods=['POST'])
-def registeri():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file uploaded'}), 400
-    name = request.form.get('name')
-    username = request.form.get('username')
-    email = request.form.get('email')
-    password = request.form.get('password')
-    print("come here")
-    if not all([name, username, email, password]):
-        return jsonify({'error': 'Missing form data'}), 400
 
-    hashed_pass = generate_password_hash(password, method='pbkdf2:sha512', salt_length=16)
-    file = request.files['file']
-    file_extension = file.filename.rsplit('.',1)[1].lower()
-    unique_extension = generate_unique_filename(file_extension)
-
-    filename = os.path.join(UPLOAD_FOLDER, unique_extension)
-    file.save(filename)
-
-    user = User(name = name , username= username, email = email, password = hashed_pass, profile_pic= filename)
-    try:
-        db.session.add(user)
-        db.session.commit()
-    except:
-        return jsonify({"error"}),400
-
-    user_id = 123
-
-    return jsonify({
-        'message': 'User successfully registered',
-        'user_id': user_id,
-        'profile_pic': filename
-    }), 201
 
 
 
@@ -158,27 +128,6 @@ def login():
         flash("Some error caused")
         return redirect('/login_html')
 
-@main.route('/api/login',methods = ['GET','POST'])
-def logina():
-    print("came here")
-    data = request.get_json(force= True)
-    username = data.get('username')
-    password = data.get('password')
-    print(username)
-    try:
-        user = User.query.filter(User.username == username).first()
-        
-        if user and check_password_hash(user.password,password):
-            login_user(user,remember =True)
-            flash(f"Hi, {user.name.upper()}! Welcome Back!","success")
-            return jsonify({'message':'logged in succesfully','redirect_url':'/profile'}),201
-        else:
-            flash("Incorrect password or username","warning")
-            return jsonify({'message':'Incorrect username or password'}),400
-    except:
-        flash("Incorrect password or username","warning")
-        flash("Some error caused")
-        return redirect('/login_html')
 
 
 @main.route('/logout')
@@ -264,3 +213,24 @@ def productes(id):
     product = Product.query.order_by(Product.id == id).first()
     return render_template('/individual_product.html',product= product)
 
+@main.route('/api/product/<int:id>')
+def productess(id):
+    product = Product.query.order_by(Product.id == id).first()
+    if not product:
+        return jsonify({'error': 'Product not found'}), 404
+    return jsonify({
+        'id': product.id,
+        'name': product.name,
+        'description': product.description,
+        'price': product.price,
+        'category': product.category,
+        'stock': product.stock
+    }),200
+
+@main.route('/api/flash', methods=['GET'])
+def get_flash_messages():
+    
+    messages = get_flashed_messages(with_categories=True)
+    
+    
+    return jsonify(messages)

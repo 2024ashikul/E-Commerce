@@ -27,7 +27,7 @@ def create_app():
     socketio.init_app(app)
     configure_oauth(app)
     socketio.init_app(app, cors_allowed_origins="*")
-    CORS(app)
+    CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
 
     from app.routes import main
     from app.send_mail import sendmail
@@ -37,6 +37,8 @@ def create_app():
     from app.profile import profiles
     from app.admin_purchase import adPurchases
     from app.chat import chatting
+    from app.login import loginsetup
+    from app.register import registersetup
     app.register_blueprint(sendmail)
     app.register_blueprint(main)
     app.register_blueprint(addproduct)
@@ -45,7 +47,8 @@ def create_app():
     app.register_blueprint(profiles)
     app.register_blueprint(adPurchases)
     app.register_blueprint(chatting)
-    
+    app.register_blueprint(loginsetup)
+    app.register_blueprint(registersetup)
     return app
 
 @login_manager.user_loader

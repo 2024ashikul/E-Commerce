@@ -7,7 +7,7 @@
 <div class="container">
   <h2 class="text-center mb-4">Login</h2>
 
-  <form action="/api/login" method="post" id="form">
+  <form action="/api/login/" method="post" id="form">
       
       <div class="form-floating mb-3">
           <input type="text" class="form-control" id="username" name="username" placeholder="Username">
@@ -46,8 +46,12 @@
           console.log("success",data);
           window.location.href = data.redirect_url;
         })
-        .catch(error => console.error('Error:', error));
-
+        .catch(error => {
+          console.error('Error:', error);
+          console.log("failure");
+          window.location.href = data.redirect_url;
+        } 
+      )
       });
     </script>
 {% endblock %}
