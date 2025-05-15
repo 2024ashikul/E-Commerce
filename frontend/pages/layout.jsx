@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 
+
 function Layout() {
   useEffect(() => {
     // Remove alert after 5 seconds

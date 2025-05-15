@@ -73,9 +73,8 @@
                     {{ item.product.price }}
                 </td>
                 <td class="table-primary" style="display: flex;">
-                    <form method="post" action="/checkout">
-                        <input name="item_id" value="{{ item.id }}" type="hidden">
-                        
+                    <form method="post" action="/api/checkout" class="checkout">
+                        <input name="item_id" value="{{ item.id }}" type="hidden" class="checkout_id">
                         <button  type="submit">Buy</button>
                     </form>
                     <form method="post" action="/api/remove_from_cart" class="removefromcart">
@@ -262,6 +261,27 @@
 
     })
     
+    document.querySelectorAll(".checkout").forEach(form => {
+        form.addEventListener("submit",function(event){
+            event.preventDefault();
+            console.log("here");
+            const item_id = this.querySelector(".checkout_id").value;
+            console.log(item_id);
+            fetch("/api/checkout",{
+                method : 'POST',
+                headers :{
+                    'Content-Type' : 'application/json',
+                },
+                body: JSON.stringify({item_id:item_id})
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("success",data);
+                window.location.href = data.redirect_url;
+            })
+            .catch(error => console.error('Error : ',error));
+        });
+    })
     
 </script>
 

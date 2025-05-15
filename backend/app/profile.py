@@ -1,18 +1,12 @@
-from flask import  Blueprint,render_template,session,request,url_for,redirect,send_from_directory,flash,jsonify
-from app import db,mail
+from flask import  Blueprint,render_template,request,url_for,redirect,flash,jsonify
+from app import db
 from app.models import Product
-from app.models import User
 from app.models import Cart
 from app.models import Purchase
-from app.__init__ import login_manager
 from app.send_mail import send_mail
-import os
-from werkzeug.utils import secure_filename
-from werkzeug.security import generate_password_hash,check_password_hash
-import uuid
-from flask_mail import Mail,Message
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from authlib.integrations.flask_client import OAuth
+
+from flask_login import  login_required, current_user
+
 
 profiles = Blueprint("profile",__name__)
 
@@ -31,9 +25,7 @@ def profile():
     total = 0
     #for i in cart_items:
         #total = total + (i.product.price)*i.quantity
-    
     purchases = Purchase.query.filter(Purchase.user_id == current_user.id).all()
-
 
     return render_template('profile.html',username = username,email= email,picture_url = picture_url,cart_items = cart_items,total = total,purchases=purchases)
 
@@ -67,21 +59,6 @@ def addtocartapi():
         flash(f"{name} added to the cartss","success")
     return redirect(url_for('profile.profile'))
 
-@profiles.route('/removefromcart',methods=['POST'])
-def removefromcart():
-    if request.method == 'POST':
-        cartid = request.form['item_id']
-        print(f"id is {cartid}")
-        todelete =  Cart.query.filter(Cart.id == cartid).first()
-        print(todelete)
-        name = todelete.product.name
-        db.session.delete(todelete)
-        db.session.commit()
-        flash(f"Removed {name} from cart","success")
-        print("delete done")
-        
-    return redirect("/profile")
-
 
 @profiles.route('/api/remove_from_cart',methods =['POST'])
 def removefromcart2():
@@ -103,15 +80,6 @@ def removefromcart2():
 
 
 
-@profiles.route('/addquantity',methods=['POST'])
-def addquantity():
-    if request.method == 'POST':
-        item_id =request.form['item_id']
-        item = Cart.query.filter(Cart.id == item_id).first()
-        item.quantity = item.quantity + 1
-        db.session.commit()
-        flash("Increased Cart Item","success")
-    return redirect('/profile')
 
 @profiles.route('/api/addquantity',methods=['POST'])
 def addquantityapi():
@@ -127,16 +95,7 @@ def addquantityapi():
         except:
             return redirect('/profile')
 
-@profiles.route('/decreasequantity',methods=['POST'])
-def decreasequantity():
-    if request.method == 'POST':
-        item_id =request.form['item_id']
-        item = Cart.query.filter(Cart.id == item_id).first()
-        item.quantity = item.quantity - 1
-        db.session.commit()
-        message = "Decreased succesfully"
-        flash(message, "success")
-    return redirect('/profile')
+
 
 @profiles.route('/api/decreasequantity',methods=['POST'])
 def decreasequantityapi():
@@ -148,19 +107,19 @@ def decreasequantityapi():
         db.session.commit()
         message = "Decreased succesfully"
         flash(message, "success")
-        return jsonify({'message':'decreased successfully','quantity':item.quantity})
+        return jsonify({'message':'decreased successfully','quantity':item.quantity}),201
     return redirect('/profile')
 
-@profiles.route('/checkout',methods=['POST'])
-def checkout():
-    if request.method == 'POST':
-        cartid = request.form['item_id']
-        print(f"id is {cartid}")
-        tocheckout =  Cart.query.filter(Cart.id == cartid).first()
-        print(tocheckout)
-        name = tocheckout.product.name
 
-        #if the payment is successful then need to add payment api
+@profiles.route('/api/checkout',methods =['POST'])
+def checkouta():
+    if request.method == 'POST':
+        data = request.get_json(force = True)
+        print(data)
+        cartid = data.get('item_id')
+        print(cartid)
+        tocheckout =  Cart.query.filter(Cart.id == cartid).first()
+        name = tocheckout.product.name
         newpurchase = Purchase(user_id = current_user.id,product_id = tocheckout.product.id,quantity= tocheckout.quantity,)
         db.session.add(newpurchase)
         db.session.delete(tocheckout)
@@ -173,8 +132,10 @@ def checkout():
             print(recipient)
             message = "Your product purchased succesfully"
             send_mail(recipient,message)
+            return jsonify({'message':'Product purchase was sucessful','redirect_url':'/profile'}),201
         except:
             print("Email failed to send")
-        print("purchase done")
-        
-    return redirect("/profile")
+            print("purchase done")
+            return jsonify({'message':'Product purchase was unsucessful','redirect_url':'/profile'}),400
+    
+    return redirect('/profile')

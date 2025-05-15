@@ -15,7 +15,6 @@ import secrets
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 from werkzeug.utils import secure_filename
 
-
 registersetup = Blueprint("registersetup",__name__)
 
 @registersetup.route('/api/register', methods=['POST'])
@@ -52,7 +51,6 @@ def registeri():
         'user_id': user_id,
         'profile_pic': filename
     }), 201
-
 
 def generate_unique_filename(extension):
     while True:

@@ -92,12 +92,6 @@ def register():
 
 
 
-
-
-
-
-
-
 def generate_unique_filename(extension):
     while True:
         unique_filename = str(uuid.uuid4()) + '.' + extension
@@ -144,12 +138,12 @@ def unauthorized():
 
 @main.route("/google")
 def google_login():
-    ""# Generate a nonce (a random string)
+    # Generate a nonce (a random string)
     nonce = secrets.token_urlsafe(32)
     
     # Store the nonce in the session
     session['nonce'] = nonce
-    ""
+
     # Pass the nonce to the Google OAuth authorization request
     return oauth.google.authorize_redirect(
         url_for("main.google_auth", _external=True), 
