@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash,check_password_hash
 import uuid
 from flask_mail import Mail,Message
-from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from flask_login import  login_user
 from app.oauth import oauth
 import secrets
 

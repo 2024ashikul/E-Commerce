@@ -59,17 +59,11 @@
 
           </ul>
 
-          <form method="post" class="d-flex" action="{{ url_for('searching.search')}}">
+          <form method="post" class="d-flex" action="{{ url_for('searching.search')}}" id="searchform">
             <input class="form-control me-2" list="datalist" type="text" placeholder="Search" aria-label="Search"
-              name="keyword">
+              name="keyword" id="searchvalue">
 
-            <datalist id="datalist">
-              <option value="San Francisco">
-              <option value="New York">
-              <option value="Seattle">
-              <option value="Los Angeles">
-              <option value="Chicago">
-            </datalist>
+          
 
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
@@ -182,7 +176,29 @@ footer {
     });
   }, 5000);
 
-  
+  //   document.getElementById("searchform").addEventListener("submit",function(event){
+  //     event.preventDefault();
+  //     const keyword = document.getElementById("searchvalue");
+  //     fetch("/api/search",{
+  //       method : 'GET',
+  //       headers : {
+  //       'Content-Type':'application/json'
+  //       },
+  //       body : JSON.stringify({ keyword: keyword})
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log("success",data)
+  //     })
+  //       .catch(error => {
+  //         console.error('Error:', error);
+  //         console.log("failure");
+  //         window.location.href = data.redirect_url;
+  //       }
+  //     )
+  //   }
+  // );
+    
 
 
 </script>

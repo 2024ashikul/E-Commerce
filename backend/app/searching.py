@@ -16,3 +16,14 @@ def search():
     count = len(result)
     
     return render_template("search_results.html", result=result,count = count)
+
+@searching.route('/api/search', methods=['GET', 'POST'])
+def searasch():
+    keyword = request.form.get('keyword','')  
+    if not keyword:
+        return redirect(url_for('main.home')) 
+
+    result = Product.query.filter(Product.description.ilike(f"%{keyword}%")).all()
+    count = len(result)
+    
+    return render_template("search_results.html", result=result,count = count)
