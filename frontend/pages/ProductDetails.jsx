@@ -24,6 +24,10 @@ function ProductDetails() {
       });
   }, []);
 
+
+
+  
+
   if (loading) return <p>Loading product...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!product) return <p>No product found</p>;
