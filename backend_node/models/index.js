@@ -5,8 +5,17 @@ const sequelize  = new Sequelize({
 });
 
 const User = require('./user')(sequelize , DataTypes);
+const Product = require('./product')(sequelize , DataTypes);
+const Cart = require('./cart.js')(sequelize , DataTypes);
 
-module.exports = { sequelize, User };
+
+//Relationships
+User.hasMany(Cart);
+Cart.belongsTo(User);
+
+
+
+module.exports = { sequelize, User , Product , Cart };
 
 (async () => {
   try {

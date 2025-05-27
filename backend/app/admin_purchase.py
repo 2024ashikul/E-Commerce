@@ -11,6 +11,6 @@ def admin_purchase():
     
     return render_template("admin_purchase.html",purchases=purchases)
 
-#@adPurchases.route('/admin_purchase_html')
+
 
     

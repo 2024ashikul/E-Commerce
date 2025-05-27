@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         category : {type : DataTypes.STRING , allowNull : false},
         image : {type : DataTypes.STRING , allowNull : false},
         availability : {type : DataTypes.BOOLEAN , allowNull : false},
-        time : {type : DataTypes.DATETIME , allowNull : false}
+        time : {type : DataTypes.DATE , allowNull : false}
     });
     return Product;
 }
