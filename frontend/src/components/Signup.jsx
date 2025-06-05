@@ -11,6 +11,7 @@ export default function Signup() {
     try {
       const res = await axios.post('http://localhost:3000/users/signup', form);
       alert('Signup successful!');
+      window.redirect('http://localhost:3000/users/login');
       console.log(res.data);
     } catch (err) {
       alert(err.response?.data?.error || 'Signup failed');

@@ -1,8 +1,12 @@
+import TopProducts from "../src/components/TopProducts";
+import '../css/HomePage.css'
+
 export default function HomePage(){
+
     return (
         <div>
-        <div className="container py-4">
-    <div className="row justify-content-center mb-5">
+        <div className="container py-4 homepage">
+    <div className="row justify-content-center mb-5 " id="main">
         <div className="col-md-10">
             <div id="carouselExampleRide" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner">
@@ -28,6 +32,8 @@ export default function HomePage(){
         </div>
     </div>
     </div>
+    <TopProducts>
+    </TopProducts>
     </div>
     )
 }
