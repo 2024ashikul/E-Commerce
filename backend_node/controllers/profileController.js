@@ -7,10 +7,16 @@ exports.cartitems = async (req,res)=>{
     try{
         const userid = req.user.userId;
         console.log(userid);
-        const cartitem = await Cart.findAll({where : {UserId : userid}});
+        const cart = await Cart.findOne({where : {UserId : userid}});
+        const id = cart.id;
+        console.log(cart);
+        const cartitem = await CartItems.findAll({
+            where : {cartId : cart.id },
+            include : {model : Product}
+        })
         console.log(cartitem);
         res.json(cartitem);
-    }catch{
+    }catch(error){
         console.log(error);
     }
 }
@@ -30,6 +36,7 @@ exports.addtocart = async (req , res) => {
         
         if(!cartitem){
             const a = await CartItems.create({
+                cartId : cart.id,
                 productId : productid,
                 quantity : 1
             });
@@ -52,31 +59,45 @@ exports.addtocart = async (req , res) => {
 exports.removefromcart = async (req , res) => {
     console.log("removefromcart");
     try{
-        const userid = req.user.userId;
-        const {productid} = req.body;
-    
+        const cartitemid = req.body.cartitemid;
+        const cartitem = await CartItems.destroy({where : {id : cartitemid}});
+        res.status(201).json({message : "deleted" , cartitemid : cartitem.id});
     }catch(error){
         console.log(error);
     }
 }
 
 exports.increasecart = async (req , res) => {
-    console.log("removefromcart");
+    console.log("increasecart");
     try{
-        const userid = req.user.userId;
-        const {productid} = req.body;
-    
+        const cartitemid = req.body.cartitemid;
+        const cartitem = await CartItems.findOne({where : {id : cartitemid}});
+       // let cartitem = await CartItems.findOne({where : {productId : productid}});
+        console.log(cartitem);
+        cartitem.quantity+=1;
+        await cartitem.save();
+        console.log("saved");
+        res.status(201).json({message: 'increased', quantity : cartitem.quantity});
     }catch(error){
         console.log(error);
     }
 }
 
 exports.decreasecart = async (req , res) => {
-    console.log("removefromcart");
+    console.log("decreasequantity");
     try{
-        const userid = req.user.userId;
-        const {productid} = req.body;
-    
+        const cartitemid = req.body.cartitemid;
+        const cartitem = await CartItems.findOne({where : {id : cartitemid}});
+       // let cartitem = await CartItems.findOne({where : {productId : productid}});
+        console.log(cartitem);
+        if(cartitem.quantity <= 1){
+            res.status(200).json({message: 'cannot decrease', quantity : cartitem.quantity});
+        }else{
+        cartitem.quantity-=1;
+        await cartitem.save();
+        console.log("saved and decreased");
+        res.status(201).json({message: 'increased', quantity : cartitem.quantity});
+        }
     }catch(error){
         console.log(error);
     }

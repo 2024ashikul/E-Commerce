@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
-
+  const navigate = useNavigate();
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
       const res = await axios.post('http://localhost:3000/users/login', form);
+      navigate('/profile');
       alert('Login successful!');
-      Navigate('Profile');
+      
       localStorage.setItem('token', res.data.token);
     } catch (err) {
       alert(err.response?.data?.error || 'Login failed');

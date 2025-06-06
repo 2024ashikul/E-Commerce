@@ -10,5 +10,8 @@ router.get('/profile' ,authenticateToken, (req,res) => {
 })
 
 router.post('/cartitems',authenticateToken, profileController.cartitems);
+router.post('/increasecart',authenticateToken, profileController.increasecart);
+router.post('/decreasecart',authenticateToken, profileController.decreasecart);
+router.post('/removefromcart',authenticateToken, profileController.removefromcart);
 
 module.exports = router;

@@ -4,7 +4,8 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import HomePage from '../pages/HomePage';
 import NavBar from './components/NavBar';
-
+import Profile from '../pages/Profile';
+import PrivateRoute from './components/PrivateRouter';
 export default function App() {
   return (
     <BrowserRouter>
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path='/profile' element={<PrivateRoute> <Profile /> </PrivateRoute>} />
       </Routes>
     </BrowserRouter>
   );
