@@ -1,21 +1,31 @@
 const {Sequelize ,DataTypes} = require('sequelize');
+const purchase = require('./purchase.js');
+const product = require('./product');
 const sequelize  = new Sequelize({
     dialect : 'sqlite',
-    storage : ':memory:'
+    storage: './database.sqlite'
 });
 
 const User = require('./user')(sequelize , DataTypes);
 const Product = require('./product')(sequelize , DataTypes);
 const Cart = require('./cart.js')(sequelize , DataTypes);
-
+const Purchase = require('./purchase.js')(sequelize, DataTypes);
+const CartItems = require('./cartitems.js')(sequelize , DataTypes);
 
 //Relationships
-User.hasMany(Cart);
-Cart.belongsTo(User);
+User.hasOne(Cart , {foreignKey : 'userId'});
+Cart.belongsTo(User, {foreignKey : 'userId'});
+
+Cart.hasMany(CartItems , {foreignKey : 'cartId'});
+CartItems.belongsTo(Cart , {foreignKey : 'cartId'});
+
+Product.hasMany(CartItems, {foreignKey : 'productId'});
+CartItems.belongsTo(Product , {foreignKey : 'productId'});
 
 
 
-module.exports = { sequelize, User , Product , Cart };
+
+module.exports = { sequelize, User , Product , Cart , Purchase, CartItems};
 
 (async () => {
   try {
