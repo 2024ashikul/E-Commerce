@@ -6,7 +6,7 @@ function TopProducts() {
   useEffect(() => {
     fetch('http://localhost:3000/topproduct')
       .then((res) => res.json())
-      .then((data) => setProducts(data))
+      .then((data) => {setProducts(data);console.log(data);})
       .catch((err) => console.log("fetching products failed",err));
   }, []);
 

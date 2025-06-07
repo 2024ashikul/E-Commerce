@@ -6,6 +6,8 @@ import HomePage from '../pages/HomePage';
 import NavBar from './components/NavBar';
 import Profile from '../pages/Profile';
 import PrivateRoute from './components/PrivateRouter';
+import AddProduct from '../pages/AddProduct';
+import ProductPage from '../pages/ProductPage';
 export default function App() {
   return (
     <BrowserRouter>
@@ -14,9 +16,9 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path='/profile' element={<PrivateRoute> <Profile /> </PrivateRoute>}
-        />
-        
+        <Route path='/profile' element={<PrivateRoute> <Profile /> </PrivateRoute>} />
+        <Route path='/addproduct' element = {<AddProduct></AddProduct>} />
+        <Route path='/product/:id' element = {<ProductPage></ProductPage>} />
       </Routes>
     </BrowserRouter>
   );
