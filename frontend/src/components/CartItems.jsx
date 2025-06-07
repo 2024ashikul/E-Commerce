@@ -3,8 +3,9 @@ import CartItem from "./CartItem";
 export default function CartItems(){
 
     const [cartItems, setCartItems ] = useState([]); 
-
+    const [loading, setLoading] = useState(true);
     useEffect(()=>{
+        setLoading(true);
         fetch('http://localhost:3000/cartitems',{
                 method : 'POST',
                 headers :{
@@ -13,7 +14,7 @@ export default function CartItems(){
                 }
             })
         .then((res => res.json()))
-        .then((data) => setCartItems(data))
+        .then((data) => {setCartItems(data);setLoading(false);})
         .catch((err) => console.log("something error",err));
     },[]);
 
@@ -21,12 +22,17 @@ export default function CartItems(){
         setCartItems(prev => prev.filter(cartitem => cartitem.id != id));
     }
 
+    
+    if(loading){
+        return <p >loading</p>
+    }
+    
     if(cartItems.length == 0){
-        return <p>No cart items found</p>
+        return <p className="text-lg text-amber-300">No cart items found</p>
     }
 
     return (
-        <div>
+        <div className="flex-col">
             { cartItems.map( item => (
                 <div key={item.id}>
                     <CartItem item = {item} onRemove = {handleRemove}/>

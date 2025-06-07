@@ -13,7 +13,6 @@ export default function Login() {
     try {
       const res = await axios.post('http://localhost:3000/users/login', form);
       navigate('/profile');
-      alert('Login successful!');
       
       localStorage.setItem('token', res.data.token);
     } catch (err) {

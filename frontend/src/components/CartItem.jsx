@@ -55,21 +55,89 @@ function CartItem({item , onRemove}){
         }
     }
 
-    return(
-        <div className="flex flex-col rounded-lg p-2 size-72 aspect-video">
-                    <img id="image-recent" src="{item.image}" className=" rounded-lg mast-auto" alt="Product image"></img>
-                    <div className="rounded-lg">
-                        <a className="" href={''}>{product.name}</a>
-                        <p className="flex">{}</p>
-                        <p  className="">৳ { product.price}</p>
-                        
-                        <button className='btn flex' onClick={()=>addQuantity(item.id)}>+</button>
-                        <p className='flex' >{quantity}</p>
-                        <button className='btn flex' onClick={()=>decreseQuantity(item.id)}>-</button>
-                        <button className='btn flex' onClick={()=>removeFromCart(item.id)}>Remove from Cart</button>
+    function buy(cartitemid){
+        try{
+            fetch('http://localhost:3000/purchase',{
+                method : 'POST',
+                headers : {
+                    'Content-Type' : 'application/json',
+                    'Authorization' : `Bearer ${localStorage.getItem("token")}` 
+                },
+            body : JSON.stringify({cartitemid})
+            })
+            .then((res) => res.json())
+            onRemove(cartitemid);
+        }catch(err){
+            console.log(err);
+        }
+    }
 
-                    </div>
+    // return(
+    //     <div className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-md w-full max-w-2xl">
+    //                 <img id="image-recent" src="{item.image}" className="w-24 h-24 object-cover rounded-lg" alt="Product image"></img>
+    //                 <div className="flex-1">
+    //                     <h2 className="text-lg font-semibold" href={''}>{product.name}</h2>
+    //                     <p  className="text-gray-500 text-sm mb-1"> { product.brand}</p>
+    //                     <p  className="text-green-700 font-bold">৳ { product.price}</p>
+    //                     <div className="flex items-center mt-2 gap-2">
+    //                         <button className='px-2 py-1 bg-gray-200 rounded hover:bg-gray-300' onClick={()=>addQuantity(item.id)}>+</button>
+                        
+    //                         <button className='px-2 py-1 bg-gray-200 rounded hover:bg-gray-300' onClick={()=>decreseQuantity(item.id)}>-</button>
+    //                     </div>
+    //                 </div>
+    //                     <button className='text-red-500 hover:text-red-700 text-sm' onClick={()=>removeFromCart(item.id)}>Remove from Cart</button>
+
+                    
+    //     </div>
+    // )
+
+    return(
+        <div className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-md w-full">
+      <img
+        src={product.image}
+        alt={product.name}
+        className="w-32 h-24 object-cover rounded-lg"
+      />
+
+
+      <div className="flex-1">
+        <h2 className="text-lg font-semibold">{product.name}</h2>
+        <p className="text-gray-500 text-sm mb-1">{product.brand}</p>
+        <p className="text-green-700 font-bold">৳ {product.price}</p>
+
+        
+        <div className="flex items-center mt-2 gap-2">
+          <button
+            onClick={()=> decreseQuantity(item.id)}
+            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+          >
+            -
+          </button>
+          <span className="px-3">{quantity}</span>
+          <button
+            onClick={()=> addQuantity(item.id)}
+            className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
+          >
+            +
+          </button>
         </div>
+      </div>
+
+      
+      <button
+        onClick={() => removeFromCart(item.id)}
+        className="text-red-500 hover:text-red-700 text-sm"
+      >
+        Remove
+      </button>
+            <button
+        onClick={() => buy(item.id)}
+        className="text-red-500 hover:text-red-700 text-sm"
+      >
+        Buy Now
+      </button>
+    </div>
+
     )
 }
 
