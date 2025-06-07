@@ -1,5 +1,6 @@
 const { where } = require("sequelize");
-const { Product , Cart , CartItems } = require("../models");
+const { Product , Cart , CartItems, Purchase } = require("../models");
+const cart = require("../models/cart");
 
 
 exports.cartitems = async (req,res)=>{
@@ -100,5 +101,50 @@ exports.decreasecart = async (req , res) => {
         }
     }catch(error){
         console.log(error);
+    }
+}
+
+exports.purchase = async (req , res) => {
+    console.log("purchasing");
+    try {
+        const cartitemid = req.body.cartitemid;
+        const userid = req.user.userId;
+        
+        const cartitem = await CartItems.findOne({
+            where : {id : cartitemid},
+            include : {model : Product}
+            
+        });
+        const productid = cartitem.Product.id;
+        const totalprice = cartitem.quantity* cartitem.Product.price;
+        const purchase = await Purchase.create({
+            quantity : cartitem.quantity,
+            userId : userid,
+            productId : productid,
+            unitPrice : cartitem.Product.price,
+            totalPrice : totalprice
+        });
+        console.log(purchase);
+        await CartItems.destroy({where : {id : cartitemid}});
+        res.status(201).json({message : 'deleted'});
+
+        
+    }catch(err){
+        console.log(err);
+    }
+}
+
+exports.purchaseitems = async (req ,res) => {
+    console.log("purchase items");
+    try{
+        const userid = req.user.userId;
+        const purchases = await Purchase.findAll({
+            where : {userId : userid},
+            include : {model : Product}
+        })
+        console.log(purchases);
+        res.status(201).json({message: 'success', purchases : purchases});
+    }catch(err){
+        console.log(err);
     }
 }

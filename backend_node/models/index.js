@@ -22,7 +22,11 @@ CartItems.belongsTo(Cart , {foreignKey : 'cartId'});
 Product.hasMany(CartItems, {foreignKey : 'productId'});
 CartItems.belongsTo(Product , {foreignKey : 'productId'});
 
+User.hasMany(Purchase ,{foreignKey : 'userId'} );
+Purchase.belongsTo(User, {foreignKey : 'userId'} );
 
+Product.hasMany(Purchase ,{foreignKey : 'productId'});
+Purchase.belongsTo(Product , {foreignKey : 'productId'})
 
 
 module.exports = { sequelize, User , Product , Cart , Purchase, CartItems};
