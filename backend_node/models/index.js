@@ -11,6 +11,7 @@ const Product = require('./product')(sequelize , DataTypes);
 const Cart = require('./cart.js')(sequelize , DataTypes);
 const Purchase = require('./purchase.js')(sequelize, DataTypes);
 const CartItems = require('./cartitems.js')(sequelize , DataTypes);
+const ProductImages = require('./productimages.js')(sequelize , DataTypes);
 
 //Relationships
 User.hasOne(Cart , {foreignKey : 'userId'});
@@ -28,8 +29,11 @@ Purchase.belongsTo(User, {foreignKey : 'userId'} );
 Product.hasMany(Purchase ,{foreignKey : 'productId'});
 Purchase.belongsTo(Product , {foreignKey : 'productId'})
 
+Product.hasMany(ProductImages , {foreignKey : 'productId' , onDelete : 'CASCADE'});
+ProductImages.belongsTo(Product , {foreignKey : 'productId'});
 
-module.exports = { sequelize, User , Product , Cart , Purchase, CartItems};
+
+module.exports = { sequelize, User , Product , Cart , Purchase, CartItems , ProductImages};
 
 (async () => {
   try {

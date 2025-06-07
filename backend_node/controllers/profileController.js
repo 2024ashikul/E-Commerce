@@ -1,6 +1,5 @@
 const { where } = require("sequelize");
 const { Product , Cart , CartItems, Purchase } = require("../models");
-const cart = require("../models/cart");
 
 
 exports.cartitems = async (req,res)=>{

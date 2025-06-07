@@ -1,9 +1,18 @@
-const { Product } = require("../models");
+const { Product, ProductImages } = require("../models");
 
 exports.topproducts = async (req , res) => {
     console.log("top products");
     try{
-        const items = await Product.findAll({limit : 10});
+        const items = await Product.findAll({
+            limit : 10,
+            include :{
+                model : ProductImages
+            }
+        });
+        
+        if(!items){
+            res.json({message : 'no items found'});
+        }
         res.json(items);
     }catch(error){
         console.log("an error was encountered");
