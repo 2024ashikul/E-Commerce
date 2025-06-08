@@ -1,10 +1,13 @@
 import TopProducts from "../src/components/TopProducts";
 import '../css/HomePage.css'
+import NavBar from "../src/components/NavBar";
 
 export default function HomePage(){
 
     return (
+        
         <div>
+            <NavBar></NavBar>
         <div className="container py-4 homepage">
     <div className="row justify-content-center mb-5 " id="main">
         <div className="col-md-10">
