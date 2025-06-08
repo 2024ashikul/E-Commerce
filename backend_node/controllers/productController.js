@@ -80,7 +80,7 @@ exports.submitratings = async(req, res) => {
             Rating.rating = rating;
             await Rating.save();
         }else{
-            const newRating = await ProductRating.create({
+                newRating = await ProductRating.create({
                 rating : rating,
                 userId : userid,
                 productId : productid
