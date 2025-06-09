@@ -1,5 +1,6 @@
 const {User} = require('../models');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
 const JWT_SECRET = 'HOWAREYOU';
 
@@ -36,3 +37,35 @@ exports.login = async (req , res ) => {
     }
 };
 
+exports.sendmail = async (req , res) => {
+    // const {to , subject , body } = req.body;
+    const to = req.body.to;
+    const subject = req.body.subject;
+    const body = req.body.body;
+    console.log(subject);
+    console.log(to);
+    console.log(body);
+    console.log('sending email');
+    try{
+        const transporter = nodemailer.createTransport({
+            service: 'gmail', // or 'smtp.ethereal.email' for testing
+            auth: {
+                user: '2024ashikul@gmail.com',
+                pass: 'lkmp dfgm vwsd bgck', // use env vars or app passwords!
+            },
+        });
+
+        const info = await transporter.sendMail({
+            from: '"Tech Bangladesh" 2024ashikul@gmail.com',
+            to,
+            subject,
+            body,
+        });
+
+        res.status(200).json({ message: 'Email sent', id: info.messageId });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error sending email' });
+  }
+}
+    
