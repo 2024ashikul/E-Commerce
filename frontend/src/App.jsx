@@ -9,6 +9,7 @@ import PrivateRoute from './components/PrivateRouter';
 import AddProduct from '../pages/AddProduct';
 import ProductPage from '../pages/ProductPage';
 import CategoryPage from '../pages/CategoryPage';
+import SendMail from './components/SendMail';
 export default function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ export default function App() {
         <Route path='/addproduct' element = {<AddProduct></AddProduct>} />
         <Route path='/product/:id' element = {<ProductPage></ProductPage>} />
         <Route path='/c/:category' element = {<CategoryPage></CategoryPage>} />
+        <Route path='/sendmail' element = {<SendMail></SendMail>} />
       </Routes>
     </BrowserRouter>
   );
