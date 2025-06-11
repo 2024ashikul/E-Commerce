@@ -7,7 +7,7 @@ const { sequelize } = require('./models');
 
 const userRoutes = require('./routes/userRoutes');
 const profileRoutes = require('./routes/profileRoutes');
-
+const searchRoutes = require('./routes/searchRoutes')
 const adminRoutes = require('./routes/adminRoutes');
 const productRoutes = require('./routes/productRoutes');
 
@@ -17,9 +17,9 @@ app.use(cors());
 
 app.use('/',userRoutes);
 app.use('/',profileRoutes);
-
 app.use('/', productRoutes);
 app.use('/',adminRoutes);
+app.use('/',searchRoutes);
 const PORT = process.env.PORT || 3000;
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
