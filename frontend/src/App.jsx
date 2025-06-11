@@ -10,19 +10,23 @@ import AddProduct from '../pages/AddProduct';
 import ProductPage from '../pages/ProductPage';
 import CategoryPage from '../pages/CategoryPage';
 import SendMail from './components/SendMail';
+import Layout from './components/Layout';
+
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
+      <Routes >
+        <Route element={<Layout />} >
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path='/profile' element={<PrivateRoute> <Profile /> </PrivateRoute>} />
+          <Route path='/addproduct' element = {<AddProduct></AddProduct>} />
+          <Route path='/product/:id' element = {<ProductPage></ProductPage>} />
+          <Route path='/c/:category' element = {<CategoryPage></CategoryPage>} />
+          <Route path='/sendmail' element = {<SendMail></SendMail>} />
+        </Route>
         
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path='/profile' element={<PrivateRoute> <Profile /> </PrivateRoute>} />
-        <Route path='/addproduct' element = {<AddProduct></AddProduct>} />
-        <Route path='/product/:id' element = {<ProductPage></ProductPage>} />
-        <Route path='/c/:category' element = {<CategoryPage></CategoryPage>} />
-        <Route path='/sendmail' element = {<SendMail></SendMail>} />
       </Routes>
     </BrowserRouter>
   );

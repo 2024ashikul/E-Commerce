@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { StarIcon } from '@heroicons/react/24/solid';
 import { StarIcon as StarOutline } from '@heroicons/react/24/outline';
 
+
 export default function ProductPage(){
     const {id} = useParams();
     const [product, setProduct] = useState();

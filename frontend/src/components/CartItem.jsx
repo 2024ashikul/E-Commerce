@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+
 function CartItem({item , onRemove}){
     const [quantity , setQuantity] = useState(item.quantity);
     const product = item.Product;
@@ -38,6 +39,7 @@ function CartItem({item , onRemove}){
             console.log(err);
         }
     }
+
     function removeFromCart(cartitemid){
         try{
             fetch('http://localhost:3000/removefromcart',{

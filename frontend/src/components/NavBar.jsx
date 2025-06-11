@@ -1,29 +1,125 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ShoppingCartIcon , UserCircleIcon,MagnifyingGlassIcon ,FireIcon, ComputerDesktopIcon} from '@heroicons/react/24/outline';
 export default function NavBar(){
 
   //const category = ['Laptops', 'Phones' , 'TABLETS', 'accessories'];
 
   const [category , setCategory] = useState([]);
+  const [search , setSearch] = useState('');
+  const [searchOptions , setSearchOptions] = useState(null);
   useEffect(()=>{
     fetch(`http://localhost:3000/categoryall`)
     .then((res) => res.json())
     .then((data)=> {setCategory(data);console.log(data);})
     .catch((err) => console.log(err))
   },[]);
+  
+
+    useEffect(()=>{
+  
+      console.log("searching here");
+      fetch(`http://localhost:3000/searchpending/${search}`)
+      .then((res)=> res.json())
+      .then((data)=> {!data.products ? setSearchOptions(null) : setSearchOptions(data.products); console.log(data)})
+      .catch((err) => console.log(err))
+    },[search]);
+    
+
   console.log(category);
+  console.log("seach is " + search);
+  console.log("seach option is " + searchOptions);
 
     return (
-      <div className="flex flex-row bg-amber-600" >
-        <div className="flex max-w-2xl align-center">
-          
+      <div className="flex flex-col " >
+        <div className="flex flex-row mx-1 px-2">
+            <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl">
+                <ComputerDesktopIcon className="h-6 w-6 m-0 mt-1  text-gray-500" />
+                <Link to={``} style={{textDecoration : 'none'}} className="m-0 p-1"><span className="m-0 p-1"  >Title</span></Link>
+            </div>
+
+            <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl">
+              <FireIcon className="h-6 w-6 m-0 mt-1 text-gray-700 fill-red-600"  />
+              <Link to={``} style={{textDecoration : 'none'}} className=" whitespace-nowrap m-0 p-1"><span className="m-0 p-1">HOT Deals</span></Link>
+            </div>
+            
+            <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl">
+              <UserCircleIcon className="h-6 w-6 m-0 mt-1 text-gray-700 fill-amber-400" />
+              <Link to={`/login`} className="m-0 p-1" style={{textDecoration : 'none', fontSize :'15x'}}><span className="m-0 p-1">Login</span></Link>
+            </div >
+            <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl">
+              
+              <ShoppingCartIcon className="h-6 w-6 m-0 mt-1 text-gray-700 fill-amber-400"  />
+              <Link to={``} className="m-0 p-1" style={{textDecoration : 'none'}}><span className="m-0 p-1">Cart</span></Link>
+            </div>
+            
+            <div className="flex mx-4 my-0 px-4 py-1 ">
+              <MagnifyingGlassIcon className="h-6 w-6 m-0 mt-1 text-gray-700"/>
+              
+              <input 
+                type="text" 
+                placeholder="Search for anything" 
+                className="p-1 w-max h-max bg-white " id="temp" 
+                style={{borderRadius : '10px'}} 
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSearch(value);
+
+                  if (value) {
+                    document.getElementById('searchoptions').style.visibility = 'visible';
+                  } else {
+                    document.getElementById('searchoptions').style.visibility = 'hidden';
+                  }
+                }}>
+
+                </input>
+                <div className="z-10 absolute mt-4 p-1 w-60 " id="searchoptions" style={{visibility : 'hidden'}}> 
+                  <ul className="flex-col  bg-green-500 ml-4 mb-0 p-1 rounded-2xl">
+                    {searchOptions==null || document.getElementById('temp').value == "" ? <p></p> : (searchOptions.map(item => (
+                        <div className="pl-4  w-full px-2 py-1 align-middle " >
+                            
+
+                            <li key={item.id} className="hover:text-white-100" >
+                                <Link to={`/product/${item.id}`} style={{textDecoration : 'none'}}>
+                                
+                                  {item.name}
+                                </Link>
+                                </li>
+
+        
+                        </div>
+
+                    )))}
+                  </ul>
+              </div>
+            </div>
+            
+
+        </div>
+        
+        <div className={`flex gap-2 flex-nowrap overflow-hidden justify-center-safe`}>
+          {/* Dynamic bug to fix cols */}
           {category.map(item=>(
-            <div key ={item}>
-            <Link to = {`/c/${item}` } className=" via-teal-900 " ><p className="text-amber-400 pl-4 pr-4 backdrop-blur-3xl uppercase" > {item}</p> </Link>
-          
+            <div key ={item} className="">
+              <Link to = {`/c/${item}` } className="transition via-teal-900 no-underline " style={{textDecoration :'none'}} >
+                <p className="
+                  px-4 py-1
+                 text-indigo-400
+                  uppercase  
+                  hover:bg-red-400
+                  transition-transform 
+                  hover:rounded-1xl 
+                  hover:text-white
+                  rounded-3xl
+                  hover:align-justify
+                  text-center
+                  whitespace-nowrap
+                    " > 
+                    {item}
+                </p> 
+                </Link>
           </div>
           ))}
-          
         </div>
       </div>
 
