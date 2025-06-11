@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ShoppingCartIcon , UserCircleIcon,MagnifyingGlassIcon ,FireIcon, ComputerDesktopIcon} from '@heroicons/react/24/outline';
 export default function NavBar(){
 
@@ -8,6 +9,7 @@ export default function NavBar(){
   const [category , setCategory] = useState([]);
   const [search , setSearch] = useState('');
   const [searchOptions , setSearchOptions] = useState(null);
+  const navigate = useNavigate();
   useEffect(()=>{
     fetch(`http://localhost:3000/categoryall`)
     .then((res) => res.json())
@@ -24,6 +26,13 @@ export default function NavBar(){
       .then((data)=> {!data.products ? setSearchOptions(null) : setSearchOptions(data.products); console.log(data)})
       .catch((err) => console.log(err))
     },[search]);
+
+    const handleSearchSubmit = (e) => {
+      if(e.key == 'Enter'){
+        e.preventDefault();
+        navigate(`/search/${encodeURIComponent(search)}`);
+      }
+    }
     
 
   console.log(category);
@@ -61,6 +70,7 @@ export default function NavBar(){
                 placeholder="Search for anything" 
                 className="p-1 w-max h-max bg-white " id="temp" 
                 style={{borderRadius : '10px'}} 
+                onKeyDown={handleSearchSubmit}
                 onChange={(e) => {
                   const value = e.target.value;
                   setSearch(value);

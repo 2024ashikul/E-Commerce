@@ -11,6 +11,7 @@ import ProductPage from '../pages/ProductPage';
 import CategoryPage from '../pages/CategoryPage';
 import SendMail from './components/SendMail';
 import Layout from './components/Layout';
+import SearchResults from '../pages/SearchResults';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           <Route path='/product/:id' element = {<ProductPage></ProductPage>} />
           <Route path='/c/:category' element = {<CategoryPage></CategoryPage>} />
           <Route path='/sendmail' element = {<SendMail></SendMail>} />
+          <Route path='/search/:value' element = {<SearchResults></SearchResults>} />
         </Route>
         
       </Routes>
