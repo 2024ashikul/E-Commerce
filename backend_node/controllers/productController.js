@@ -14,22 +14,12 @@ exports.product = async (req , res) => {
                 model : ProductImages
             }
         });
-        const comments = await Comments.findAll({
-            where : {
-                productId : productid
-            },
-            include : [
-                {
-                    model : User,
-                    attributes : ['name']
-                }
-            ]
-        });
+        
 
 
         console.log(productinfo);
-        console.log(comments);
-        return res.json({productinfo:productinfo , comments : comments});
+        
+        return res.json({productinfo:productinfo });
     }catch(err){
         console.log(err);
     }
@@ -139,6 +129,7 @@ exports.comment = async(req,res) => {
     console.log("comments");
     try{
         const productid = req.body.productid;
+        console.log(productid);
         const comments = await Comments.findAll({
             where : {
                 productId : productid
@@ -155,6 +146,6 @@ exports.comment = async(req,res) => {
         console.log(comments);
         return res.json({comment : comments});
     }catch(err){
-
+        console.log(err)
     }
 }

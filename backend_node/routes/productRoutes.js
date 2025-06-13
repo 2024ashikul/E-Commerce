@@ -9,6 +9,6 @@ router.get('/categoryall', productController.categories);
 router.get('/c/:category' , productController.category);
 router.post('/submitrating', authenticateToken , productController.submitratings);
 router.post('/submitcomment', authenticateToken , productController.submitcomments);
-router.get('/comment',productController.comment);
+router.post('/comment',productController.comment);
 
 module.exports = router;
