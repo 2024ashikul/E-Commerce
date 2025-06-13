@@ -28,9 +28,10 @@ exports.login = async (req , res ) => {
             console.log("not valid");
             return res.status(401).json({message : "Invalid credentials"});
         }
-        const token = jwt.sign({userId : user.id},JWT_SECRET,{'expiresIn':'1h'});
+        const token = jwt.sign({userId : user.id},JWT_SECRET,{'expiresIn':'10h'});
+        const username = user.name;
         console.log("jswt");
-        res.json({token});
+        res.json({token , username});
     }catch(err){
         console.log("eror");
         res.status(500).json({error : err.message});

@@ -1,5 +1,5 @@
 const { where } = require("sequelize");
-const { Product , Cart , CartItems, Purchase } = require("../models");
+const { Product , Cart , CartItems, Purchase, ProductImages } = require("../models");
 
 
 exports.cartitems = async (req,res)=>{
@@ -12,7 +12,11 @@ exports.cartitems = async (req,res)=>{
         console.log(cart);
         const cartitem = await CartItems.findAll({
             where : {cartId : cart.id },
-            include : {model : Product}
+            include : {model : Product,
+                include :[{
+                    model : ProductImages
+            }]
+            }
         })
         console.log(cartitem);
         res.json(cartitem);
@@ -139,7 +143,14 @@ exports.purchaseitems = async (req ,res) => {
         const userid = req.user.userId;
         const purchases = await Purchase.findAll({
             where : {userId : userid},
-            include : {model : Product}
+            include : {
+                model : Product,
+                include : [
+                    {
+                        model : ProductImages
+                    }
+                ]
+            }
         })
         console.log(purchases);
         res.status(201).json({message: 'success', purchases : purchases});

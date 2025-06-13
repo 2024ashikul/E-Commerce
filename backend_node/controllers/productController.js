@@ -1,5 +1,5 @@
 const { Model ,Sequelize, where } = require("sequelize");
-const { Product, ProductImages, ProductRating, Comments  } = require("../models");
+const { Product, ProductImages, ProductRating, Comments, User  } = require("../models");
 const { raw } = require("body-parser");
 
 
@@ -17,7 +17,13 @@ exports.product = async (req , res) => {
         const comments = await Comments.findAll({
             where : {
                 productId : productid
-            }
+            },
+            include : [
+                {
+                    model : User,
+                    attributes : ['name']
+                }
+            ]
         });
 
 
@@ -103,35 +109,52 @@ exports.submitcomments = async(req, res) => {
         const comment = req.body.selfComment;
         console.log(comment);
         console.log(productid);
-        // const Rating = await ProductRating.findOne({
-        //     where :{
-        //         productId : productid,
-        //         userId : userid
-        //     }
-        // });
-        // const newRating = new ProductRating();
-        // if(Rating){
-        //     Rating.rating = rating;
-        //     await Rating.save();
-        // }else{
-        //     const newRating = await ProductRating.create({
-        //         rating : rating,
-        //         userId : userid,
-        //         productId : productid
-        //     });
-        // }
+       
 
         const newComment = await Comments.create({
                 comment : comment,
                 userId : userid,
-                productId : productid
+                productId : productid,
             });
+        const fullComment = await Comments.findOne({
+            where: { id: newComment.id },
+            include: [
+                        {
+                            model: User,
+                            attributes: ['name'],
+                        },
+                    ],
+            });
+        
         console.log("succcessfully submitted comments");
-        console.log(newComment);
-        res.status(201).json({comment : newComment});
+        console.log(fullComment);
+        res.status(201).json({comment : fullComment});
         
     }catch(err){
         console.log(err);
     }
 }
 
+exports.comment = async(req,res) => {
+    console.log("comments");
+    try{
+        const productid = req.body.productid;
+        const comments = await Comments.findAll({
+            where : {
+                productId : productid
+            },
+            include : [
+                {
+                    model : User,
+                    attributes : ['name']
+                }
+            ]
+        });
+
+
+        console.log(comments);
+        return res.json({comment : comments});
+    }catch(err){
+
+    }
+}
