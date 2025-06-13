@@ -11,16 +11,16 @@ export default function Comments({productid}){
 
     useEffect(()=>{
         fetch(`http://localhost:3000/comment`,{
-            method : 'GET',
-            headers : {
+            method : 'POST',
+            headers :{
                 'Content-Type' :'application/json'
             },
-            body : JSON.stringify({ productid})
+            body : JSON.stringify({productid})
         })
         .then((res) => res.json())
         .then((data)=> {setComment(data.comment);console.log(data)})
         .catch((err)=> console.log(err))
-    })
+    },[productid]);
 
     function sumbitComment(){
         console.log(selfComment);
@@ -33,7 +33,10 @@ export default function Comments({productid}){
             body : JSON.stringify({selfComment, productid})
         })
         .then((res) => res.json())
-        .then((data) => {console.log(data);setComment(prev => [...prev,data.comment]);console.log(2);console.log(comment);})
+        .then((data) => {console.log(data);
+            if(data.comment){setComment(prev => [...prev,data.comment])}
+            ;console.log(comment);
+        })
         .catch((err)=> console.log(err))
     }
 
@@ -42,7 +45,7 @@ export default function Comments({productid}){
                 <div className="flex flex-col mt-6 w-full max-w-4xl mx-auto px-4">
                     <p className="pt-2 pr-8 text-2xl text-indigo-400">Comments</p>
                     <textarea className="border-1 rounded-2xl px-4 py-2 focus:outline-none focus:ring-blue-400 resize-none" id="comment" onChange={handleCommentChange}>
-
+                
                     </textarea>
                     <button onClick={sumbitComment} >Submit</button>
                     <div className="">
