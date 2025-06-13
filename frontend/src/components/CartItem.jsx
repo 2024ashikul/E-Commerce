@@ -96,7 +96,7 @@ function CartItem({item , onRemove}){
     return(
         <div className="flex items-center gap-4 p-4 bg-white rounded-xl shadow-md w-full">
       <img
-        src={product.image}
+        src={'http://localhost:3000/uploads/'+ item.Product.ProductImages[0].name}
         alt={product.name}
         className="w-32 h-24 object-cover rounded-lg"
       />

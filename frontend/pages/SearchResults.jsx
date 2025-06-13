@@ -23,10 +23,11 @@ export default function SearchResults(){
 
     return(
         <div className="flex flex-col">
-            <p>{products.length} items found</p>
+            <p className="text-3xl mt-4">Search Results for {value}</p>
+            <p className="text-lg"> {products.length} items found</p>
 
-            <div className="flex ">
-                {products.map(item => (
+            <div className="grid grid-cols-4 ">
+                { products.map(item => (
                     <div key={item.id}>
                         <Card item={item}  />
                     </div>

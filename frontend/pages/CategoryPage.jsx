@@ -25,12 +25,17 @@ export default function CategoryPage(){
     }
 
     return (
-        <div>
+        <div className="flex flex-col">
+            <div className="">
+                <p className="p-2 m-2 text-4xl uppercase">{category}</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {products.map(item=>(
-                <div key={item.id}>
+                <div key={item.id} >
                     <Card item={item} />
                 </div>
             ))}
+            </div>
         </div>
     )
 }

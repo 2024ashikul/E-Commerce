@@ -23,7 +23,7 @@ export default function PurchasedItems(){
     }
 
     return (
-        <div >
+        <div  className="grid grid-cols-2">
             { purchaseItems.map( item => (
                 <div key={item.id}>
                     <PurchaseItem item = {item} />

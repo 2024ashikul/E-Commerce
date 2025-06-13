@@ -2,6 +2,7 @@ import { useEffect ,useState} from "react";
 import { useParams } from "react-router-dom";
 import { StarIcon } from '@heroicons/react/24/solid';
 import { StarIcon as StarOutline } from '@heroicons/react/24/outline';
+import Comments from "../src/components/ProductPage/Comments";
 
 
 export default function ProductPage(){
@@ -119,8 +120,8 @@ export default function ProductPage(){
                     </div>
                     
                 </div>
-                <div className="flex mt-4">
-                        <h3 className="pt-2 pr-8">Submit your Ratings</h3>
+                <div className="flex mt-4 ">
+                        <p className="pt-2 pr-8 text-2xl text-indigo-400">Submit your Ratings</p>
                         <div className="flex">
                             {stars.map((star,index) => (
                                 <div
@@ -136,30 +137,35 @@ export default function ProductPage(){
                                 </div>
                             ))}
                         </div>
-                        <h3>
-                            {submitRating ? <div className=" pl-4 pr-4 pt-2 pb-2 ml-6 hover:bg-amber-400 " id="feedback"> <button onClick={submitRatingFunction}> Submit Rating</button></div> : ""}
-                        </h3>
+                        <p className="pt-1 pr-8 text-2xl text-indigo-400">
+                            {submitRating ? <div className=" pl-4 pr-4 pt-2 pb-2 ml-6 hover:bg-amber-400 hover:rounded-3xl" id="feedback"> <button onClick={submitRatingFunction}> Submit Rating</button></div> : ""}
+                        </p>
                     
                     
                 </div>
-                <div className="flex flex-col mt-4">
-                    <h3>Comments</h3>
-                    <textarea className=" border-1" id="comment" onChange={handleCommentChange}>
+                <div className="flex flex-col mt-6 w-full max-w-4xl mx-auto px-4">
+                    <p className="pt-2 pr-8 text-2xl text-indigo-400">Comments</p>
+                    <textarea className="border-1 rounded-2xl px-4 py-2 focus:outline-none focus:ring-blue-400 resize-none" id="comment" onChange={handleCommentChange}>
 
                     </textarea>
                     <button onClick={sumbitComment} >Submit</button>
-                    <div>
+                    <div className="">
                         {comment.length} comments found
                         {comment.map(item => (
-                            <div key={item.id} className="flex flex-col border-s-fuchsia-10 p-1 m-1">
-                                <div className="flex m-1 p-1">
-                                    <p className=" m-0" style={{fontSize : '16px'}}>Username lastname</p>
-                                    <p className=" p-1 pl-4 m-0" style={{fontSize : '10px'}}> {item.createdAt}</p>
+                            <div key={item.id} className="flex flex-col border-s-fuchsia-10 p-3 mt-3 rounded-2xl shadow-md">
+                                <div className="flex m-1 p-1 items-center justify-between">
+                                    <p className=" m-0 text-1xl font-medium">{ item.User.name}</p>
+                                    <p className=" p-1 pl-4 m-0 text-sm"> {item.createdAt.slice(2,10)}</p>
                                 </div>
-                                <p className=" m-0 pl-8"> {item.comment}</p>
+                                <p className="text-sm m-0 pl-8 p"> {item.comment}</p>
                             </div>
                         ))}
                     </div>
+                </div>
+                <div>
+                    <Comments item = {productid} />
+
+                    
                 </div>
             
             </div>

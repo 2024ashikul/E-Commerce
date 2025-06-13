@@ -1,6 +1,6 @@
 import TopProducts from "../src/components/TopProducts";
 import '../css/HomePage.css'
-import NavBar from "../src/components/NavBar";
+import NavBar from "../src/components/NavBar/NavBar";
 
 export default function HomePage(){
 

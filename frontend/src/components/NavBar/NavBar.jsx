@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCartIcon , UserCircleIcon,MagnifyingGlassIcon ,FireIcon, ComputerDesktopIcon} from '@heroicons/react/24/outline';
+import { AuthContext } from "../Contexts/AuthContext";
+
 export default function NavBar(){
 
   //const category = ['Laptops', 'Phones' , 'TABLETS', 'accessories'];
+  const {isLoggedIn, username} = useContext(AuthContext);
 
   const [category , setCategory] = useState([]);
   const [search , setSearch] = useState('');
@@ -28,9 +31,12 @@ export default function NavBar(){
     },[search]);
 
     const handleSearchSubmit = (e) => {
+      
       if(e.key == 'Enter'){
+        document.getElementById("temp").value ='';
         e.preventDefault();
         navigate(`/search/${encodeURIComponent(search)}`);
+        
       }
     }
     
@@ -40,9 +46,10 @@ export default function NavBar(){
   console.log("seach option is " + searchOptions);
 
     return (
-      <div className="flex flex-col " >
+    <>
+      <div className="flex flex-col bg-blue-50" >
         <div className="flex flex-row mx-1 px-2">
-            <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl">
+            <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl items-center">
                 <ComputerDesktopIcon className="h-6 w-6 m-0 mt-1  text-gray-500" />
                 <Link to={``} style={{textDecoration : 'none'}} className="m-0 p-1"><span className="m-0 p-1"  >Title</span></Link>
             </div>
@@ -54,18 +61,20 @@ export default function NavBar(){
             
             <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl">
               <UserCircleIcon className="h-6 w-6 m-0 mt-1 text-gray-700 fill-amber-400" />
-              <Link to={`/login`} className="m-0 p-1" style={{textDecoration : 'none', fontSize :'15x'}}><span className="m-0 p-1">Login</span></Link>
+              {isLoggedIn ? <Link to={`/profile`} className="m-0 p-1" style={{textDecoration : 'none', fontSize :'15x'}}><span className="m-0 p-1">{username}</span></Link> : 
+              <Link to={`/login`} className="m-0 p-1" style={{textDecoration : 'none', fontSize :'15x'}}><span className="m-0 p-1">Log In</span></Link>}
             </div >
             <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl">
               
               <ShoppingCartIcon className="h-6 w-6 m-0 mt-1 text-gray-700 fill-amber-400"  />
-              <Link to={``} className="m-0 p-1" style={{textDecoration : 'none'}}><span className="m-0 p-1">Cart</span></Link>
+              <Link to={`/cartpage`} className="m-0 p-1" style={{textDecoration : 'none'}}><span className="m-0 p-1">Cart</span></Link>
             </div>
             
             <div className="flex mx-4 my-0 px-4 py-1 ">
               <MagnifyingGlassIcon className="h-6 w-6 m-0 mt-1 text-gray-700"/>
               
               <input 
+                
                 type="text" 
                 placeholder="Search for anything" 
                 className="p-1 w-max h-max bg-white " id="temp" 
@@ -85,7 +94,7 @@ export default function NavBar(){
                 </input>
                 <div className="z-10 absolute mt-4 p-1 w-60 " id="searchoptions" style={{visibility : 'hidden'}}> 
                   <ul className="flex-col  bg-green-500 ml-4 mb-0 p-1 rounded-2xl">
-                    {searchOptions==null || document.getElementById('temp').value == "" ? <p></p> : (searchOptions.map(item => (
+                    {searchOptions==null || document.getElementById('temp').value == "" ? '' : (searchOptions.map(item => (
                         <div className="pl-4  w-full px-2 py-1 align-middle " >
                             
 
@@ -132,6 +141,6 @@ export default function NavBar(){
           ))}
         </div>
       </div>
-
+    </>
     )
 }

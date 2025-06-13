@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { Link, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../src/components/Contexts/AuthContext';
+
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const navigate = useNavigate();
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
-
+  const {  setIsLoggedIn, setUserName} = useContext(AuthContext);
   const handleSubmit = async e => {
     e.preventDefault();
     try {
       const res = await axios.post('http://localhost:3000/login', form);
-      navigate('/profile');
+      
       
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('username', res.data.username);
+      setIsLoggedIn(true);
+      setUserName(res.data.username);
+      navigate('/profile');
+      
     } catch (err) {
       alert(err.response?.data?.error || 'Login failed');
+      
     }
   };
 

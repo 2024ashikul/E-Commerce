@@ -17,8 +17,8 @@ function TopProducts() {
   return (
     <div className="flex flew-row overflow-x-scroll overflow-hidden">
       {products.map(item => (
-        <div className="mx-4 "  key={item.id}>
-          <Card item={item} />
+        <div className="mx-4"  key={item.id} >
+          <Card item={item}  />
         </div>
       ))} 
     </div>

@@ -6,6 +6,8 @@ export default function CartItems(){
     const [loading, setLoading] = useState(true);
     useEffect(()=>{
         setLoading(true);
+        console.log(localStorage.getItem("token"));
+        console.log(localStorage.getItem("username"));
         fetch('http://localhost:3000/cartitems',{
                 method : 'POST',
                 headers :{
@@ -32,9 +34,9 @@ export default function CartItems(){
     }
 
     return (
-        <div className="flex-col">
+        <div className="flex-col ">
             { cartItems.map( item => (
-                <div key={item.id}>
+                <div key={item.id} className="my-1">
                     <CartItem item = {item} onRemove = {handleRemove}/>
                 </div>
             ) )}
