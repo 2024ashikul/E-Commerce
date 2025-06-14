@@ -22,4 +22,5 @@ async function sendMail({to, subject ,body}){
   return info;
 }
 
+
 module.exports = sendMail;

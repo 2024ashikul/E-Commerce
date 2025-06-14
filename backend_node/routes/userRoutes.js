@@ -9,6 +9,8 @@ router.post('/signup', userController.signup);
 router.post('/login', userController.login);
 router.post('/send-mail', userController.sendmail);
 router.get('/topproduct', homeController.topproducts);
+router.post('/sendverificationcode',userController.sendverificationcode)
+router.post('/verifycode',userController.verifycode);
 
 module.exports = router;
 

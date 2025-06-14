@@ -59,23 +59,23 @@ exports.sendmail = async (req , res) => {
 
 exports.sendverificationcode = async (req , res) => {
     console.log("sending verification code");
-    const email = req.body.email;
+    const to = req.body.email;
     const buffer = crypto.randomBytes(3);
     const temp = parseInt(buffer.toString("hex"), 16) % 1000000;
-    const code = temp.toString().padStart(6, '0');
+    const body = temp.toString().padStart(6, '0');
+    console.log({body,to});
     const subject = 'give the verificaiont';
     try{
         
-        const info = await sendMail({email, subject , code});
+        const info = await sendMail({to, subject , body});
         if(info){
             const verify = EmailVerify.create({
-                email : email,
-                code : code
+                email : to,
+                code : body
             });
         }else{
             res.status(201).json({message : "could not sent"});
         }
-
         
         res.status(201).json({message : "code sent"});
     }catch(err){
@@ -83,3 +83,27 @@ exports.sendverificationcode = async (req , res) => {
     }
 }
     
+
+exports.verifycode = async (req , res) => {
+    console.log("verifying");
+    const code = req.body.code;
+    const email = req.body.email;
+    try{
+        const find = EmailVerify.findOne({
+            where :{
+                email : email,
+                code : code
+            }
+ 
+        });
+        if(find){
+            res.json({message : 'success'});
+        }else{
+            console.log("could not veryify");
+            res.json({message : 'failed'});
+        }
+        
+    }catch(err){
+        console.log(err);
+    }
+}
