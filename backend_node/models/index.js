@@ -15,6 +15,7 @@ const CartItems = require('./cartitems.js')(sequelize , DataTypes);
 const ProductImages = require('./productimages.js')(sequelize , DataTypes);
 const ProductRating = require('./productrating.js')(sequelize , DataTypes);
 const Comments = require('./comments.js')(sequelize ,DataTypes);
+const EmailVerify = require('./emailverify.js')(sequelize ,DataTypes);
 
 
 //Relationships
@@ -48,7 +49,7 @@ Comments.belongsTo(Product , {foreignKey :'productId'});
 User.hasMany(Comments , {foreignKey : 'userId' , onDelete : 'CASCADE'});
 Comments.belongsTo(User , {foreignKey :'userId'});
 
-module.exports = { sequelize, User , Product , Cart , Purchase, CartItems , ProductImages , ProductRating , Comments};
+module.exports = { sequelize, User , Product , Cart , Purchase, CartItems , ProductImages , ProductRating , Comments,EmailVerify};
 
 (async () => {
   try {

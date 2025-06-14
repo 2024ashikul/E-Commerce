@@ -1,6 +1,9 @@
-const {User} = require('../models');
+const {User, EmailVerify} = require('../models');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const crypto = require("crypto");
+const sendMail = require('./emailController');
+const emailverify = require('../models/emailverify');
 
 const JWT_SECRET = 'HOWAREYOU';
 
@@ -43,30 +46,40 @@ exports.sendmail = async (req , res) => {
     const to = req.body.to;
     const subject = req.body.subject;
     const body = req.body.body;
-    console.log(subject);
-    console.log(to);
-    console.log(body);
     console.log('sending email');
     try{
-        const transporter = nodemailer.createTransport({
-            service: 'gmail', // or 'smtp.ethereal.email' for testing
-            auth: {
-                user: '2024ashikul@gmail.com',
-                pass: 'lkmp dfgm vwsd bgck', // use env vars or app passwords!
-            },
-        });
-
-        const info = await transporter.sendMail({
-            from: '"Tech Bangladesh" 2024ashikul@gmail.com',
-            to,
-            subject,
-            body,
-        });
+        const info = sendMail({to,subject,body});
 
         res.status(200).json({ message: 'Email sent', id: info.messageId });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error sending email' });
   }
+}
+
+exports.sendverificationcode = async (req , res) => {
+    console.log("sending verification code");
+    const email = req.body.email;
+    const buffer = crypto.randomBytes(3);
+    const temp = parseInt(buffer.toString("hex"), 16) % 1000000;
+    const code = temp.toString().padStart(6, '0');
+    const subject = 'give the verificaiont';
+    try{
+        
+        const info = await sendMail({email, subject , code});
+        if(info){
+            const verify = EmailVerify.create({
+                email : email,
+                code : code
+            });
+        }else{
+            res.status(201).json({message : "could not sent"});
+        }
+
+        
+        res.status(201).json({message : "code sent"});
+    }catch(err){
+        console.log(err);
+    }
 }
     
