@@ -38,7 +38,7 @@ function Card({item}){
       </div>
 
       <div className="p-4 flex flex-col gap-1">
-        <h2 className="text-lg font-semibold truncate">{item.name}asfasdfdsafasdf</h2>
+        <h2 className="text-lg font-semibold truncate">{item.name}</h2>
         <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
         <p className="text-xl font-bold text-amber-600">৳ {item.price}</p>
 

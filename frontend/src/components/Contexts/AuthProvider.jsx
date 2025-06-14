@@ -11,6 +11,8 @@ export const AuthProvider = ({children}) => {
       const token = localStorage.getItem('token'); 
       if (token) {
       setIsLoggedIn(true);
+      }else{
+        setIsLoggedIn(false);
       }
       const username = localStorage.getItem('username');
       if(username){

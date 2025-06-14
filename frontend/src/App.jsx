@@ -15,7 +15,7 @@ import SearchResults from '../pages/SearchResults';
 import { AuthProvider } from './components/Contexts/AuthProvider';
 import { CartProvider } from './components/Contexts/CartProvider';
 import CartPage from '../pages/CartPage';
-
+import { AuthContext } from './components/Contexts/AuthContext';
 
 export default function App() {
   return (
@@ -28,7 +28,7 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path='/profile' element={<PrivateRoute> <Profile /> </PrivateRoute>} />
+            <Route path='/profile'  element={<PrivateRoute> <Profile /> </PrivateRoute>} />
             <Route path='/addproduct' element = {<AddProduct></AddProduct>} />
             <Route path='/product/:id' element = {<ProductPage></ProductPage>} />
             <Route path='/c/:category' element = {<CategoryPage></CategoryPage>} />

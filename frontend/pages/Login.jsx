@@ -15,7 +15,6 @@ export default function Login() {
     try {
       const res = await axios.post('http://localhost:3000/login', form);
       
-      
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('username', res.data.username);
       setIsLoggedIn(true);

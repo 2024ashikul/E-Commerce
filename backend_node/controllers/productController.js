@@ -14,10 +14,10 @@ exports.product = async (req , res) => {
                 model : ProductImages
             }
         });
+
         
 
-
-        console.log(productinfo);
+        //console.log(productinfo);
         
         return res.json({productinfo:productinfo });
     }catch(err){
@@ -50,7 +50,7 @@ exports.categories = async (req ,res) => {
             limit:10
         });
         const category = (categories.map(c => c.category));
-        console.log(category);
+        //console.log(category);
         res.json(category);
     }catch(err){
         console.log(err);
@@ -83,7 +83,7 @@ exports.submitratings = async(req, res) => {
             });
         }
         console.log("succcessfully submitted ratings");
-        console.log(newRating);
+        //console.log(newRating);
         res.status(201).json(newRating);
         
     }catch(err){
@@ -117,7 +117,7 @@ exports.submitcomments = async(req, res) => {
             });
         
         console.log("succcessfully submitted comments");
-        console.log(fullComment);
+        //console.log(fullComment);
         res.status(201).json({comment : fullComment});
         
     }catch(err){
@@ -143,9 +143,28 @@ exports.comment = async(req,res) => {
         });
 
 
-        console.log(comments);
+        //console.log(comments);
         return res.json({comment : comments});
     }catch(err){
         console.log(err)
+    }
+}
+
+exports.getratings = async (req ,res) => {
+    console.log("getting ratings of a product");
+    try{
+        const productid = req.body.productid;
+        const Rating = await ProductRating.findOne({
+            where :{
+                productId : productid
+            },
+            attributes:[[Sequelize.fn('AVG', Sequelize.col('rating')) , 'avgRating']]
+        });
+        const ans = Rating.get('avgRating');
+        console.log(ans);
+        res.status(201).json({ans});
+
+    }catch(err){
+        console.log(err);
     }
 }

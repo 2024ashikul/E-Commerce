@@ -35,8 +35,10 @@ export default function CartItems(){
 
     return (
         <div className="flex-col ">
-            { cartItems.map( item => (
-                <div key={item.id} className="my-1">
+            { !cartItems ? "You have no cart Items"
+            :
+            cartItems.map( item => (
+                <div key={item.id} className="">
                     <CartItem item = {item} onRemove = {handleRemove}/>
                 </div>
             ) )}

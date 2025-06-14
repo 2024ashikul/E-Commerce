@@ -5,15 +5,7 @@ import Card from "../src/components/Card";
 export default function SearchResults(){
     const [products, setProducts] = useState([]);
     const { value } = useParams();
-//     try{
-//         console.log("ssea");
-//     fetch(`http://localhost:3000/search/${value}`)
-//     .then((res) => res.json())
-//     .then((data) => {setProducts(data.products);console.log(data.products);})
-//     .catch((err) => console.log(err))
-// }catch(err){
-//     console.log(err)
-// }
+
     useEffect(()=>{
         fetch(`http://localhost:3000/search/${value}`)
         .then((res) => res.json())

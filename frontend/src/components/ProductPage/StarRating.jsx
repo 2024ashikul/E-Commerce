@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
 import { StarIcon } from '@heroicons/react/24/solid';
-import { StarIcon as StarOutline } from '@heroicons/react/24/outline';
+import { RadioIcon, StarIcon as StarOutline } from '@heroicons/react/24/outline';
 
 
 export default function StarRating({productid}){
@@ -8,11 +8,17 @@ export default function StarRating({productid}){
     const [starover, setStarOver] = useState(null);
     const [starRating, setStarRating] = useState(0);
     const [submitRating , setSubmitRating] = useState(false);
+    const [rating , setRating] = useState(null);
     const stars = [0,1,2,3,4];
+
      useEffect(() => {
             console.log("Updated star rating:", starRating);
         }, [starRating]);
 
+        useEffect(()=>{
+        getRating(productid);
+    },[productid]);
+    
     function submitRatingFunction(){
         fetch(`http://localhost:3000/submitrating`,{
             method : 'POST',
@@ -23,9 +29,29 @@ export default function StarRating({productid}){
             body : JSON.stringify({starRating, productid})
         })
         .then((res) => res.json())
-        .then((data) => {console.log(data);document.getElementById("feedback").innerHTML = "Thanks for your rating";})
+        .then((data) => {console.log(data);document.getElementById("feedback").innerHTML = "Thanks for your rating"; getRating(productid)})
         .catch((err)=> console.log(err))
     }
+
+    async function getRating(productid){
+        try{
+            const res = await fetch(`http://localhost:3000/getratings`,{
+            method : 'POST',
+            headers :{
+                'Content-Type' :'application/json'
+            },
+            body : JSON.stringify({productid})
+        });
+        const data = await res.json();
+        setRating(data.ans);
+        }catch(err){
+            console.log(err);
+        }
+        
+    };
+    console.log(rating);
+
+    
 
     function starClick(star){
         if(starRating == star+1){
@@ -40,6 +66,7 @@ export default function StarRating({productid}){
     return (
         <>
             <div className="flex mt-4 ">
+                        {/* <p>{rating}</p> */}
                         <p className="pt-2 pr-8 text-2xl text-indigo-400">Submit your Ratings</p>
                         <div className="flex">
                             {stars.map((star,index) => (
