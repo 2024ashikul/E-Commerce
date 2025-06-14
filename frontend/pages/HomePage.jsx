@@ -2,12 +2,16 @@ import TopProducts from "../src/components/TopProducts";
 import '../css/HomePage.css'
 import NavBar from "../src/components/NavBar/NavBar";
 
+import { Helmet } from "react-helmet";
 export default function HomePage(){
 
     return (
         
         <div className="flex flex-col">
         
+            <Helmet>
+                <title>404Store</title>
+            </Helmet>
             <div className=" container py-4 homepage">
                     <div className="row justify-content-center mb-5 " id="main">
                         <div className="col-md-10">

@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../Contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Comments({productid}){
-
+    const {isLoggedIn } = useContext(AuthContext);
     const [comment, setComment] = useState([]);
     const [selfComment, setSelfComment] = useState("");
-    
+    const navigate = useNavigate();
     function handleCommentChange(e) {
         setSelfComment(e.target.value);
     }
@@ -23,6 +25,9 @@ export default function Comments({productid}){
     },[productid]);
 
     function sumbitComment(){
+        if(!isLoggedIn){
+            navigate('/login');
+        }
         console.log(selfComment);
         fetch(`http://localhost:3000/submitcomment`,{
             method : 'POST',

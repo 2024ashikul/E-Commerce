@@ -1,16 +1,18 @@
-import { useState,useEffect } from "react";
+import { useState,useEffect, useContext } from "react";
 import { StarIcon } from '@heroicons/react/24/solid';
 import { RadioIcon, StarIcon as StarOutline } from '@heroicons/react/24/outline';
+import { AuthContext } from "../Contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 export default function StarRating({productid}){
-
+    const {isLoggedIn} = useContext(AuthContext);
     const [starover, setStarOver] = useState(null);
     const [starRating, setStarRating] = useState(0);
     const [submitRating , setSubmitRating] = useState(false);
     const [rating , setRating] = useState(null);
     const stars = [0,1,2,3,4];
-
+    const navigate = useNavigate();
      useEffect(() => {
             console.log("Updated star rating:", starRating);
         }, [starRating]);
@@ -20,6 +22,9 @@ export default function StarRating({productid}){
     },[productid]);
     
     function submitRatingFunction(){
+        if(!isLoggedIn){
+            navigate('/login');
+        }
         fetch(`http://localhost:3000/submitrating`,{
             method : 'POST',
             headers : {
@@ -65,6 +70,7 @@ export default function StarRating({productid}){
 
     return (
         <>
+        
             <div className="flex mt-4 ">
                         {/* <p>{rating}</p> */}
                         <p className="pt-2 pr-8 text-2xl text-indigo-400">Submit your Ratings</p>
