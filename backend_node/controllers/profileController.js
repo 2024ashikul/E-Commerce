@@ -119,7 +119,7 @@ exports.decreasecart = async (req , res) => {
 exports.purchase = async (req , res) => {
     console.log("purchasing");
     try {
-        const cartitemid = req.body.cartitemid;
+        const cartitemid = req.body.cartid;
         const userid = req.user.userId;
         
         const cartitem = await CartItems.findOne({
