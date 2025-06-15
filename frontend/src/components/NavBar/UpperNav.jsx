@@ -16,7 +16,6 @@ export default function UpperNav() {
 
 
     useEffect(() => {
-
         console.log("searching here");
         fetch(`http://192.168.0.102:3000/searchpending/${search}`)
             .then((res) => res.json())
@@ -33,20 +32,19 @@ export default function UpperNav() {
 
         }
     }
-    console.log("seach is " + search);
-    console.log("seach option is " + searchOptions);
+    console.log("search is " + search);
+    console.log("search option is " + searchOptions);
 
     return (
         <>
-            <div className="flex flex-col bg-blue-50" >
-                <div className="flex flex-row mx-1 px-2">
-                    <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl items-center">
-                        {/* <ComputerDesktopIcon className="h-6 w-6 m-0 mt-1  text-gray-500" /> */}
+            <div className="flex flex-col bg-blue-200 " >
+                <div className="flex flex-row mx-1  px-2">
+                    <div className="flex mx-4 my-0 px-2 w-1/5 hover:bg-amber-300 rounded-3xl items-center">
 
                         <Link to={`/`} >
-                            <div className="object-contain pb-1 m-0 shrink-0 items-center justify-center" >
+                            <div className="object-contain  m-0 shrink-0 items-center justify-center" >
 
-                                <svg className="h-8 w-auto shrink-0" viewBox="0 0 250 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="404Store Logo">
+                                <svg className="h-10 w-auto shrink-0" viewBox="0 0 250 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="404Store Logo">
                                     <g fill="#0070f3" stroke="#0070f3" strokeWidth="2">
                                         <rect x="10" y="25" width="60" height="30" rx="5" ry="5" fill="none" />
                                         <circle cx="23" cy="62" r="4" fill="" />
@@ -67,24 +65,25 @@ export default function UpperNav() {
                         </Link>
                     </div>
 
-                    <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl">
-                        <FireIcon className="h-6 w-6 m-0 mt-1 text-gray-700 fill-red-600" />
+                    <div className="flex mx-1 my-0 px-4 py-1 w-1/5 hover:bg-neutral-400 rounded-3xl items-center justify-center">
+                        <FireIcon className="h-6 w-6 m-0 text-gray-700 fill-red-600" />
                         <Link to={``} style={{ textDecoration: 'none' }} className=" whitespace-nowrap m-0 p-1"><span className="m-0 p-1">HOT Deals</span></Link>
                     </div>
 
-                    <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl">
-                        <UserCircleIcon className="h-6 w-6 m-0 mt-1 text-gray-700 fill-amber-400" />
+                    <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl items-center justify-center">
+                        <UserCircleIcon className="h-6 w-6 m-0 text-gray-700 fill-amber-400" />
                         {isLoggedIn ? <Link to={`/profile`} className="m-0 p-1" style={{ textDecoration: 'none', fontSize: '15x' }}><span className="m-0 p-1">{username}</span></Link> :
                             <Link to={`/login`} className="m-0 p-1" style={{ textDecoration: 'none', fontSize: '15x' }}><span className="m-0 p-1">Log In</span></Link>}
                     </div >
-                    <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl">
 
-                        <ShoppingCartIcon className="h-6 w-6 m-0 mt-1 text-gray-700 fill-amber-400" />
+                    <div className="flex mx-4 my-0 px-4 py-1 w-1/5 hover:bg-amber-300 rounded-3xl items-center justify-center">
+
+                        <ShoppingCartIcon className="h-6 w-6 m-0  text-gray-700 fill-amber-400" />
                         <Link to={`/cartpage`} className="m-0 p-1" style={{ textDecoration: 'none' }}><span className="m-0 p-1">Cart</span></Link>
                     </div>
 
-                    <div className="flex mx-4 my-0 px-4 py-1 ">
-                        <MagnifyingGlassIcon className="h-6 w-6 m-0 mt-1 text-gray-700" />
+                    <div className="flex mx-4 my-0 px-4 py-1 items-center justify-center">
+                        <MagnifyingGlassIcon className="h-6 w-6 m-0  text-gray-700" />
 
                         <input
 
