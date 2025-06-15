@@ -39,7 +39,7 @@ export default function UpperNav() {
         <>
             <div className="flex flex-col bg-blue-200 " >
                 <div className="flex flex-row mx-1  px-2">
-                    <div className="flex mx-4 my-0 px-2 w-1/5 hover:bg-amber-300 rounded-3xl items-center">
+                    <div className="flex mx-4 my-0 px-2 w-1/5 hover:bg-amber-300 rounded-3xl items-center justify-center">
 
                         <Link to={`/`} >
                             <div className="object-contain  m-0 shrink-0 items-center justify-center" >

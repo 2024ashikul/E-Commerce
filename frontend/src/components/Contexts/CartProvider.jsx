@@ -4,10 +4,11 @@
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "./cartContext";
 import { AuthContext } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 export const CartProvider = ({ children }) => {
-
+    const navigate = useNavigate();
     const { isLoggedIn } = useContext(AuthContext);
     const [cartItem, setCartItem] = useState(() => {
         const cartitem = localStorage.getItem('cartitems');
@@ -35,7 +36,7 @@ export const CartProvider = ({ children }) => {
                 body: JSON.stringify({ productid })
             })
                 .then((res) => res.json())
-                .then((data) => { console.log(data); })
+                .then((data) => { console.log(data);  })
                 .catch((err) => console.log(err));
         } else {
             try {
@@ -50,7 +51,7 @@ export const CartProvider = ({ children }) => {
                         image: item.ProductImages[0].name
                     }]);
 
-                    
+
                 console.log("added")
                 console.log(cartItem);
             } catch (Err) {
@@ -75,7 +76,7 @@ export const CartProvider = ({ children }) => {
                 body: JSON.stringify({ cartid })
             })
                 .then((res) => res.json())
-                .then((data) => { console.log(data); })
+                .then((data) => { console.log(data); setCartItem(prev => prev.filter(temp => temp.id != cartid)) })
                 .catch((err) => console.log(err));
         } else {
             try {
@@ -148,13 +149,35 @@ export const CartProvider = ({ children }) => {
         }
     }
 
+    async function Buy(item) {
+        if(isLoggedIn){
+            const cartid = item.id;
+            try{
+          fetch('http://localhost:3000/purchase',{
+              method : 'POST',
+              headers : {
+                  'Content-Type' : 'application/json',
+                  'Authorization' : `Bearer ${localStorage.getItem("token")}` 
+              },
+          body : JSON.stringify({cartid})
+          })
+          .then((res) => res.json())
+          .then((data) => {console.log(data.json())})
+      }catch(err){
+          console.log(err);
+      }
+        }else{
+            navigate('/login');
+        }
+    }
+
 
 
 
 
 
     return (
-        <CartContext.Provider value={{ cartItem, setCartItem, addToCart, removeFromCart, addQuantity, decreseQuantity }}>
+        <CartContext.Provider value={{ cartItem, setCartItem, addToCart, removeFromCart, addQuantity, decreseQuantity,Buy}}>
             {children}
         </CartContext.Provider>
     )

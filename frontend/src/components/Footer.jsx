@@ -42,10 +42,10 @@ export default function Footer(){
                     </div>
                     <div className="text-2xl mb-2"> Subscribe to our newsletter</div>
                     <div>
-                        {!alert ? <button className="bg-amber-500 px-6 py-2 rounded-1xl border" onClick={()=> setAlert(true)}>Subscribe</button> : 
+                        {!alert ?<div className="rounded-2xl hover:accent-slate-200"> <button className="bg-amber-500 px-6 py-1 border" onClick={()=> setAlert(true)}>Subscribe</button> </div>: 
                         <div className="flex">
                                 <input type="email " className="bg-white rounded-2xl px-2 py-1" name="subemail"></input>
-                                <div className="px-2 py-1 rounded-2xl hover:bg-amber-50 ml-2"><button type="submit" className=" ">Submit</button></div>
+                                <div className="px-2 py-1 rounded-1xl hover:bg-amber-50 ml-2"><button type="submit" className=" ">Submit</button></div>
                         </div> 
                     }
 
@@ -56,7 +56,6 @@ export default function Footer(){
                     <p>Terms and Conditions</p>
                     <p>Affiliate Program</p>
                     <p>Contact Us</p>
-                    
 
                 </div>
             

@@ -1,8 +1,8 @@
 
 import { useContext } from "react";
-import CartItems from "../src/components/CartItems";
+import CartItems from "../src/components/Profile/CartItems";
 import { CartContext } from "../src/components/Contexts/cartContext";
-import CartItem from "../src/components/CartItem";
+import CartItem from "../src/components/Profile/CartItem";
 
 
 export default function CartPage(){

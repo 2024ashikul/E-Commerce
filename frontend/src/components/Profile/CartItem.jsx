@@ -1,29 +1,16 @@
 import { useContext, useState } from "react";
-import { CartContext } from "./Contexts/cartContext";
+import { CartContext } from "../Contexts/cartContext";
 
 
 export default function CartItem({ item }) {
   console.log(item.quantity);
 
   const [localquantity, setLocalQuantity] = useState(item.quantity);
-  const { removeFromCart, addQuantity, decreseQuantity } = useContext(CartContext);
+  const { removeFromCart, addQuantity, decreseQuantity,Buy } = useContext(CartContext);
   
 
   // function buy(cartitemid){
-  //     try{
-  //         fetch('http://localhost:3000/purchase',{
-  //             method : 'POST',
-  //             headers : {
-  //                 'Content-Type' : 'application/json',
-  //                 'Authorization' : `Bearer ${localStorage.getItem("token")}` 
-  //             },
-  //         body : JSON.stringify({cartitemid})
-  //         })
-  //         .then((res) => res.json())
-  //         onRemove(cartitemid);
-  //     }catch(err){
-  //         console.log(err);
-  //     }
+      
   // }
 
 
@@ -68,7 +55,7 @@ export default function CartItem({ item }) {
         Remove
       </button>
       <button
-        // onClick={() => buy(item.id)}
+        onClick={() => Buy(item)}
         className="text-red-500 hover:text-red-700 text-sm"
       >
         Buy Now

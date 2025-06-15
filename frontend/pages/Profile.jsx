@@ -1,6 +1,6 @@
 
 import { useContext, useEffect } from "react";
-import CartItems from "../src/components/CartItems"
+import CartItems from "../src/components/Profile/CartItems"
 import NavBar from "../src/components/NavBar/NavBar";
 import PurchasedItems from "../src/components/PurchasedItems"
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ export default function Profile(){
     }
     },[isLoggedIn,navigate]);
     
-    
+
     function logOut(){
         localStorage.removeItem('token');
         localStorage.removeItem('username');
@@ -27,10 +27,11 @@ export default function Profile(){
 
     return (
         <div>
-            <h1 className="mb-8 pl-4 text-amber-200">Cart </h1>
+            <p className="pt-4 pb-1 pl-4 text-4xl border-b-2">Cart </p>
             <CartItems> </CartItems>
 
-            <h1 className=" mt-6 pl-4 text-amber-200 mb-8" >Purchase History </h1>
+            <p className="py-4 pl-4 text-4xl">Purchased Items </p>
+
             <PurchasedItems> </PurchasedItems>
             <button onClick={logOut}>Log out</button>
         </div>
