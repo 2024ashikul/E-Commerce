@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../src/components/Contexts/AuthContext';
+import { AuthContext } from '../src/components/Contexts/AuthContext/AuthContext';
 
 
 export default function Login() {
@@ -25,7 +25,7 @@ export default function Login() {
       setIsLoggedIn(true);
       setUserName(res.data.username);
       localStorage.removeItem('cartitems');
-      
+
       navigate('/profile');
       
     } catch (err) {

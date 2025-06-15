@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../Contexts/AuthContext";
+import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Comments({productid}){

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCartIcon, UserCircleIcon, MagnifyingGlassIcon, FireIcon, ComputerDesktopIcon } from '@heroicons/react/24/outline';
-import { AuthContext } from "../Contexts/AuthContext";
+import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 
 
 export default function UpperNav() {

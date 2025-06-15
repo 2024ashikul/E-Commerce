@@ -12,17 +12,21 @@ import CategoryPage from '../pages/CategoryPage';
 import SendMail from './components/SendMail';
 import Layout from './components/Layout';
 import SearchResults from '../pages/SearchResults';
-import { AuthProvider } from './components/Contexts/AuthProvider';
-import { CartProvider } from './components/Contexts/CartProvider';
+import { AuthProvider } from './components/Contexts/AuthContext/AuthProvider';
+import { CartProvider } from './components/Contexts/CartContext/CartProvider';
+import { AlertProvider } from './components/Contexts/AlertContext/AlertProvider';
 import CartPage from '../pages/CartPage';
-import { AuthContext } from './components/Contexts/AuthContext';
+
+
 import ComponentTester from './components/ComponentTester';
 
 export default function App() {
   return (
     <BrowserRouter>
+    <AlertProvider>
       <AuthProvider>
         <CartProvider>
+      
         <Routes >
       
           <Route element={<Layout />} >
@@ -40,8 +44,10 @@ export default function App() {
           </Route>
         
         </Routes>
+        
         </CartProvider>
       </AuthProvider>
+      </AlertProvider>
     </BrowserRouter>
   );
 }

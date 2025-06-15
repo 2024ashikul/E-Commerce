@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import '../../css/Card.css';
 import { Link } from 'react-router-dom';
-import { CartContext } from './Contexts/cartContext';
+import { CartContext } from './Contexts/CartContext/CartContext';
 // function addToCart(productid){
 //         const temp = localStorage.getItem("token");
 //         console.log(temp);

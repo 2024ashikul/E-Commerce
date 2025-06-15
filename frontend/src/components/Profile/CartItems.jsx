@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import CartItem from "./CartItem";
-import { CartContext } from "../Contexts/cartContext";
+import { CartContext } from "../Contexts/CartContext/CartContext";
 export default function CartItems(){
 
     const {cartItem, setCartItem} = useContext(CartContext);

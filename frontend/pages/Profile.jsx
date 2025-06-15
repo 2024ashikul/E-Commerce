@@ -2,9 +2,9 @@
 import { useContext, useEffect } from "react";
 import CartItems from "../src/components/Profile/CartItems"
 import NavBar from "../src/components/NavBar/NavBar";
-import PurchasedItems from "../src/components/PurchasedItems"
+import PurchasedItems from "../src/components/Profile/PurchasedItems"
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from "../src/components/Contexts/AuthContext";
+import { AuthContext } from "../src/components/Contexts/AuthContext/AuthContext";
 
 export default function Profile(){
     const {isLoggedIn, setIsLoggedIn, setUserName} = useContext(AuthContext);

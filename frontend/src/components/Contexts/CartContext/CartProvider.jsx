@@ -1,15 +1,21 @@
 
 
-
 import { useContext, useEffect, useState } from "react";
-import { CartContext } from "./cartContext";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { AlertContext } from "../AlertContext/AlertContext";
+import { CartContext } from "./CartContext";
+import { AlertProvider } from "../AlertContext/AlertProvider";
 
 
 export const CartProvider = ({ children }) => {
+
+    
     const navigate = useNavigate();
     const { isLoggedIn } = useContext(AuthContext);
+    
+    const {setMessage} = useContext(AlertContext);
+    
     const [cartItem, setCartItem] = useState(() => {
         const cartitem = localStorage.getItem('cartitems');
         return cartitem ? JSON.parse(cartitem) : [];
@@ -36,7 +42,7 @@ export const CartProvider = ({ children }) => {
                 body: JSON.stringify({ productid })
             })
                 .then((res) => res.json())
-                .then((data) => { console.log(data);  })
+                .then((data) => { console.log(data); setMessage('Added to Cart'); })
                 .catch((err) => console.log(err));
         } else {
             try {
@@ -51,7 +57,7 @@ export const CartProvider = ({ children }) => {
                         image: item.ProductImages[0].name
                     }]);
 
-
+                setMessage('Added to Cart');
                 console.log("added")
                 console.log(cartItem);
             } catch (Err) {

@@ -1,7 +1,7 @@
 import { useState,useEffect, useContext } from "react";
 import { StarIcon } from '@heroicons/react/24/solid';
 import { RadioIcon, StarIcon as StarOutline } from '@heroicons/react/24/outline';
-import { AuthContext } from "../Contexts/AuthContext";
+import { AuthContext } from "../Contexts/AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 
