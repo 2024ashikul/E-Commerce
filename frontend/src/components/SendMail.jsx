@@ -10,7 +10,7 @@ export default function SendMail(){
         console.log(body);
         console.log(subject);
 
-        fetch('http://localhost:3000/send-mail',{
+        fetch('http://192.168.0.102:3000/send-mail',{
             method : 'POST',
             headers: {
             'Content-Type': 'application/json',

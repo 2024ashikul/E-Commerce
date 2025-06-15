@@ -1,5 +1,5 @@
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import CartItems from "../src/components/CartItems"
 import NavBar from "../src/components/NavBar/NavBar";
 import PurchasedItems from "../src/components/PurchasedItems"
@@ -7,12 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from "../src/components/Contexts/AuthContext";
 
 export default function Profile(){
-    const {setIsLoggedIn, setUserName} = useContext(AuthContext);
-    console.log(localStorage.getItem("token")+'a');
+    const {isLoggedIn, setIsLoggedIn, setUserName} = useContext(AuthContext);
     const navigate = useNavigate();
-    if(!localStorage.getItem("token")){
+    useEffect(()=>{
+        if(!isLoggedIn){
         return navigate('/login');
     }
+    },[isLoggedIn,navigate]);
+    
+    
     function logOut(){
         localStorage.removeItem('token');
         localStorage.removeItem('username');

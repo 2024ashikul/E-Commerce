@@ -12,7 +12,7 @@ export default function BasicInfo({productid}){
     
     useEffect(() => {
         setLoading(true);
-        fetch(`http://localhost:3000/product/${productid}`)
+        fetch(`http://192.168.0.102:3000/product/${productid}`)
         .then((res) => res.json())
         .then((data) => {setProduct(data.productinfo);setLoading(false);})
         .catch((err) => console.log(err))
@@ -71,7 +71,7 @@ export default function BasicInfo({productid}){
                         <div className="w-[600px] h-[450px]"> 
                             <img
                             className={`w-full h-full object-contain transition-all duration-300 ${fade ? 'opacity-100' : 'opacity-0'}`}
-                            src={`http://localhost:3000/uploads/${product.ProductImages[image].name}`}>
+                            src={`http://192.168.0.102:3000/uploads/${product.ProductImages[image].name}`}>
                                 
                             </img>
                          </div>

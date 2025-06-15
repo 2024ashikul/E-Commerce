@@ -37,7 +37,7 @@ export default function AddProduct() {
     console.log(formDataObj);
 
     try {
-      const response = await fetch('http://localhost:3000/products', {
+      const response = await fetch('http://192.168.0.102:3000/products', {
         method: 'POST',
         body: formDataObj
       });

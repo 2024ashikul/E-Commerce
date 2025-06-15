@@ -6,7 +6,7 @@ export default function PurchasedItems(){
     const [purchaseItems , setPurchaseItems] = useState([]);
 
     useEffect(()=>{
-        fetch('http://localhost:3000/purchaseitems',{
+        fetch('http://192.168.0.102:3000/purchaseitems',{
             method : 'POST',
             headers : {
                 'Content-Type' : 'application/json',

@@ -12,7 +12,7 @@ export default function Comments({productid}){
     }
 
     useEffect(()=>{
-        fetch(`http://localhost:3000/comment`,{
+        fetch(`http://192.168.0.102:3000/comment`,{
             method : 'POST',
             headers :{
                 'Content-Type' :'application/json'
@@ -29,7 +29,7 @@ export default function Comments({productid}){
             navigate('/login');
         }
         console.log(selfComment);
-        fetch(`http://localhost:3000/submitcomment`,{
+        fetch(`http://192.168.0.102:3000/submitcomment`,{
             method : 'POST',
             headers : {
                 'Content-Type' :'application/json',

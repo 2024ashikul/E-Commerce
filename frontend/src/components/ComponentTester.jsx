@@ -1,3 +1,8 @@
+export default function ComponentTester(){
+
+    return(
+
+            
 <svg viewBox="0 0 75 75" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="404Store Logo">
                       <g fill="#0070f3" stroke="#0070f3" stroke-width="2">
                       <rect x="2" y="20" width="70" height="35" rx="5" ry="5" fill="none" />
@@ -11,3 +16,5 @@
                       404
                       </text>
                     </svg>
+    )
+}

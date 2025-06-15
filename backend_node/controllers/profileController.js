@@ -13,13 +13,22 @@ exports.cartitems = async (req,res)=>{
         const cartitem = await CartItems.findAll({
             where : {cartId : cart.id },
             include : {model : Product,
+            
                 include :[{
                     model : ProductImages
             }]
             }
-        })
+        });
+        const updatedcartitem = cartitem.map(item => ({
+            id : item.id,
+            name : item.Product.name,
+            price : item.Product.price,
+            quantity : item.quantity,
+            brand : item.Product.brand,
+            image : item.Product.ProductImages[0].name
+        }))
         console.log(cartitem);
-        res.json(cartitem);
+        res.json(updatedcartitem);
     }catch(error){
         console.log(error);
     }
@@ -63,7 +72,7 @@ exports.addtocart = async (req , res) => {
 exports.removefromcart = async (req , res) => {
     console.log("removefromcart");
     try{
-        const cartitemid = req.body.cartitemid;
+        const cartitemid = req.body.cartid;
         const cartitem = await CartItems.destroy({where : {id : cartitemid}});
         res.status(201).json({message : "deleted" , cartitemid : cartitem.id});
     }catch(error){
@@ -74,7 +83,7 @@ exports.removefromcart = async (req , res) => {
 exports.increasecart = async (req , res) => {
     console.log("increasecart");
     try{
-        const cartitemid = req.body.cartitemid;
+        const cartitemid = req.body.cartid;
         const cartitem = await CartItems.findOne({where : {id : cartitemid}});
        // let cartitem = await CartItems.findOne({where : {productId : productid}});
         console.log(cartitem);
@@ -90,7 +99,7 @@ exports.increasecart = async (req , res) => {
 exports.decreasecart = async (req , res) => {
     console.log("decreasequantity");
     try{
-        const cartitemid = req.body.cartitemid;
+        const cartitemid = req.body.cartid;
         const cartitem = await CartItems.findOne({where : {id : cartitemid}});
        // let cartitem = await CartItems.findOne({where : {productId : productid}});
         console.log(cartitem);

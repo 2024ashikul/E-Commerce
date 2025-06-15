@@ -1,10 +1,14 @@
 
+import { useContext } from "react";
 import CartItems from "../src/components/CartItems";
+import { CartContext } from "../src/components/Contexts/cartContext";
+import CartItem from "../src/components/CartItem";
 
 
 export default function CartPage(){
-
-
+    const {cartItem} = useContext(CartContext);
+    console.log(cartItem);
+   
     return (
         <>
             <div className="mt-4">
@@ -12,7 +16,10 @@ export default function CartPage(){
             </div>
             
             <div>
-                <CartItems></CartItems>
+                {cartItem.map(item =>
+                    <CartItem item={item}/>
+                )}
+                
             </div>
         </>
     )

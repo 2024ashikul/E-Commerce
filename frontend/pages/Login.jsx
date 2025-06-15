@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -9,15 +9,23 @@ export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const navigate = useNavigate();
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
-  const {  setIsLoggedIn, setUserName} = useContext(AuthContext);
+  const {isLoggedIn,  setIsLoggedIn, setUserName} = useContext(AuthContext);
+  useEffect(()=>{
+    if(isLoggedIn){
+    navigate('/profile');
+    }
+  },[isLoggedIn,navigate])
+
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3000/login', form);
+      const res = await axios.post('http://192.168.0.102:3000/login', form);
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('username', res.data.username);
       setIsLoggedIn(true);
       setUserName(res.data.username);
+      localStorage.removeItem('cartitems');
+      
       navigate('/profile');
       
     } catch (err) {

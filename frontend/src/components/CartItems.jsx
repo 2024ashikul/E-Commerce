@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import CartItem from "./CartItem";
+import { CartContext } from "./Contexts/cartContext";
 export default function CartItems(){
 
-    const [cartItems, setCartItems ] = useState([]); 
+    const {cartItem, setCartItem} = useContext(CartContext);
     const [loading, setLoading] = useState(true);
     useEffect(()=>{
         setLoading(true);
         console.log(localStorage.getItem("token"));
         console.log(localStorage.getItem("username"));
-        fetch('http://localhost:3000/cartitems',{
+        fetch('http://192.168.0.102:3000/cartitems',{
                 method : 'POST',
                 headers :{
                     'Content-Type':'application/json',
@@ -16,30 +17,28 @@ export default function CartItems(){
                 }
             })
         .then((res => res.json()))
-        .then((data) => {setCartItems(data);setLoading(false);})
+        .then((data) => {setCartItem(data);setLoading(false);})
         .catch((err) => console.log("something error",err));
-    },[]);
+    },[setCartItem]);
 
-    function handleRemove(id){
-        setCartItems(prev => prev.filter(cartitem => cartitem.id != id));
-    }
+    
 
     
     if(loading){
         return <p >loading</p>
     }
     
-    if(cartItems.length == 0){
+    if(cartItem.length == 0){
         return <p className="text-lg text-amber-300">No cart items found</p>
     }
 
     return (
         <div className="flex-col ">
-            { !cartItems ? "You have no cart Items"
+            { !cartItem ? "You have no cart Items"
             :
-            cartItems.map( item => (
+            cartItem.map( item => (
                 <div key={item.id} className="">
-                    <CartItem item = {item} onRemove = {handleRemove}/>
+                    <CartItem item = {item} />
                 </div>
             ) )}
         </div>

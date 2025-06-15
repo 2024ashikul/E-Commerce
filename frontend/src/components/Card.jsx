@@ -1,31 +1,35 @@
+import { useContext } from 'react';
 import '../../css/Card.css';
 import { Link } from 'react-router-dom';
-function addToCart(productid){
-        const temp = localStorage.getItem("token");
-        console.log(temp);
-        try{
-            fetch('http://localhost:3000/addtocart',{
-                method : 'POST',
-                headers :{
-                    'Content-Type':'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem("token")}` 
-                },
-                body: JSON.stringify({ productid })
-            })
+import { CartContext } from './Contexts/cartContext';
+// function addToCart(productid){
+//         const temp = localStorage.getItem("token");
+//         console.log(temp);
+//         try{
+//             fetch('http://192.168.0.102:3000/addtocart',{
+//                 method : 'POST',
+//                 headers :{
+//                     'Content-Type':'application/json',
+//                     'Authorization': `Bearer ${localStorage.getItem("token")}` 
+//                 },
+//                 body: JSON.stringify({ productid })
+//             })
             
-            .then((res) => res.json())
-            .then((data) => console.log(data))
-            .catch((err)=> console.log(err));
-        }catch (err) {
-        console.log(err);
-    }
-}
+//             .then((res) => res.json())
+//             .then((data) => console.log(data))
+//             .catch((err)=> console.log(err));
+//         }catch (err) {
+//         console.log(err);
+//     }
+// }
     
 
 
 function Card({item}){
+
+    const { addToCart} = useContext(CartContext);
     
-    const filename = 'http://localhost:3000/uploads/'+ item.ProductImages[0].name;
+    const filename = 'http://192.168.0.102:3000/uploads/'+ item.ProductImages[0].name;
     console.log(filename);
     return(
 <div className="bg-white shadow-md rounded-2xl overflow-hidden w-72 hover:scale-105 transition-transform duration-300 m-3">
@@ -51,7 +55,7 @@ function Card({item}){
           </Link>
 
           <button
-            onClick={() => addToCart(item.id)}
+            onClick={() => addToCart(item)}
             className="bg-amber-500 text-white px-4 py-1 rounded-full text-sm hover:bg-amber-600 transition"
           >
             Add to Cart

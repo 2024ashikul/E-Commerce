@@ -6,7 +6,7 @@ import { AuthContext } from "../Contexts/AuthContext";
 
 export default function NavBar(){
 
-  //const category = ['Laptops', 'Phones' , 'TABLETS', 'accessories'];
+  
   const {isLoggedIn, username} = useContext(AuthContext);
 
   const [category , setCategory] = useState([]);
@@ -14,7 +14,7 @@ export default function NavBar(){
   const [searchOptions , setSearchOptions] = useState(null);
   const navigate = useNavigate();
   useEffect(()=>{
-    fetch(`http://localhost:3000/categoryall`)
+    fetch(`http://192.168.0.102:3000/categoryall`)
     .then((res) => res.json())
     .then((data)=> {setCategory(data);console.log(data);})
     .catch((err) => console.log(err))
@@ -24,7 +24,7 @@ export default function NavBar(){
     useEffect(()=>{
   
       console.log("searching here");
-      fetch(`http://localhost:3000/searchpending/${search}`)
+      fetch(`http://192.168.0.102:3000/searchpending/${search}`)
       .then((res)=> res.json())
       .then((data)=> {!data.products ? setSearchOptions(null) : setSearchOptions(data.products); console.log(data)})
       .catch((err) => console.log(err))
@@ -56,17 +56,17 @@ export default function NavBar(){
                   <div className="object-contain pb-1 m-0 shrink-0 items-center justify-center" >
   
                     <svg className="h-8 w-auto shrink-0"  viewBox="0 0 250 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="404Store Logo">
-                      <g fill="#0070f3" stroke="#0070f3" stroke-width="2">
+                      <g fill="#0070f3" stroke="#0070f3" strokeWidth="2">
                       <rect x="10" y="25" width="60" height="30" rx="5" ry="5" fill="none" />
                       <circle cx="23" cy="62" r="4" fill="" />
                       <circle cx="57" cy="62" r="4" fill="" />
-                      <line x1="10" y1="25" x2="20" y2="15" stroke="#0070f3" stroke-width="2" />
-                      <line x1="20" y1="15" x2="50" y2="15" stroke="#0070f3" stroke-width="2" />
+                      <line x1="10" y1="25" x2="20" y2="15" stroke="#0070f3" strokeWidth="2" />
+                      <line x1="20" y1="15" x2="50" y2="15" stroke="#0070f3" strokeWidth="2" />
                       </g>
-                      <text x="85" y="55" font-family="Arial, sans-serif" font-size="36" fill="#0070f3" font-weight="bold">
+                      <text x="85" y="55" fontFamily="Arial, sans-serif" fontSize="36" fill="#0070f3" fontWeight="bold">
                       404Store
                       </text>
-                      <text x="24" y="47" font-family="Arial, sans-serif" font-size="20" fill="green" font-weight="">
+                      <text x="24" y="47" fontFamily="Arial, sans-serif" fontSize="20" fill="green" fontWeight="">
                       404
                       </text>
                     </svg>
@@ -142,7 +142,7 @@ export default function NavBar(){
           {/* Dynamic bug to fix cols */}
           {category.map(item=>(
             <div key ={item} className="">
-              <Link to = {`/c/${item}` } className="transition via-teal-900 no-underline " style={{textDecoration :'none'}} >
+              <Link to = {`/c/${item}` } className="transition via-teal-900 no-underline hover:animate-bounce" style={{textDecoration :'none'}} >
                 <p className="
                   px-4 py-1
                  text-indigo-400

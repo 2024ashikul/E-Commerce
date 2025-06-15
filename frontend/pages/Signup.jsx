@@ -13,7 +13,7 @@ export default function Signup() {
     console.log("handling the submit");
     
     try {
-      const res = await axios.post('http://localhost:3000/signup', form);
+      const res = await axios.post('http://192.168.0.102:3000/signup', form);
 
       console.log(res.data);
       navigate('/login');
@@ -24,7 +24,7 @@ export default function Signup() {
 
   function submitVCode(){
     const email = form.email;
-    fetch('http://localhost:3000/verifycode',{
+    fetch('http://192.168.0.102:3000/verifycode',{
       method : 'POST',
       headers : {
         'Content-Type' : 'application/json'
@@ -40,7 +40,7 @@ export default function Signup() {
     e.preventDefault();
     const email = form.email;
     console.log(email);
-    fetch('http://localhost:3000/sendverificationcode',{
+    fetch('http://192.168.0.102:3000/sendverificationcode',{
       method : 'POST',
       headers : {
         'Content-Type' : 'application/json'

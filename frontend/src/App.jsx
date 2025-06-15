@@ -16,6 +16,7 @@ import { AuthProvider } from './components/Contexts/AuthProvider';
 import { CartProvider } from './components/Contexts/CartProvider';
 import CartPage from '../pages/CartPage';
 import { AuthContext } from './components/Contexts/AuthContext';
+import ComponentTester from './components/ComponentTester';
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
             <Route path='/sendmail' element = {<SendMail></SendMail>} />
             <Route path='/search/:value' element = {<SearchResults></SearchResults>} />
             <Route path='/cartpage' element={<CartPage></CartPage>} />
+            <Route path='/componenttester' element={<ComponentTester></ComponentTester>} />
           </Route>
         
         </Routes>
