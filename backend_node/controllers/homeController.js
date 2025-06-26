@@ -4,7 +4,7 @@ exports.topproducts = async (req , res) => {
     console.log("top products");
     try{
         const items = await Product.findAll({
-            limit : 5,
+            limit : 10,
             include :{
                 model : ProductImages
             }

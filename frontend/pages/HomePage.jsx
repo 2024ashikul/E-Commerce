@@ -1,10 +1,13 @@
 import TopProducts from "../src/components/TopProducts";
 import '../css/HomePage.css'
 import NavBar from "../src/components/NavBar/NavBar";
-
+import NProgress from "nprogress";
 import { Helmet } from "react-helmet";
 
+
 import { AlertContext } from "../src/components/Contexts/AlertContext/AlertContext";
+
+
 
 
 
@@ -53,9 +56,11 @@ export default function HomePage() {
                 <h2>
                     Top Products
                 </h2>
+                
                 <TopProducts>
 
                 </TopProducts>
+                
             </div>
 
         </div>

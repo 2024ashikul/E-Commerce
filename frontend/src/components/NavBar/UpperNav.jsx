@@ -9,7 +9,7 @@ export default function UpperNav() {
     const { isLoggedIn, username } = useContext(AuthContext);
 
 
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState(null);
     const [searchOptions, setSearchOptions] = useState(null);
     const navigate = useNavigate();
 
@@ -17,10 +17,15 @@ export default function UpperNav() {
 
     useEffect(() => {
         console.log("searching here");
+        if(search == null){
+            setSearchOptions(null);
+            
+        }else{
         fetch(`http://192.168.0.102:3000/searchpending/${search}`)
             .then((res) => res.json())
             .then((data) => { !data.products ? setSearchOptions(null) : setSearchOptions(data.products); console.log(data) })
-            .catch((err) => console.log(err))
+            .catch((err) => console.log(err));
+        }
     }, [search]);
 
     const handleSearchSubmit = (e) => {
@@ -106,8 +111,8 @@ export default function UpperNav() {
                         </input>
                         <div className="z-10 absolute mt-4 p-1 w-60 " id="searchoptions" style={{ visibility: 'hidden' }}>
                             <ul className="flex-col  bg-green-500 ml-4 mb-0 p-1 rounded-2xl">
-                                {searchOptions == null || document.getElementById('temp').value == "" ? '' : (searchOptions.map(item => (
-                                    <div className="pl-4  w-full px-2 py-1 align-middle " >
+                                {searchOptions == null || document.getElementById('temp').value == null ? '' : (searchOptions.map((item,index) => (
+                                    <div className="pl-4  w-full px-2 py-1 align-middle " key={index} >
 
 
                                         <li key={item.id} className="hover:text-white-100" >

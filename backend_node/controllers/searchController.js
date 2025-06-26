@@ -15,7 +15,8 @@ exports.searchpending = async (req , res) => {
         }  );
         
         //const keywords = (pendingProducts.map(c=> c.name));
-        console.log(pendingProducts);
+        console.log(pendingProducts)
+       
         
         res.status(200).json({products : pendingProducts});
     }catch(err){

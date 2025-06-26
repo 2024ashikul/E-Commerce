@@ -6,7 +6,7 @@ export default function NavBar(){
 
     return (
     <>
-    <div >
+    <div className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
       <UpperNav></UpperNav>
       <LowerNav></LowerNav>
 </div>  

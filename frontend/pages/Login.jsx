@@ -12,7 +12,7 @@ export default function Login() {
   const {isLoggedIn,  setIsLoggedIn, setUserName} = useContext(AuthContext);
   useEffect(()=>{
     if(isLoggedIn){
-    navigate('/profile');
+    navigate('/profile' ,{ replace: true });
     }
   },[isLoggedIn,navigate])
 

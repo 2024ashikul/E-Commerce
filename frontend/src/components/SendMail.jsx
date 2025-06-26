@@ -1,4 +1,4 @@
-export default function SendMail(){
+export default function SendMail() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -10,27 +10,27 @@ export default function SendMail(){
         console.log(body);
         console.log(subject);
 
-        fetch('http://192.168.0.102:3000/send-mail',{
-            method : 'POST',
+        fetch('http://192.168.0.102:3000/send-mail', {
+            method: 'POST',
             headers: {
-            'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
-            body : JSON.stringify({ to , subject,body})
+            body: JSON.stringify({ to, subject, body })
         })
-        .then((res)=> res.json())
-        .then((data) => console.log(data))
-        .catch((err) => console.log(err))
+            .then((res) => res.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err))
     }
 
-    
 
-    return(
+
+    return (
         <div>
             <form onSubmit={handleSubmit} method="post">
                 <input type="email" name="to"></input>
                 <input type="text" name="subject"></input>
                 <input type="text" name="body"></input>
-                
+
                 <button type="submit" >Send</button>
             </form>
         </div>

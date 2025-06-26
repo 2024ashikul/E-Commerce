@@ -4,6 +4,7 @@ function TopProducts() {
   const [products,setProducts] = useState([]);
 
   useEffect(() => {
+    
     fetch('http://192.168.0.102:3000/topproduct')
       .then((res) => res.json())
       .then((data) => {setProducts(data.items);console.log(data);})

@@ -2,11 +2,14 @@ import { useParams } from "react-router-dom"
 import {  useEffect, useState } from "react";
 import Card from "../src/components/Card";
 
+
 export default function SearchResults(){
     const [products, setProducts] = useState([]);
     const { value } = useParams();
-
+    
+    
     useEffect(()=>{
+    
         fetch(`http://192.168.0.102:3000/search/${value}`)
         .then((res) => res.json())
         .then((data) => {setProducts(data.products);console.log(data.products);})
