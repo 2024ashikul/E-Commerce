@@ -9,7 +9,7 @@ export default function CategoryPage(){
     const {category} = useParams();
     console.log(category);
     useEffect(()=>{
-        fetch(`http://192.168.0.102:3000/c/${category}`)
+        fetch(`http://localhost:3000/c/${category}`)
         .then((res) => res.json())
         .then((data) => {setProducts(data.products);setLoading(false);})
         .catch((err) => console.log(err))

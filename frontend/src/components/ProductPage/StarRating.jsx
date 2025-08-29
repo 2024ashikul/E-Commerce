@@ -25,7 +25,7 @@ export default function StarRating({productid}){
         if(!isLoggedIn){
             navigate('/login');
         }
-        fetch(`http://192.168.0.102:3000/submitrating`,{
+        fetch(`http://localhost:3000/submitrating`,{
             method : 'POST',
             headers : {
                 'Content-Type' :'application/json',
@@ -40,7 +40,7 @@ export default function StarRating({productid}){
 
     async function getRating(productid){
         try{
-            const res = await fetch(`http://192.168.0.102:3000/getratings`,{
+            const res = await fetch(`http://localhost:3000/getratings`,{
             method : 'POST',
             headers :{
                 'Content-Type' :'application/json'

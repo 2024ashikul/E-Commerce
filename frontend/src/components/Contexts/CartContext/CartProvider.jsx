@@ -33,7 +33,7 @@ export const CartProvider = ({ children }) => {
 
         if (isLoggedIn) {
             const productid = item.id;
-            fetch('http://192.168.0.102:3000/addtocart', {
+            fetch('http://localhost:3000/addtocart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export const CartProvider = ({ children }) => {
 
         if (isLoggedIn) {
             const cartid = item.id;
-            fetch('http://192.168.0.102:3000/removefromcart', {
+            fetch('http://localhost:3000/removefromcart', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

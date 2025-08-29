@@ -9,7 +9,7 @@ export default function CartItems(){
         setLoading(true);
         console.log(localStorage.getItem("token"));
         console.log(localStorage.getItem("username"));
-        fetch('http://192.168.0.102:3000/cartitems',{
+        fetch('http://localhost:3000/cartitems',{
                 method : 'POST',
                 headers :{
                     'Content-Type':'application/json',

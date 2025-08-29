@@ -10,7 +10,7 @@ export default function SearchResults(){
     
     useEffect(()=>{
     
-        fetch(`http://192.168.0.102:3000/search/${value}`)
+        fetch(`http://localhost:3000/search/${value}`)
         .then((res) => res.json())
         .then((data) => {setProducts(data.products);console.log(data.products);})
         .catch((err) => console.log(err))

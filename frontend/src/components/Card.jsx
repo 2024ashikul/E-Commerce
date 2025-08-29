@@ -6,7 +6,7 @@ import { CartContext } from './Contexts/CartContext/CartContext';
 //         const temp = localStorage.getItem("token");
 //         console.log(temp);
 //         try{
-//             fetch('http://192.168.0.102:3000/addtocart',{
+//             fetch('http://localhost:3000/addtocart',{
 //                 method : 'POST',
 //                 headers :{
 //                     'Content-Type':'application/json',
@@ -14,7 +14,7 @@ import { CartContext } from './Contexts/CartContext/CartContext';
 //                 },
 //                 body: JSON.stringify({ productid })
 //             })
-            
+
 //             .then((res) => res.json())
 //             .then((data) => console.log(data))
 //             .catch((err)=> console.log(err));
@@ -22,48 +22,50 @@ import { CartContext } from './Contexts/CartContext/CartContext';
 //         console.log(err);
 //     }
 // }
-    
 
 
-function Card({item}){
 
-    const { addToCart} = useContext(CartContext);
-    
-    const filename = 'http://192.168.0.102:3000/uploads/'+ item.ProductImages[0].name;
-    console.log(filename);
-    return(
-<div className="bg-white shadow-md rounded-2xl overflow-hidden w-72 hover:scale-105 transition-transform duration-300 m-3">
-      <div className="w-full h-48 overflow-hidden">
+function Card({ item }) {
+
+  const { addToCart } = useContext(CartContext);
+
+  const filename = 'http://localhost:3000/uploads/' + item.ProductImages[0].name;
+  console.log(filename);
+  return (
+    <div className="bg-white shadow-md rounded-2xl justify-between flex flex-col overflow-hidden w-60 aspect-[4/6] hover:scale-105 transition-transform duration-300 m-3">
+      <div className="w-full  overflow-hidden">
         <img
           src={filename}
           alt="Product"
-          className="w-full h-full object-cover"
+          className="w-full h-[180px]  object-cover"
         />
       </div>
 
-      <div className="p-4 flex flex-col gap-1">
-        <h2 className="text-lg font-semibold truncate">{item.name}</h2>
-        <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
-        <p className="text-xl font-bold text-amber-600">৳ {item.price}</p>
+      <div className="p-3 flex flex-col gap-1">
+        <span className="text-2xl font-medium truncate">{item.name}</span>
+        <span className="text-sm text-gray-600 line-clamp-2">{item.description}</span>
+        <span className="text-lg font-bold text-amber-600">৳ {item.price}</span>
 
-        <div className="flex justify-between items-center mt-2">
-          <Link
-            to={`/product/${item.id}`}
-            className="text-blue-600 underline text-sm hover:text-blue-800 bg-amber-400"
-          >
-            View Product
-          </Link>
-
-          <button
-            onClick={() => addToCart(item)}
-            className="bg-amber-500 text-white px-4 py-1 rounded-full text-sm hover:bg-amber-600 transition"
-          >
-            Add to Cart
-          </button>
+        <div className="flex justify-between items-center mt-1">
+          <div className="bg-amber-500 text-white px-4 py-2 rounded-2xl text-sm hover:bg-amber-600 transition">
+            <Link
+              to={`/product/${item.id}`}
+              className=""
+            >
+              View 
+            </Link>
+          </div>
+          <div className="bg-amber-500 text-white px-3 py-2 rounded-2xl text-sm hover:bg-amber-600 transition">
+            <button
+              onClick={() => addToCart(item)}
+              >
+              Add to Cart
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    )
+  )
 }
 
 export default Card;
