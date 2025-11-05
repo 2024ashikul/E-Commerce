@@ -51,13 +51,14 @@ jobs:
         env:
           RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
         run: |
-          RESPONSE=$(curl -s -o response.json -w "%{http_code}" \
+          echo "Triggering deploy on Render..."
+          RESPONSE=$(curl -s -w "%{http_code}" -o response.json \
             -X POST \
             -H "Accept: application/json" \
             -H "Authorization: Bearer $RENDER_API_KEY" \
             -H "Content-Type: application/json" \
-            -d '{"clearCache":true}' \
+            -d '{"clearCache": true}' \
             https://api.render.com/v1/services/srv-xxxxxxxx/deploys)
           echo "HTTP Status: $RESPONSE"
-          cat response.json
+          cat response.json 
           
