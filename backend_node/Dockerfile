@@ -12,7 +12,7 @@ RUN npm ci
 
 # Copy the rest of the code
 COPY . .
-
+ 
 # Expose port (Render will use this)
 EXPOSE 3000
 
