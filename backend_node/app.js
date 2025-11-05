@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 
 const { sequelize } = require('./models');
-
+ 
 const userRoutes = require('./routes/userRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const searchRoutes = require('./routes/searchRoutes')
