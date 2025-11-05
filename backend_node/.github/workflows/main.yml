@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
  
     strategy:
-      matrix:
-        node-version: [18.x]  # test on multiple Node versions
+        # test on multiple Node versions
 
     steps:
       - name: 📦 Checkout Repository
