@@ -12,26 +12,28 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [22.x]
+        node-version: [18.x, 20.x]  # stable Node versions
 
     steps:
+      # Step 1: Checkout repo
       - name: 📦 Checkout Repository
         uses: actions/checkout@v4
 
+      # Step 2: Setup Node.js
       - name: 🧰 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
+      # Step 3: Install dependencies inside backend_node
       - name: 📥 Install Dependencies
-        run: |
-         cd backend_node
-         npm ci
+        working-directory: backend_node
+        run: npm ci
 
+      # Step 4: Run Jest tests inside backend_node
       - name: 🧪 Run Jest Tests
+        working-directory: backend_node
         env:
           NODE_ENV: test
-        run: |
-          cd backend_node
-          npm test -- --runInBand --detectOpenHandles
+        run: npm test -- --runInBand --detectOpenHandles
