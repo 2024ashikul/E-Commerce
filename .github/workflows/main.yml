@@ -10,9 +10,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    
-      
-        
+    strategy:
+      matrix:
+        node-version: [24.x]
 
     steps:
       - name: 📦 Checkout Repository
@@ -25,11 +25,13 @@ jobs:
           cache: 'npm'
 
       - name: 📥 Install Dependencies
-        run: npm ci
+        run: |
+         cd backend_node
+         npm ci
 
       - name: 🧪 Run Jest Tests
         env:
           NODE_ENV: test
         run: |
-          cd backend_node
+          cd node_backend
           npm test -- --runInBand --detectOpenHandles
