@@ -40,24 +40,19 @@ jobs:
           NODE_ENV: test
         run: npm test -- --runInBand --detectOpenHandles
   deploy:
-      runs-on: ubuntu-latest
-      needs: test
-      steps:
-        - uses: actions/checkout@v4
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: 📦 Checkout Repository
+        uses: actions/checkout@v4
 
-        # Build Docker image
-        - name: Build Docker image
-          run: |
-            cd backend_node
-            docker build -t backend:latest .
+      # Install Render CLI
+      - name: 🖥️ Install Render CLI
+        run: npm install -g @render/cli
 
-        # Login to Render Docker registry (use Render service credentials)
-        - name: Render Docker Login
-          run: |
-            echo "${{ secrets.RENDER_API_KEY }}" | docker login registry.render.com -u ${{ secrets.RENDER_SERVICE_NAME }} --password-stdin
-
-        # Push Docker image to Render
-        - name: Deploy to Render
-          run: |
-            docker tag backend:latest registry.render.com/<your-service-name>:latest
-            docker push registry.render.com/<your-service-name>:latest
+      # Deploy to Render using CLI
+      - name: 🚀 Deploy to Render
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          render deploy service srv-d45ou0ripnbc738qgbsg --dir backend_node 
