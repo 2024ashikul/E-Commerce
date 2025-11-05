@@ -18,6 +18,8 @@ jobs:
       # Step 1: Checkout repo
       - name: 📦 Checkout Repository
         uses: actions/checkout@v4
+        with: 
+          fetch-depth : 0
 
       # Step 2: Setup Node.js
       - name: 🧰 Setup Node.js
