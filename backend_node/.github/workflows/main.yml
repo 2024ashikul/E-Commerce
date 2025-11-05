@@ -9,10 +9,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+ 
     strategy:
       matrix:
-        node-version: [18.x, 20.x]  # test on multiple Node versions
+        node-version: [24.x]  # test on multiple Node versions
 
     steps:
       - name: 📦 Checkout Repository
